@@ -1,0 +1,15 @@
+# ads.txt for voxoira.com
+#
+# HOW TO USE THIS FILE
+# 1. Once Google approves your AdSense account, find your publisher ID.
+#    It looks like: ca-pub-1234567890123456
+# 2. Copy just the numeric part after "ca-pub-" (e.g. 1234567890123456)
+#    and replace REPLACE_WITH_YOUR_PUBLISHER_ID below with:
+#       pub-1234567890123456
+# 3. Upload this file to the ROOT of your domain, so it loads at:
+#       https://voxoira.com/ads.txt
+#    (not in a subfolder — it must be at the root for Google to find it)
+# 4. Give it a day or two to be crawled. You can check status inside
+#    your AdSense account under Sites > ads.txt.
+
+google.com, REPLACE_WITH_YOUR_PUBLISHER_ID, DIRECT, f08c47fec0942fa0

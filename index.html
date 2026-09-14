@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voxoira — Free Voice to Text, Translator &amp; AI Transcript Tool</title>
+<meta name="description" content="Free online voice to text (speech to text), live language translator, and AI transcript assistant. No sign-up, no install — everything runs in your browser.">
+<meta name="keywords" content="voice to text, speech to text, online dictation, voice translator, live translation, transcribe audio, AI transcript summarizer, free dictation tool">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://voxoira.com/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Voxoira — Free Voice to Text, Translator & AI Transcript Tool">
+<meta property="og:description" content="Speak, translate live, and ask AI about your transcript — free, no sign-up, runs entirely in your browser.">
+<meta property="og:url" content="https://voxoira.com/">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Voxoira — Free Voice to Text, Translator & AI Transcript Tool">
+<meta name="twitter:description" content="Speak, translate live, and ask AI about your transcript — free, no sign-up, runs entirely in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E8A33D'/%3E%3Cstop offset='1' stop-color='%234FA79B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='%2314171C'/%3E%3Cpath d='M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z' fill='none' stroke='url(%23g)' stroke-width='1.8'/%3E%3Cpath d='M6.5 11.5a5.5 5.5 0 0 0 11 0' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M12 17v3M9 20h6' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#14171C; --panel:#1B2027; --panel-2:#20262E; --paper:#191D23; --border:#2A313B;
+  --text:#EDEAE2; --text-muted:#8D93A0;
+  --accent:#E8A33D; --accent-dim:#7A5A28;
+  --accent-2:#4FA79B; --accent-2-dim:#28564F;
+  --accent-3:#9B86E8; --accent-3-dim:#4A3E80;
+  --danger:#D9614F;
+  --ring: rgba(232,163,61,0.28); --ring-2: rgba(79,167,155,0.28);
+  --radius:10px; --mono:'JetBrains Mono', ui-monospace, monospace; --sans:'Space Grotesk', -apple-system, sans-serif;
+  color-scheme: dark;
+}
+:root.light{
+  --bg:#EEF1EF; --panel:#FFFFFF; --panel-2:#F5F6F4; --paper:#FFFFFF; --border:#D9DCD7;
+  --text:#1D2126; --text-muted:#666F78;
+  --accent:#C97D1F; --accent-dim:#F0D3A5;
+  --accent-2:#2E7B71; --accent-2-dim:#CDE7E3;
+  --accent-3:#6E56CF; --accent-3-dim:#E4DCFB;
+  --danger:#B8432F;
+  --ring: rgba(201,125,31,0.18); --ring-2: rgba(46,123,113,0.18);
+  color-scheme: light;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;transition:background .25s ease,color .25s ease;}
+.wrap{max-width:920px;margin:0 auto;padding:26px 20px 60px;}
+
+header.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-dot{width:11px;height:11px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 0 4px var(--ring);}
+.brand h1{font-size:1.05rem;font-weight:600;margin:0;letter-spacing:.01em;}
+.brand span.sub{display:block;font-size:0.72rem;color:var(--text-muted);font-weight:400;margin-top:1px;}
+.top-actions{display:flex;gap:8px;}
+.icon-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;transition:border-color .15s, transform .1s;}
+.icon-btn:hover{border-color:var(--accent);}
+.icon-btn:active{transform:scale(0.94);}
+.icon-btn svg{width:17px;height:17px;}
+
+/* navbar */
+.navbar{display:flex;justify-content:center;gap:6px;border-bottom:1px solid var(--border);margin-bottom:26px;}
+.nav-btn{
+  background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-muted);
+  padding:11px 20px;font-family:var(--sans);font-size:0.86rem;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;gap:7px;transition:color .15s, border-color .15s;
+}
+.nav-btn svg{width:16px;height:16px;}
+.nav-btn:hover{color:var(--text);}
+.nav-btn[data-tab="dictate"].active{color:var(--text);border-bottom-color:var(--accent);}
+.nav-btn[data-tab="translate"].active{color:var(--text);border-bottom-color:var(--accent-2);}
+.nav-btn[data-tab="ai"].active,.nav-btn[data-tab="setup"].active{color:var(--text);border-bottom-color:var(--accent-3);}
+
+.page{display:none;}
+.page.active{display:block;}
+
+.unsupported{background:var(--panel);border:1px solid var(--danger);border-radius:var(--radius);padding:14px 16px;font-size:0.82rem;margin-bottom:18px;line-height:1.5;}
+.unsupported b{color:var(--danger);}
+
+/* ---- shared mic hero ---- */
+.mic-hero{display:flex;flex-direction:column;align-items:center;padding:6px 0 24px;}
+.mic-btn-wrap{position:relative;width:100px;height:100px;display:flex;align-items:center;justify-content:center;}
+.ring{position:absolute;border-radius:50%;border:1px solid var(--accent);opacity:0;}
+.mic-btn-wrap.listening .ring{animation:pulse 2.2s ease-out infinite;}
+.ring.r1{width:100%;height:100%;} .ring.r2{width:100%;height:100%;animation-delay:.7s !important;} .ring.r3{width:100%;height:100%;animation-delay:1.4s !important;}
+@keyframes pulse{0%{transform:scale(.72);opacity:.55;}100%{transform:scale(1.55);opacity:0;}}
+button.mic-btn{width:78px;height:78px;border-radius:50%;border:1.5px solid var(--border);cursor:pointer;background:var(--panel-2);color:var(--text);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;transition:background .2s, border-color .2s, transform .12s;}
+button.mic-btn:hover{border-color:var(--accent);}
+button.mic-btn:active{transform:scale(.96);}
+button.mic-btn.active{background:var(--accent);border-color:var(--accent);color:#1A1400;}
+button.mic-btn svg{width:28px;height:28px;}
+.mic-status{margin-top:12px;font-size:0.85rem;color:var(--text-muted);text-align:center;min-height:1.2em;}
+.mic-status b{color:var(--accent);font-weight:600;}
+.mic-status.err b{color:var(--danger);}
+.kbd-hint{margin-top:4px;font-size:0.7rem;color:var(--text-muted);opacity:0.7;}
+.kbd-hint kbd{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:0.68rem;}
+
+/* ---- dictate page ---- */
+.lang-row{display:flex;justify-content:center;margin-bottom:8px;}
+select.langsel{appearance:none;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:20px;padding:7px 32px 7px 16px;font-family:var(--sans);font-size:0.82rem;cursor:pointer;background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%238D93A0%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpolyline%20points%3D%276%209%2012%2015%2018%209%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px 14px;}
+:root.light select.langsel{background-image:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23666F78%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpolyline%20points%3D%276%209%2012%2015%2018%209%27/%3E%3C/svg%3E");}
+select.langsel:focus{outline:2px solid var(--ring);}
+
+.editor-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.editor-toolbar{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--panel-2);gap:8px;flex-wrap:wrap;}
+.tbtn-group{display:flex;gap:6px;align-items:center;}
+button.tbtn{background:transparent;border:1px solid transparent;color:var(--text-muted);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+button.tbtn:hover:not(:disabled){border-color:var(--border);color:var(--text);}
+button.tbtn:disabled{opacity:0.35;cursor:not-allowed;}
+button.tbtn svg{width:15px;height:15px;}
+.size-slider{display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.72rem;}
+.size-slider input[type=range]{width:64px;accent-color:var(--accent);}
+
+#d-editor{width:100%;min-height:260px;resize:vertical;border:none;outline:none;background:var(--paper);color:var(--text);font-family:var(--mono);font-size:15px;line-height:1.75;padding:20px 22px;caret-color:var(--accent);}
+#d-editor::placeholder{color:var(--text-muted);opacity:0.65;}
+
+.editor-footer{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-top:1px solid var(--border);background:var(--panel-2);font-size:0.74rem;color:var(--text-muted);flex-wrap:wrap;gap:8px;}
+.counts span{margin-right:10px;}
+.footer-actions{display:flex;gap:6px;}
+button.pill{display:flex;align-items:center;gap:5px;background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:16px;padding:5px 11px;font-size:0.74rem;font-family:var(--sans);cursor:pointer;}
+button.pill:hover{border-color:var(--accent-2);}
+button.pill svg{width:12px;height:12px;}
+button.pill.danger:hover{border-color:var(--danger);color:var(--danger);}
+button.pill:disabled{opacity:.4;cursor:not-allowed;}
+
+.autosave-note{font-size:0.68rem;color:var(--text-muted);text-align:center;margin-top:8px;opacity:0.75;}
+
+details.commands{margin-top:22px;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);overflow:hidden;}
+details.commands summary{padding:12px 16px;cursor:pointer;font-size:0.84rem;font-weight:600;list-style:none;display:flex;align-items:center;justify-content:space-between;}
+details.commands summary::-webkit-details-marker{display:none;}
+summary .chev{transition:transform .2s;color:var(--text-muted);}
+details[open] summary .chev{transform:rotate(180deg);}
+.cmd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px;padding:2px 16px 16px;}
+.cmd-row{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed var(--border);font-size:0.78rem;}
+.cmd-row .say{color:var(--text);} .cmd-row .does{color:var(--text-muted);font-family:var(--mono);font-size:0.74rem;}
+
+/* ---- translate page ---- */
+.t-lang-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.lang-pick{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.lang-pick label{font-size:0.66rem;color:var(--text-muted);letter-spacing:.02em;}
+select#t-sourceLang{border-color:var(--accent-dim);min-width:168px;}
+select#t-targetLang{border-color:var(--accent-2-dim);min-width:168px;}
+button#t-swapBtn{margin-top:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--panel);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s, border-color .15s, color .15s;}
+button#t-swapBtn:hover{border-color:var(--accent-2);color:var(--accent-2);}
+button#t-swapBtn.spin{transform:rotate(180deg);}
+button#t-swapBtn svg{width:16px;height:16px;}
+
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:720px){.panes{grid-template-columns:1fr;}}
+.pane{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
+.pane-tab{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:0.76rem;font-weight:600;letter-spacing:.01em;}
+.pane.original .pane-tab{color:var(--accent);}
+.pane.translated .pane-tab{color:var(--accent-2);}
+.pane-tab .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;margin-right:7px;}
+.pane textarea, .pane .translated-text{flex:1;width:100%;min-height:220px;border:none;outline:none;resize:vertical;background:var(--paper);color:var(--text);font-family:var(--mono);font-size:14.5px;line-height:1.75;padding:18px 20px;}
+.pane textarea::placeholder{color:var(--text-muted);opacity:.6;}
+.pane .translated-text{white-space:pre-wrap;overflow-y:auto;}
+.pane-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--border);background:var(--panel-2);font-size:0.72rem;color:var(--text-muted);}
+.pane-foot .actions{display:flex;gap:6px;}
+
+.status-line{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;font-size:0.7rem;color:var(--text-muted);opacity:.8;text-align:center;flex-wrap:wrap;}
+.status-line .live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);flex:0 0 auto;}
+
+/* ---- saved documents (translate) ---- */
+.saved-docs-card{margin-top:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);overflow:hidden;}
+.saved-docs-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);background:var(--panel-2);}
+.saved-docs-title{display:flex;align-items:center;gap:8px;font-size:0.88rem;font-weight:600;}
+.saved-docs-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--accent-2-dim);color:var(--accent-2);font-size:0.72rem;font-weight:700;}
+:root.light .saved-docs-count{color:#1D2126;}
+.saved-docs-empty{margin:0;padding:16px 14px;font-size:0.8rem;line-height:1.55;color:var(--text-muted);}
+.saved-docs-list{list-style:none;margin:0;padding:0;max-height:360px;overflow-y:auto;}
+.saved-doc-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-top:1px solid var(--border);flex-wrap:wrap;}
+.saved-doc-item:first-child{border-top:none;}
+.saved-doc-info{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.saved-doc-langs{font-size:0.84rem;font-weight:600;color:var(--text);}
+.saved-doc-meta{font-size:0.72rem;color:var(--text-muted);}
+.saved-doc-preview{font-size:0.74rem;color:var(--text-muted);max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.saved-doc-actions{display:flex;gap:6px;flex:0 0 auto;}
+@media (max-width:560px){.saved-doc-item{flex-direction:column;align-items:stretch;}.saved-doc-actions{justify-content:flex-end;}}
+
+/* ---- settings drawer ---- */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;}
+.overlay.open{opacity:1;pointer-events:auto;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,88vw);background:var(--panel);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .25s ease;z-index:11;padding:20px;overflow-y:auto;}
+.drawer.open{transform:translateX(0);}
+.drawer h2{font-size:1rem;margin:0 0 4px;}
+.drawer .drawer-sub{font-size:0.72rem;color:var(--text-muted);margin:0 0 16px;}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:10px;}
+.setting-row .label{font-size:0.85rem;}
+.setting-row .desc{font-size:0.72rem;color:var(--text-muted);margin-top:2px;}
+.switch{position:relative;width:38px;height:22px;flex:none;}
+.switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer;}
+.switch .track{position:absolute;inset:0;background:var(--border);border-radius:20px;transition:background .15s;}
+.switch .thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--text-muted);transition:transform .15s, background .15s;}
+.switch input:checked + .track{background:var(--accent-dim);}
+.switch input:checked ~ .thumb{transform:translateX(16px);background:var(--accent);}
+.drawer .close-x{position:absolute;top:16px;right:16px;}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,10px);background:var(--panel-2);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:20px;font-size:0.8rem;opacity:0;transition:opacity .2s, transform .2s;pointer-events:none;z-index:20;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+
+/* ---- footer, tip jar, ads, cookie consent ---- */
+.site-footer{margin-top:34px;padding-top:20px;border-top:1px solid var(--border);}
+.support-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;font-size:0.82rem;color:var(--text-muted);}
+button.support-btn, a.support-btn{
+  display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);color:var(--text);
+  border-radius:16px;padding:6px 13px;font-size:0.78rem;font-family:var(--sans);text-decoration:none;cursor:pointer;
+}
+a.support-btn:hover{border-color:var(--accent);color:var(--accent);}
+.ad-slot{
+  min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:var(--panel);border:1px dashed var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.ad-slot .ad-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);opacity:0.7;}
+.cookie-banner{
+  display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:30;
+  max-width:640px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  box-shadow:0 8px 28px rgba(0,0,0,0.35);
+}
+.cookie-banner p{margin:0;font-size:0.78rem;color:var(--text-muted);flex:1;min-width:220px;}
+.cookie-banner a{color:var(--accent-3);}
+
+/* ---- ask-ai page ---- */
+.ai-setup{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;}
+.setup-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.setup-row:last-of-type{margin-bottom:0;}
+.setup-row label{font-size:0.76rem;color:var(--text-muted);min-width:84px;}
+.ai-input{
+  flex:1;min-width:160px;background:var(--paper);border:1px solid var(--border);border-radius:8px;
+  padding:8px 12px;color:var(--text);font-family:var(--sans);font-size:0.82rem;outline:none;
+}
+.ai-input:focus{border-color:var(--accent-3);}
+#ai-provider{border-color:var(--accent-3-dim);}
+.ai-hint{font-size:0.72rem;color:var(--text-muted);line-height:1.5;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);}
+
+.ai-source-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.ai-source-row label{font-size:0.76rem;color:var(--text-muted);}
+.ai-source-count{font-size:0.72rem;color:var(--text-muted);}
+
+.ai-quick-prompts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+button.chip{
+  background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:16px;
+  padding:6px 12px;font-size:0.74rem;font-family:var(--sans);cursor:pointer;
+}
+button.chip:hover{border-color:var(--accent-3);color:var(--accent-3);}
+
+.ai-chat{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  min-height:140px;max-height:420px;overflow-y:auto;padding:14px 16px;margin-bottom:10px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.ai-chat:empty::before{content:"Ask something about your text below — answers will show up here.";color:var(--text-muted);font-size:0.82rem;}
+.ai-msg{max-width:82%;padding:9px 13px;border-radius:12px;font-size:0.85rem;line-height:1.55;white-space:pre-wrap;}
+.ai-msg.user{align-self:flex-end;background:var(--accent-3-dim);color:var(--text);border-bottom-right-radius:3px;}
+.ai-msg.assistant{align-self:flex-start;background:var(--panel-2);border:1px solid var(--border);border-bottom-left-radius:3px;}
+
+.ai-input-row{display:flex;gap:8px;align-items:flex-end;}
+#ai-question{
+  flex:1;resize:vertical;background:var(--paper);border:1px solid var(--border);border-radius:10px;
+  padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:0.86rem;outline:none;min-height:44px;
+}
+#ai-question:focus{border-color:var(--accent-3);}
+button.ai-send{background:var(--accent-3);border-color:var(--accent-3);color:#1B1330;font-weight:600;}
+button.ai-send:disabled{opacity:0.55;cursor:not-allowed;}
+.ai-status{font-size:0.72rem;color:var(--text-muted);margin-top:6px;min-height:1.1em;}
+.ai-foot-row{display:flex;justify-content:flex-end;margin-bottom:8px;}
+
+@media (max-width:480px){
+  #d-editor{min-height:220px;font-size:14px;padding:16px;}
+  .pane textarea,.pane .translated-text{min-height:160px;font-size:13.5px;padding:14px 16px;}
+  select#t-sourceLang, select#t-targetLang{min-width:0;flex:1;}
+  .mic-btn-wrap{width:92px;height:92px;}
+  button.mic-btn{width:68px;height:68px;}
+  .nav-btn{padding:10px 14px;font-size:0.8rem;}
+  .ai-msg{max-width:92%;}
+}
+
+/* =====================================================================
+   RESPONSIVE LAYOUT LAYER
+   Mobile-first overrides: preserves the existing visual design and JS,
+   while making sizing/wrapping fluid from 320px through large desktops.
+   ===================================================================== */
+html{overflow-x:hidden;scrollbar-gutter:stable;} body{overflow-x:hidden;width:100%;}
+img,video,canvas,svg{max-width:100%;height:auto;} iframe{max-width:100%;}
+button,input,select,textarea{font:inherit;max-width:100%;} button,select,input,textarea{touch-action:manipulation;}
+.wrap{width:100%;max-width:920px;margin-inline:auto;padding:clamp(14px,3vw,26px) clamp(10px,3.5vw,20px) clamp(40px,6vw,60px);}
+header.top{gap:12px;flex-wrap:wrap;} .brand{min-width:0;flex:1 1 220px;} .brand h1{font-size:clamp(.95rem,2.5vw,1.05rem);} .brand span.sub{font-size:clamp(.62rem,1.8vw,.72rem);}
+.top-actions{flex:0 0 auto;} .icon-btn{width:40px;height:40px;min-width:40px;min-height:40px;}
+.navbar{width:100%;justify-content:center;gap:2px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;}
+.nav-btn{flex:0 0 auto;min-height:44px;padding:10px clamp(10px,2.5vw,20px);font-size:clamp(.74rem,1.8vw,.86rem);white-space:nowrap;}
+.mic-hero{padding-bottom:clamp(16px,4vw,24px);} .mic-btn-wrap{width:clamp(84px,24vw,100px);height:clamp(84px,24vw,100px);} button.mic-btn{width:clamp(66px,18vw,78px);height:clamp(66px,18vw,78px);} button.mic-btn svg{width:clamp(24px,7vw,28px);height:clamp(24px,7vw,28px);}
+select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
+.editor-card,.live-speech-card,.ai-live-card,.ai-setup,.panes,.commands,.cmd-grid{min-width:0;max-width:100%;}
+.editor-toolbar,.editor-footer,.footer-actions,.tbtn-group{min-width:0;flex-wrap:wrap;} .footer-actions{gap:6px;}
+#d-editor{min-height:clamp(220px,40vh,360px);font-size:clamp(14px,1.8vw,15px);padding:clamp(14px,3vw,20px);overflow-wrap:anywhere;}
+.cmd-grid{grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));}
+.live-speech-card,.ai-live-card{background:linear-gradient(135deg,var(--panel),var(--panel-2));border:1px solid var(--border);border-radius:14px;padding:13px 15px;margin:0 0 16px;box-shadow:0 8px 24px rgba(0,0,0,.08);}
+.live-speech-head{display:flex;align-items:center;gap:10px;margin-bottom:9px;}.live-speech-head>div{display:flex;flex-direction:column;gap:2px;min-width:0;}.live-speech-head b{font-size:.78rem;}.live-speech-head span:not(.live-signal):not(.live-signal-dot){font-size:.68rem;color:var(--text-muted);}
+.live-signal{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent-dim);flex:none;}.live-signal-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--ring);animation:liveDot 1.6s infinite;}@keyframes liveDot{0%{box-shadow:0 0 0 0 var(--ring);}70%{box-shadow:0 0 0 8px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+.live-translate-card .live-signal{background:var(--accent-2-dim);}.live-translate-card .live-signal-dot{background:var(--accent-2);}.ai-live-card .live-signal{background:var(--accent-3-dim);}.ai-live-card .live-signal-dot{background:var(--accent-3);}
+.live-speech-text{font-family:var(--mono);font-size:clamp(.78rem,1.8vw,.9rem);line-height:1.6;min-height:52px;color:var(--text);background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:11px 13px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;}.live-speech-card.listening{border-color:var(--accent);}.live-speech-card.listening .live-speech-text{box-shadow:0 0 0 2px var(--ring);}
+.t-lang-row{width:100%;gap:clamp(7px,2vw,10px);}.lang-pick{min-width:0;flex:1 1 150px;}.t-lang-row select{width:100%;min-width:0;} #t-swapBtn{min-width:40px;min-height:40px;}
+.panes{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,16px);}.pane{min-width:0;}.pane textarea,.pane .translated-text{width:100%;min-width:0;min-height:clamp(160px,28vh,220px);overflow-wrap:anywhere;word-break:break-word;}
+.ai-setup{width:100%;}.setup-row{min-width:0;}.setup-row label{flex:0 0 auto;}.ai-input{min-width:0;max-width:100%;}.ai-source-row{min-width:0;}.ai-source-row select{min-width:0;max-width:100%;}.ai-chat{min-width:0;max-width:100%;overflow-x:hidden;}.ai-msg{max-width:min(82%,42rem);overflow-wrap:anywhere;word-break:break-word;}.ai-input-row{min-width:0;}.ai-input-row textarea{min-width:0;width:100%;}
+/* Setup AI guide: responsive grid, without changing its visual language. */
+.setup-hero{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;align-items:start;background:radial-gradient(circle at top right,rgba(155,134,232,.16),transparent 45%),var(--panel);border:1px solid var(--border);border-radius:18px;padding:clamp(16px,3vw,22px);margin-bottom:14px;}.setup-hero-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:1.5rem;color:var(--accent-3);background:var(--accent-3-dim);}.setup-hero h2{margin:4px 0 6px;font-size:clamp(1.15rem,3vw,1.45rem);}.setup-hero p,.security-card p,.guide-card p,.guide-card li,.error-grid span{line-height:1.55;overflow-wrap:anywhere;}
+.eyebrow{font-size:.62rem;letter-spacing:.14em;font-weight:700;color:var(--accent-3);}.security-card{display:flex;gap:12px;background:var(--panel);border:1px solid var(--accent-dim);border-radius:14px;padding:14px 16px;margin-bottom:14px;}.security-card>div{min-width:0;}.security-card p{margin:3px 0 0;color:var(--text-muted);font-size:.72rem;}.setup-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:16px;}.setup-step{display:flex;gap:9px;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:11px;}.setup-step>div{min-width:0;}.step-no{width:26px;height:26px;flex:none;border-radius:8px;display:grid;place-items:center;background:var(--accent-3-dim);color:var(--accent-3);font-family:var(--mono);font-size:.7rem;font-weight:700;}.setup-step b{display:block;font-size:.72rem;}.setup-step span:last-child{display:block;color:var(--text-muted);font-size:.62rem;margin-top:2px;}.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.guide-card{min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px;position:relative;overflow:hidden;}.guide-number{font-family:var(--mono);font-size:.66rem;color:var(--accent-3);margin-bottom:5px;}.guide-card h3{font-size:1rem;margin:0 0 5px;}.guide-card ul{padding-left:18px;margin:8px 0 12px;color:var(--text-muted);font-size:.7rem;}.guide-visual{border:1px dashed var(--border);background:var(--paper);border-radius:11px;padding:10px 11px;margin:12px 0;}.guide-visual span,.guide-visual small{display:block;font-size:.58rem;color:var(--text-muted);}.guide-visual div{margin-top:5px;background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:8px;font-family:var(--mono);font-size:.68rem;overflow-wrap:anywhere;}.danger-tip{color:var(--danger)!important;}.error-card,.before-ai{min-width:0;}.error-card{margin-top:14px;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px;}.error-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:11px;}.error-grid>div{min-width:0;padding:10px 11px;border-radius:10px;background:var(--panel-2);border:1px solid var(--border);}.error-grid b{display:block;font-size:.7rem;margin-bottom:3px;}.error-grid span{display:block;color:var(--text-muted);font-size:.66rem;}.before-ai{margin-top:14px;background:linear-gradient(135deg,var(--accent-3-dim),var(--panel));border:1px solid var(--accent-3-dim);border-radius:15px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;}.before-ai h3{margin:3px 0 0;font-size:.95rem;}.check-list{grid-column:1 / -1;display:flex;gap:8px;flex-wrap:wrap;}.check-list span{background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 9px;font-size:.65rem;}.setup-go{grid-column:2;grid-row:1 / span 2;min-height:44px;background:var(--accent-3);color:#1B1330;border:0;border-radius:10px;padding:9px 13px;font-weight:700;cursor:pointer;}
+.drawer{width:min(360px,92vw);max-width:100%;}.cookie-banner{left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));width:auto;max-width:min(640px,calc(100vw - 20px));}.cookie-banner p{min-width:0;}.toast{max-width:calc(100vw - 24px);white-space:normal;text-align:center;}
+@media (width < 768px){
+  .navbar{justify-content:flex-start;margin-bottom:18px;scroll-snap-type:x proximity;}.nav-btn{scroll-snap-align:start;}
+  .top-actions{margin-left:auto;}.panes{grid-template-columns:1fr;}.pane textarea,.pane .translated-text{min-height:180px;}
+  .t-lang-row{flex-wrap:wrap;}.lang-pick{flex-basis:calc(50% - 28px);} #t-swapBtn{margin-top:17px;}
+  .setup-row{flex-direction:column;align-items:stretch;gap:6px;}.setup-row label{padding-top:0;}.ai-source-row{align-items:stretch;}.ai-source-row label{width:100%;}.ai-source-row select{width:100%;flex-basis:100%;min-height:42px;}.ai-input-row{flex-direction:column;align-items:stretch;}button.ai-send{width:100%;min-height:44px;}
+  .setup-steps,.guide-grid,.error-grid{grid-template-columns:1fr;}.before-ai{grid-template-columns:1fr;}.setup-go{grid-column:1;grid-row:auto;width:100%;}.setup-hero{grid-template-columns:44px minmax(0,1fr);}.setup-hero-icon{width:44px;height:44px;border-radius:12px;}.check-list{grid-column:1;}
+}
+@media (width < 420px){
+  .wrap{padding-inline:10px;}.brand{flex-basis:100%;}.top-actions{width:100%;justify-content:flex-end;}.nav-btn{padding-inline:11px;}.nav-btn svg{width:15px;height:15px;}.editor-toolbar{padding:8px;}.size-slider{width:100%;justify-content:flex-end;}.tbtn-group{width:100%;}.lang-pick{flex-basis:100%;}.t-lang-row{justify-content:center;}#t-swapBtn{margin:0 auto;}.pane-tab{padding-inline:10px;}.footer-actions{width:100%;}.footer-actions .pill{flex:1 1 auto;justify-content:center;min-height:40px;}.setup-hero{grid-template-columns:1fr;}.setup-hero-icon{width:42px;height:42px;}.security-card{align-items:flex-start;}.check-list span{flex:1 1 100%;}
+}
+@media (width >= 768px){.wrap{padding-inline:clamp(20px,3vw,28px);}.navbar{overflow-x:visible;}.setup-row{flex-direction:row;}}
+@media (width >= 1024px){.wrap{max-width:min(920px,calc(100vw - 48px));}}
+@media (width >= 1440px){.wrap{max-width:920px;}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}}
+
+
+/* ================= TERMS OF USE ================= */
+.terms-page{padding-bottom:8px;}
+.terms-hero{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;align-items:start;background:radial-gradient(circle at top right,rgba(255,159,67,.14),transparent 48%),var(--panel);border:1px solid var(--border);border-radius:18px;padding:clamp(18px,3vw,26px);margin-bottom:14px;}
+.terms-hero-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:1.35rem;font-weight:800;color:var(--accent);background:var(--accent-dim);border:1px solid var(--border);}
+.terms-hero h2{margin:4px 0 7px;font-size:clamp(1.25rem,3vw,1.65rem);}
+.terms-hero p,.terms-card p,.terms-card li{line-height:1.65;color:var(--text-muted);overflow-wrap:anywhere;}
+.terms-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:clamp(17px,3vw,24px);margin-bottom:12px;}
+.terms-card h3{margin:0 0 9px;font-size:clamp(1rem,2.2vw,1.12rem);}
+.terms-card p{margin:0 0 10px;}
+.terms-card p:last-child{margin-bottom:0;}
+.terms-card ul{margin:8px 0 0;padding-left:20px;}
+.terms-note{display:flex;gap:10px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:14px;}
+.terms-note span{flex:0 0 auto;font-size:1.05rem;}
+.terms-note p{margin:0;font-size:.9rem;}
+@media (width < 768px){.terms-hero{grid-template-columns:44px minmax(0,1fr);}.terms-hero-icon{width:44px;height:44px;border-radius:12px;}}
+@media (width < 420px){.terms-hero{grid-template-columns:1fr;}.terms-hero-icon{width:42px;height:42px;}}
+
+
+.footer-link-inline{border:0;background:none;color:var(--accent-3);cursor:pointer;text-decoration:underline;font:inherit;padding:0;}
+
+/* ================= VISUAL GUIDE IMAGES ================= */
+.visual-guide-section{margin-top:22px;}
+.visual-guide-header{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:12px;}
+.visual-guide-header h3{margin:4px 0 0;font-size:clamp(1.15rem,2vw,1.5rem);}
+.visual-guide-header p{margin:0;color:var(--text-muted);font-size:.88rem;line-height:1.5;}
+.visual-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.visual-frame{overflow:hidden;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);box-shadow:0 14px 40px rgba(0,0,0,.18);}
+.visual-frame img,.visual-frame svg{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
+.visual-frame figcaption{padding:10px 13px;color:var(--text-muted);font-size:.78rem;line-height:1.5;}
+.feature-visual{margin:18px 0 0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--panel);}
+.feature-visual img,.feature-visual svg{display:block;width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;}
+.feature-visual figcaption{padding:9px 12px;color:var(--text-muted);font-size:.75rem;}
+@media (width < 700px){.visual-gallery{grid-template-columns:1fr;}.visual-guide-header{display:block;}.visual-guide-header p{margin-top:5px;}}
+/* ================= LEGAL / TRUST PAGES ================= */
+.legal-page{max-width:980px;margin:0 auto;}
+.legal-hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin-bottom:18px;padding:22px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,var(--panel),var(--panel-2));}
+.legal-hero-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:#111;font-weight:900;font-size:1.2rem;}
+.legal-hero h2{margin:4px 0 6px;font-size:clamp(1.35rem,2.5vw,2rem);}
+.legal-hero p{margin:0;color:var(--text-muted);line-height:1.6;}
+.legal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.legal-card{padding:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);min-width:0;}
+.legal-card h3{margin:0 0 9px;font-size:1rem;}
+.legal-card p,.legal-card li{color:var(--text-muted);line-height:1.7;font-size:.9rem;}
+.legal-card ul{padding-left:20px;margin:8px 0 0;}
+.legal-wide{grid-column:1/-1;}
+.contact-box{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--panel-2);}
+.contact-email{font-family:var(--mono);word-break:break-word;color:var(--accent);}
+.footer-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding-top:15px;margin-top:15px;border-top:1px solid var(--border);font-size:.78rem;color:var(--text-muted);}
+.footer-links{display:flex;flex-wrap:wrap;gap:7px;}
+.footer-links button{border:0;background:transparent;color:var(--text-muted);cursor:pointer;font:inherit;padding:6px 8px;border-radius:8px;}
+.footer-links button:hover{color:var(--text);background:var(--panel-2);}
+.trust-note{margin-top:14px;padding:13px 15px;border-left:3px solid var(--accent-2);background:var(--panel-2);border-radius:0 10px 10px 0;color:var(--text-muted);font-size:.8rem;line-height:1.6;}
+@media (width < 768px){.legal-grid{grid-template-columns:1fr;}.legal-wide{grid-column:auto;}.legal-hero{grid-template-columns:1fr;}.footer-meta{align-items:flex-start;}.footer-links{width:100%;}}
+/* ---- undo / redo / share actions ---- */
+.share-menu{position:fixed;z-index:10000;min-width:220px;max-width:calc(100vw - 24px);padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.28);display:none;}
+.share-menu.open{display:block;}
+.share-menu-title{font-weight:800;font-size:.82rem;padding:6px 8px 8px;color:var(--text-muted);}
+.share-option{width:100%;display:flex;align-items:center;gap:9px;border:0;background:transparent;color:var(--text);padding:10px 9px;border-radius:9px;cursor:pointer;text-align:left;font:inherit;}
+.share-option:hover{background:var(--panel-2);}
+.translate-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:7px;margin:14px 0 10px;}
+.translate-toolbar .tbtn{width:38px;height:38px;}
+@media (max-width:520px){.translate-toolbar{justify-content:stretch}.translate-toolbar .tbtn,.translate-toolbar .pill{flex:1}.share-menu{left:12px!important;right:12px!important;width:auto;max-width:none;}}
+
+/* Modern 2026 refresh */
+:root{--radius:16px !important;}
+.editor-card,.pane,.legal-card,.terms-card,.feature-visual,.visual-frame,.ai-chat,.ai-setup{box-shadow:0 20px 50px rgba(0,0,0,.18);border-radius:18px!important;}
+.navbar{backdrop-filter:blur(14px);position:sticky;top:0;background:rgba(20,23,28,.75);z-index:50;}
+.mic-btn,.pill,.icon-btn{transition:all .25s ease;}
+body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), transparent 30%), radial-gradient(circle at top left, rgba(232,163,61,.08), transparent 30%), var(--bg);}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <div>
+        <h1>Voxoira
+          <span class="sub">free voice to text, live translator &amp; AI transcript assistant</span>
+        </h1>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" title="Toggle dark / light" aria-label="Toggle theme"></button>
+      <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Open settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.5-2-3.4-2.4.6a7.6 7.6 0 0 0-1.7-1L15 3h-6l-.3 2.7a7.6 7.6 0 0 0-1.7 1l-2.4-.6-2 3.4L4.6 11a7.6 7.6 0 0 0 0 2l-2 1.5 2 3.4 2.4-.6a7.6 7.6 0 0 0 1.7 1L9 21h6l.3-2.7a7.6 7.6 0 0 0 1.7-1l2.4.6 2-3.4-2-1.5z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="unsupportedNote" class="unsupported" style="display:none;">
+    <b>Heads up —</b> this browser doesn't support live speech recognition, so the microphone won't work on either tab. Voxoira works best in Chrome or Edge on desktop or Android — typing still works everywhere.
+  </div>
+
+  <nav class="navbar">
+    <button class="nav-btn active" data-tab="dictate" id="navDictate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/></svg>
+      Dictate
+    </button>
+    <button class="nav-btn" data-tab="translate" id="navTranslate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+      Translate
+    </button>
+    <button class="nav-btn" data-tab="ai" id="navAI">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg>
+      Ask AI
+    </button>
+    <button class="nav-btn" data-tab="setup" id="navSetup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>
+      Setup AI
+    </button>
+  </nav>
+
+  <!-- ================= DICTATE PAGE ================= -->
+  <section class="page active" id="page-dictate">
+
+    <div class="lang-row">
+      <select id="d-langSelect" class="langsel" aria-label="Dictation language"></select>
+    </div>
+
+    <div class="mic-hero">
+      <div class="mic-btn-wrap" id="d-micWrap">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <button class="mic-btn" id="d-micBtn" aria-label="Start dictation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/>
+            <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/>
+          </svg>
+        </button>
+      </div>
+      <div class="mic-status" id="d-micStatus">Tap the microphone to start dictating</div>
+      <div class="kbd-hint">Toggle with <kbd>Ctrl</kbd>+<kbd>Space</kbd> · Undo <kbd>Ctrl</kbd>+<kbd>Z</kbd></div>
+    </div>
+
+    <div class="live-speech-card" id="d-liveCard" aria-live="polite">
+      <div class="live-speech-head"><span class="live-signal"><span class="live-signal-dot"></span></span><div><b>Live transcription</b><span id="d-liveStatus">Ready — your words will appear here while you speak</span></div></div>
+      <div class="live-speech-text" id="d-liveText">Start the microphone and speak. Live words will appear instantly.</div>
+    </div>
+
+    <div class="editor-card">
+      <div class="editor-toolbar">
+        <div class="tbtn-group">
+          <button class="tbtn" id="d-undoBtn" title="Undo" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg>
+          </button>
+          <button class="tbtn" id="d-redoBtn" title="Redo" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 7 5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg>
+          </button>
+        </div>
+        <div class="size-slider">
+          <span>Aa</span>
+          <input type="range" id="d-fontSize" min="12" max="22" value="15">
+          <span style="font-size:0.95rem;">Aa</span>
+        </div>
+      </div>
+
+      <textarea id="d-editor" placeholder="Your words will appear here as you speak — or just start typing."></textarea>
+
+      <div class="editor-footer">
+        <div class="counts">
+          <span id="d-wordCount">0 words</span>
+          <span id="d-charCount">0 characters</span>
+        </div>
+        <div class="footer-actions">
+          <button class="pill" id="d-copyBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a1.5 1.5 0 0 1 1.5-1.5H15"/></svg>
+            Copy
+          </button>
+          <button class="pill" id="d-downloadBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            .txt
+          </button>
+          <button class="pill" id="d-downloadDocBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            .doc
+          </button>
+          <button class="pill" id="d-shareBtn" data-share-open title="Share transcript">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"/></svg>
+            Share
+          </button>
+          <button class="pill danger" id="d-clearBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a1.5 1.5 0 0 0 1.5 1.4h7a1.5 1.5 0 0 0 1.5-1.4L18 7"/><path d="M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></svg>
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="autosave-note" id="d-autosaveNote">Draft saves automatically in this browser</div>
+
+    <details class="commands">
+      <summary>Voice commands <span class="chev">▾</span></summary>
+      <div class="cmd-grid" id="d-cmdGrid"></div>
+    </details>
+
+  
+    <figure class="feature-visual" id="page-dictate-visual"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-dictate-title" xmlns="http://www.w3.org/2000/svg">
+<title id="ill-dictate-title">Live transcription and the main Voxoira workflow.</title>
+<defs>
+<linearGradient id="dict-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
+<radialGradient id="dict-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="675" fill="var(--paper)"/>
+<circle cx="960" cy="140" r="260" fill="url(#dict-glow)"/>
+<circle cx="130" cy="560" r="190" fill="var(--accent-2)" opacity="0.08"/>
+<g opacity="0.5" stroke="var(--border)" stroke-width="1">
+<line x1="0" y1="225" x2="1200" y2="225"/><line x1="0" y1="450" x2="1200" y2="450"/>
+</g>
+<g transform="translate(150,255)">
+<rect x="-40" y="-40" width="245" height="245" rx="32" fill="var(--panel-2)" stroke="var(--border)"/>
+<g transform="translate(82,82)" stroke="url(#dict-g1)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 -38a22 22 0 0 1 22 22v34a22 22 0 0 1-44 0v-34a22 22 0 0 1 22-22z"/>
+<path d="M-35 8a35 35 0 0 0 70 0"/>
+<path d="M0 43v22M-19 65h38"/>
+</g>
+</g>
+<g transform="translate(455,150)" stroke="url(#dict-g1)" stroke-linecap="round" fill="none">
+<rect x="0" y="0" width="10" height="70" rx="5" transform="translate(0,95)" fill="url(#dict-g1)" stroke="none" opacity="0.9"/>
+<rect x="34" y="0" width="10" height="140" rx="5" transform="translate(0,25)" fill="url(#dict-g1)" stroke="none" opacity="0.65"/>
+<rect x="68" y="0" width="10" height="100" rx="5" transform="translate(0,75)" fill="url(#dict-g1)" stroke="none" opacity="0.9"/>
+<rect x="102" y="0" width="10" height="175" rx="5" transform="translate(0,0)" fill="url(#dict-g1)" stroke="none" opacity="0.5"/>
+<rect x="136" y="0" width="10" height="90" rx="5" transform="translate(0,85)" fill="url(#dict-g1)" stroke="none" opacity="0.85"/>
+<rect x="170" y="0" width="10" height="130" rx="5" transform="translate(0,45)" fill="url(#dict-g1)" stroke="none" opacity="0.6"/>
+</g>
+<g transform="translate(700,180)">
+<rect x="0" y="0" width="420" height="290" rx="20" fill="var(--panel)" stroke="var(--border)"/>
+<rect x="34" y="42" width="352" height="14" rx="7" fill="var(--text)" opacity="0.85"/>
+<rect x="34" y="76" width="300" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
+<rect x="34" y="110" width="330" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
+<rect x="34" y="144" width="220" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
+<rect x="34" y="187" width="150" height="14" rx="7" fill="url(#dict-g1)" opacity="0.9"/>
+<rect x="192" y="187" width="6" height="16" fill="var(--accent)"/>
+<rect x="34" y="230" width="200" height="34" rx="17" fill="var(--panel-2)" stroke="var(--border)"/>
+<text x="60" y="253" font-family="var(--sans)" font-size="14" fill="var(--text-muted)">Autosaving…</text>
+</g>
+</svg><figcaption>Live transcription and the main Voxoira workflow.</figcaption></figure>
+</section>
+
+  <!-- ================= TRANSLATE PAGE ================= -->
+  <section class="page" id="page-translate">
+
+    <div class="t-lang-row">
+      <div class="lang-pick">
+        <label>Speaking in</label>
+        <select id="t-sourceLang" class="langsel" aria-label="Source language"></select>
+      </div>
+      <button id="t-swapBtn" title="Swap languages" aria-label="Swap languages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h13l-4-4"/><path d="M17 17H4l4 4"/></svg>
+      </button>
+      <div class="lang-pick">
+        <label>Translate to</label>
+        <select id="t-targetLang" class="langsel" aria-label="Target language"></select>
+      </div>
+    </div>
+
+    <div class="mic-hero">
+      <div class="mic-btn-wrap" id="t-micWrap">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <button class="mic-btn" id="t-micBtn" aria-label="Start dictation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/>
+            <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/>
+          </svg>
+        </button>
+      </div>
+      <div class="mic-status" id="t-micStatus">Tap the microphone and start speaking</div>
+    </div>
+
+    <div class="live-speech-card live-translate-card" id="t-liveCard" aria-live="polite">
+      <div class="live-speech-head"><span class="live-signal"><span class="live-signal-dot"></span></span><div><b>Live speech</b><span id="t-liveStatus">Ready — your spoken words will appear here instantly</span></div></div>
+      <div class="live-speech-text" id="t-liveText">Start the microphone and speak. Live words will appear here while you talk.</div>
+    </div>
+
+    <div class="translate-toolbar" aria-label="Translation editing actions">
+      <button class="tbtn" id="t-undoBtn" title="Undo" aria-label="Undo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg></button>
+      <button class="tbtn" id="t-redoBtn" title="Redo" aria-label="Redo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 7 5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg></button>
+      <button class="pill" id="t-shareBtn" data-share-open title="Share translation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"/></svg>Share</button>
+      <button class="pill" id="t-newDocBtn" title="Save the current text as a document and start a new one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Save &amp; start new</button>
+    </div>
+
+    <div class="panes">
+      <div class="pane original">
+        <div class="pane-tab"><span><span class="dot"></span>Original</span><span id="t-origLangLabel"></span></div>
+        <textarea id="t-originalBox" placeholder="What you say (or type) appears here…"></textarea>
+        <div class="pane-foot">
+          <span id="t-origCount">0 words</span>
+          <div class="actions">
+            <button class="pill" id="t-copyOrigBtn">Copy</button>
+            <button class="pill danger" id="t-clearBtn">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pane translated">
+        <div class="pane-tab"><span><span class="dot"></span>Translation</span><span id="t-targetLangLabel"></span></div>
+        <div class="translated-text" id="t-translatedBox" aria-live="polite"></div>
+        <div class="pane-foot">
+          <span id="t-translateState">—</span>
+          <div class="actions">
+            <button class="pill" id="t-speakBtn">🔊 Speak</button>
+            <button class="pill" id="t-copyTransBtn">Copy</button>
+            <button class="pill" id="t-downloadTxtBtn">.txt</button>
+            <button class="pill" id="t-downloadDocBtn">.doc</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-line">
+      <span class="live-dot"></span>
+      Free &amp; keyless — a public, no-signup translation API. No server, no account, no cost.
+      Your translation can continue as long as you like. Completed speech is translated continuously as you speak.
+    </div>
+
+    <div class="saved-docs-card" id="t-savedDocsCard">
+      <div class="saved-docs-head">
+        <div class="saved-docs-title"><span>Saved documents</span><span class="saved-docs-count" id="t-savedDocsCount">0</span></div>
+        <button class="pill danger" id="t-savedDocsClearBtn" title="Delete all saved documents">Clear all</button>
+      </div>
+      <p class="saved-docs-empty" id="t-savedDocsEmpty">Nothing saved yet. Documents you save manually will appear here, ready to download.</p>
+      <ul class="saved-docs-list" id="t-savedDocsList"></ul>
+    </div>
+
+    <figure class="feature-visual" id="page-translate-visual"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-translate-title" xmlns="http://www.w3.org/2000/svg">
+<title id="ill-translate-title">Live speech translation and language workflow.</title>
+<defs>
+<linearGradient id="tr-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-3)"/></linearGradient>
+<radialGradient id="tr-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-2)" stop-opacity="0.25"/><stop offset="1" stop-color="var(--accent-2)" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="675" fill="var(--paper)"/>
+<circle cx="980" cy="130" r="250" fill="url(#tr-glow)"/>
+<circle cx="150" cy="540" r="170" fill="var(--accent-3)" opacity="0.08"/>
+<g transform="translate(120,150)">
+<rect x="0" y="0" width="430" height="190" rx="22" fill="var(--panel-2)" stroke="var(--border)"/>
+<rect x="0" y="0" width="430" height="190" rx="22" fill="none" stroke="var(--accent)" stroke-opacity="0.35"/>
+<text x="30" y="42" font-family="var(--sans)" font-size="15" font-weight="600" fill="var(--accent)">FI</text>
+<rect x="30" y="62" width="330" height="13" rx="6.5" fill="var(--text)" opacity="0.8"/>
+<rect x="30" y="92" width="280" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+<rect x="30" y="122" width="220" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+<g transform="translate(30,152)" stroke-linecap="round">
+<path d="M0 0a14 14 0 0 0 14 12" fill="none" stroke="var(--accent)" stroke-width="3"/>
+</g>
+</g>
+<g transform="translate(640,320)">
+<rect x="0" y="0" width="430" height="190" rx="22" fill="var(--panel-2)" stroke="var(--border)"/>
+<rect x="0" y="0" width="430" height="190" rx="22" fill="none" stroke="var(--accent-2)" stroke-opacity="0.35"/>
+<text x="30" y="42" font-family="var(--sans)" font-size="15" font-weight="600" fill="var(--accent-2)">EN</text>
+<rect x="30" y="62" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.8"/>
+<rect x="30" y="92" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+<rect x="30" y="122" width="240" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+</g>
+<g transform="translate(455,300)">
+<circle cx="55" cy="55" r="55" fill="var(--panel)" stroke="var(--border)"/>
+<g transform="translate(55,55)" fill="none" stroke="url(#tr-g1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-24 -12h34l-11-11"/>
+<path d="M24 12h-34l11 11"/>
+</g>
+</g>
+<g transform="translate(60,60)" fill="none" stroke="var(--accent-3)" stroke-width="4" stroke-linecap="round" opacity="0.55">
+<circle cx="0" cy="0" r="3" fill="var(--accent-3)" stroke="none"/>
+<circle cx="26" cy="14" r="3" fill="var(--accent-3)" stroke="none"/>
+<circle cx="14" cy="34" r="3" fill="var(--accent-3)" stroke="none"/>
+</g>
+</svg><figcaption>Live speech translation and language workflow.</figcaption></figure>
+</section>
+
+  <!-- ================= ASK AI PAGE ================= -->
+  <section class="page" id="page-ai">
+    <div class="ai-live-card" aria-live="polite">
+      <div class="live-speech-head"><span class="live-signal"><span class="live-signal-dot"></span></span><div><b>Live AI input</b><span id="ai-live-status">Connected to your current transcript</span></div></div>
+      <div class="live-speech-text" id="ai-live-text">Choose a source below. Your latest dictated or translated text will appear here.</div>
+    </div>
+
+    <div class="ai-setup">
+      <div class="setup-row">
+        <label>AI engine</label>
+        <select id="ai-provider" class="ai-input" style="flex:0 0 auto;min-width:220px;">
+          <option value="browser">Browser AI (free, on-device)</option>
+          <option value="openai">OpenAI-compatible API</option>
+          <option value="anthropic">Anthropic API</option>
+          <option value="gemini">Google Gemini API</option>
+        </select>
+      </div>
+      <div class="setup-row" id="ai-key-row" style="display:none;">
+        <label>API key</label>
+        <input type="password" id="ai-apikey" class="ai-input" placeholder="Stored only in this browser's local storage" autocomplete="off">
+      </div>
+      <div class="setup-row" id="ai-endpoint-row" style="display:none;">
+        <label>Endpoint</label>
+        <input type="text" id="ai-endpoint" class="ai-input" placeholder="https://api.openai.com/v1/chat/completions">
+      </div>
+      <div class="setup-row" id="ai-model-row" style="display:none;">
+        <label>Model</label>
+        <input type="text" id="ai-model" class="ai-input" placeholder="e.g. gpt-4o-mini">
+      </div>
+      <div class="ai-hint" id="ai-provider-hint"></div>
+    </div>
+
+    <div class="ai-source-row">
+      <label>Ask about</label>
+      <select id="ai-source" class="langsel">
+        <option value="dictate">Dictate transcript</option>
+        <option value="orig">Translate — original text</option>
+        <option value="trans">Translate — translated text</option>
+      </select>
+      <span class="ai-source-count" id="ai-source-count"></span>
+    </div>
+
+    <div class="ai-quick-prompts" id="aiQuickPrompts"></div>
+
+    <div class="ai-foot-row">
+      <button class="pill" id="ai-clear-btn">Clear conversation</button>
+    </div>
+    <div class="ai-chat" id="aiChat"></div>
+
+    <div class="ai-input-row">
+      <textarea id="ai-question" placeholder="Ask something about the text above… e.g. “Summarize the key points”" rows="2"></textarea>
+      <button class="pill ai-send" id="ai-send-btn">Ask</button>
+    </div>
+    <div class="ai-status" id="ai-status"></div>
+
+  </section>
+
+  <!-- ================= SETUP AI PAGE ================= -->
+  <section class="page" id="page-setup">
+    <div class="setup-hero">
+      <div class="setup-hero-icon">✦</div>
+      <div><span class="eyebrow">ASK AI · QUICK SETUP</span><h2>Fix your AI connection</h2><p>Use this guide when Ask AI is not answering. The four settings below are the important pieces: <b>AI engine</b>, <b>API key</b>, <b>Endpoint</b>, and <b>Model</b>.</p></div>
+    </div>
+    <div class="security-card"><span>🔐</span><div><b>Security first</b><p>Your API key is stored in this browser and sent directly to the provider. For a public website, a server-side proxy is safer because browser JavaScript cannot keep API keys secret.</p></div></div>
+    <div class="setup-steps">
+      <div class="setup-step"><span class="step-no">1</span><div><b>Choose engine</b><span>Who provides the AI?</span></div></div>
+      <div class="setup-step"><span class="step-no">2</span><div><b>Enter API key</b><span>Proves your account</span></div></div>
+      <div class="setup-step"><span class="step-no">3</span><div><b>Set endpoint</b><span>Where requests go</span></div></div>
+      <div class="setup-step"><span class="step-no">4</span><div><b>Set model</b><span>Which AI to use</span></div></div>
+    </div>
+    <div class="guide-grid">
+      <article class="guide-card"><div class="guide-number">01</div><h3>AI engine</h3><p>Choose the service that will answer your questions.</p><ul><li><b>Browser AI</b> — no API key; runs on supported browsers.</li><li><b>OpenAI-compatible</b> — OpenAI, Groq, OpenRouter, Ollama-compatible services, etc.</li><li><b>Anthropic</b> — Claude API.</li><li><b>Google Gemini</b> — Gemini API.</li></ul><div class="guide-visual"><span>AI engine</span><div>Browser AI <i>⌄</i></div><small>Choose your provider</small></div><p>If you do not have an API key yet, start with Browser AI if your browser supports it.</p></article>
+      <article class="guide-card"><div class="guide-number">02</div><h3>API key</h3><p>This is the secret credential supplied by your AI provider.</p><ul><li>Create an API key in the provider's developer/AI dashboard.</li><li>Copy the complete key without extra spaces.</li><li>Paste it into <b>API key</b>.</li><li>If you see a 401/403 error, check the key, billing/quota, and permissions.</li></ul><div class="guide-visual"><span>API key</span><div>••••••••••••••••</div><small>Stored locally in this browser</small></div><p class="danger-tip">Never post your API key in screenshots, GitHub, or public HTML.</p></article>
+      <article class="guide-card"><div class="guide-number">03</div><h3>Endpoint</h3><p>The endpoint is the web address where Voxoira sends the AI request.</p><ul><li>For OpenAI, use the chat completions endpoint shown by the app.</li><li>For compatible providers, use the provider's OpenAI-compatible endpoint.</li><li>Anthropic and Gemini use their provider-specific endpoints automatically in this app.</li></ul><div class="guide-visual"><span>Endpoint</span><div>https://api.provider.com/…</div><small>Request destination</small></div><p>If you get 404, CORS, or “failed to fetch”, the endpoint or provider access may be the problem.</p></article>
+      <article class="guide-card"><div class="guide-number">04</div><h3>Model</h3><p>The model is the specific AI you want the selected engine to run.</p><ul><li>Enter a model name that exists for your provider and account.</li><li>Use the exact spelling/capitalization shown in the provider dashboard.</li><li>A 400 error often means the model name or request format is wrong.</li></ul><div class="guide-visual"><span>Model</span><div>gpt-4o-mini</div><small>Exact provider model name</small></div><p>If your key works but you see “model not found”, check the model name first.</p></article>
+    </div>
+    <div class="error-card"><div class="eyebrow">QUICK ERROR GUIDE</div><div class="error-grid"><div><b>“Add your API key”</b><span>API key is empty. Paste your provider key into Ask AI.</span></div><div><b>401 / 403</b><span>Key, account permissions, billing, quota, or provider access issue.</span></div><div><b>404</b><span>Usually an incorrect endpoint or unsupported URL.</span></div><div><b>Model not found</b><span>Use a model name available to your selected provider/account.</span></div><div><b>Failed to fetch / CORS</b><span>The provider may block browser requests. Use a compatible endpoint or a server-side proxy.</span></div><div><b>Browser AI unavailable</b><span>Use a recent supported Chrome/Edge setup or switch to an API provider.</span></div></div></div>
+    <div class="before-ai"><div><span class="eyebrow">BEFORE TRYING ASK AI AGAIN</span><h3>Connection checklist</h3></div><div class="check-list"><span>✓ Engine selected</span><span>✓ Key entered</span><span>✓ Endpoint correct</span><span>✓ Model available</span></div><button class="setup-go" type="button" id="setupGoAsk">Open Ask AI →</button></div>
+  
+    <div class="visual-guide-section" id="setupVisualGuide">
+      <div class="visual-guide-header"><div><span class="eyebrow">VISUAL GUIDE</span><h3>See how Voxoira works</h3></div><p>Quick visual references for the main Voxoira workflow and AI connection setup.</p></div>
+      <div class="visual-gallery">
+        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-ai-overview-title" xmlns="http://www.w3.org/2000/svg">
+<title id="ill-ai-overview-title">Voxoira overview showing Dictate, Translate, Ask AI and Setup AI features</title>
+<defs>
+<linearGradient id="ai1-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-3)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
+<radialGradient id="ai1-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-3)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent-3)" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="675" fill="var(--paper)"/>
+<circle cx="920" cy="150" r="270" fill="url(#ai1-glow)"/>
+<circle cx="170" cy="540" r="170" fill="var(--accent-2)" opacity="0.08"/>
+<g stroke="var(--border)" stroke-width="1.5" opacity="0.7">
+<line x1="230" y1="230" x2="360" y2="150"/><line x1="230" y1="230" x2="330" y2="330"/>
+<line x1="360" y1="150" x2="500" y2="210"/><line x1="330" y1="330" x2="480" y2="360"/>
+<line x1="500" y1="210" x2="480" y2="360"/>
+</g>
+<g fill="url(#ai1-g1)">
+<circle cx="230" cy="230" r="7"/><circle cx="360" cy="150" r="5"/>
+<circle cx="330" cy="330" r="6"/><circle cx="500" cy="210" r="8"/>
+<circle cx="480" cy="360" r="5"/>
+</g>
+<g transform="translate(345,225)" fill="url(#ai1-g1)">
+<path d="M0 -46 L12 -12 L46 0 L12 12 L0 46 L-12 12 L-46 0 L-12 -12 Z"/>
+</g>
+<g transform="translate(650,140)">
+<rect x="0" y="0" width="440" height="150" rx="20" fill="var(--panel-2)" stroke="var(--border)"/>
+<circle cx="34" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" repeatCount="indefinite"/></circle>
+<circle cx="50" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.2s" repeatCount="indefinite"/></circle>
+<circle cx="66" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.4s" repeatCount="indefinite"/></circle>
+<rect x="30" y="66" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.75"/>
+<rect x="30" y="96" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+<rect x="30" y="122" width="200" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+</g>
+<g transform="translate(700,340)">
+<rect x="0" y="0" width="360" height="120" rx="18" fill="var(--panel)" stroke="var(--border)"/>
+<rect x="26" y="28" width="140" height="12" rx="6" fill="var(--accent)" opacity="0.85"/>
+<rect x="26" y="54" width="270" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
+<rect x="26" y="78" width="230" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
+</g>
+</svg><figcaption>Voxoira feature overview — Dictate, Translate, Ask AI and Setup AI.</figcaption></figure>
+        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-ai-providers-title" xmlns="http://www.w3.org/2000/svg">
+<title id="ill-ai-providers-title">Voxoira interface showing live transcription, translation, Ask AI and connected AI providers</title>
+<defs>
+<linearGradient id="ai2-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-3)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
+<radialGradient id="ai2-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-3)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent-3)" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="675" fill="var(--paper)"/>
+<circle cx="920" cy="150" r="270" fill="url(#ai2-glow)"/>
+<circle cx="170" cy="540" r="170" fill="var(--accent-2)" opacity="0.08"/>
+<g stroke="var(--border)" stroke-width="1.5" opacity="0.7">
+<line x1="230" y1="230" x2="360" y2="150"/><line x1="230" y1="230" x2="330" y2="330"/>
+<line x1="360" y1="150" x2="500" y2="210"/><line x1="330" y1="330" x2="480" y2="360"/>
+<line x1="500" y1="210" x2="480" y2="360"/>
+</g>
+<g fill="url(#ai2-g1)">
+<circle cx="230" cy="230" r="7"/><circle cx="360" cy="150" r="5"/>
+<circle cx="330" cy="330" r="6"/><circle cx="500" cy="210" r="8"/>
+<circle cx="480" cy="360" r="5"/>
+</g>
+<g transform="translate(345,225)" fill="url(#ai2-g1)">
+<path d="M0 -46 L12 -12 L46 0 L12 12 L0 46 L-12 12 L-46 0 L-12 -12 Z"/>
+</g>
+<g transform="translate(650,140)">
+<rect x="0" y="0" width="440" height="150" rx="20" fill="var(--panel-2)" stroke="var(--border)"/>
+<circle cx="34" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" repeatCount="indefinite"/></circle>
+<circle cx="50" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.2s" repeatCount="indefinite"/></circle>
+<circle cx="66" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.4s" repeatCount="indefinite"/></circle>
+<rect x="30" y="66" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.75"/>
+<rect x="30" y="96" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+<rect x="30" y="122" width="200" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
+</g>
+<g transform="translate(700,340)">
+<rect x="0" y="0" width="360" height="120" rx="18" fill="var(--panel)" stroke="var(--border)"/>
+<rect x="26" y="28" width="140" height="12" rx="6" fill="var(--accent)" opacity="0.85"/>
+<rect x="26" y="54" width="270" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
+<rect x="26" y="78" width="230" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
+</g>
+</svg><figcaption>Voxoira interface preview — live transcription, translation and AI provider connections.</figcaption></figure>
+      </div>
+    </div>
+</section>
+
+  <!-- ================= ABOUT PAGE ================= -->
+  <section class="page legal-page" id="page-about">
+    <div class="legal-hero"><div class="legal-hero-icon">V</div><div><span class="eyebrow">VOXOIRA · ABOUT</span><h2>Voxoira</h2><p>A browser-based workspace for voice dictation, translation, and AI-assisted text workflows.</p></div></div>
+    <div class="legal-grid">
+      <article class="legal-card legal-wide"><h3>What Voxoira does</h3><p>Voxoira helps you turn speech into editable text, translate spoken or written content, and work with text using an AI assistant. The app is designed to keep the main workflow simple: speak, review, edit, translate, and ask AI.</p></article>
+      <article class="legal-card"><h3>Dictate</h3><p>Use browser speech recognition to create editable notes and documents. Voxoira includes language selection, microphone controls, formatting tools, autosave, copy, and download options.</p></article>
+      <article class="legal-card"><h3>Translate</h3><p>Speak into the translation workspace, select languages, review the original and translated text, and use the available copy, download, and speech controls.</p></article>
+      <article class="legal-card"><h3>Ask AI</h3><p>Ask AI can work with selected Voxoira text. Depending on your setup and browser support, it can use Browser AI or a third-party provider such as an OpenAI-compatible endpoint, Anthropic, or Gemini.</p></article>
+      <article class="legal-card"><h3>Built for practical use</h3><p>Voxoira is intended for everyday writing, notes, translation assistance, and text exploration. AI and speech results should always be reviewed before being used for important decisions.</p></article>
+    </div>
+    <div class="trust-note"><b>Transparency:</b> Voxoira is not affiliated with Google, OpenAI, Anthropic, or Google Gemini. Third-party provider names are referenced only to explain optional integrations.</div>
+  </section>
+
+  <!-- ================= CONTACT PAGE ================= -->
+  <section class="page legal-page" id="page-contact">
+    <div class="legal-hero"><div class="legal-hero-icon">@</div><div><span class="eyebrow">VOXOIRA · CONTACT</span><h2>Contact Voxoira</h2><p>For support, feedback, privacy requests, bug reports, or business inquiries, contact us by email.</p></div></div>
+    <div class="legal-grid">
+      <article class="legal-card legal-wide"><h3>Support email</h3><div class="contact-box"><span class="contact-email">support@voxoira.com</span><span style="color:var(--text-muted)">Replace this placeholder with your real support address before publishing.</span></div></article>
+      <article class="legal-card"><h3>Technical support</h3><p>Tell us what feature you were using, what browser/device you use, and what happened. Do not send passwords, API keys, or other secrets.</p></article>
+      <article class="legal-card"><h3>Privacy requests</h3><p>For questions about personal data, cookies, consent, or deletion requests, use the same support address and include “Privacy Request” in the subject.</p></article>
+      <article class="legal-card legal-wide"><h3>Before contacting us</h3><ul><li>Do not email API keys or authentication credentials.</li><li>Remove private or confidential text from screenshots.</li><li>For AI-provider billing or account issues, contact the relevant provider directly.</li></ul></article>
+    </div>
+  </section>
+
+  <!-- ================= PRIVACY POLICY PAGE ================= -->
+  <section class="page legal-page" id="page-privacy">
+    <div class="legal-hero"><div class="legal-hero-icon">🔒</div><div><span class="eyebrow">VOXOIRA · PRIVACY</span><h2>Privacy Policy</h2><p>This page explains how Voxoira may handle information when you use the website and its features.</p></div></div>
+    <div class="legal-grid">
+      <article class="legal-card legal-wide"><h3>1. Information processed by Voxoira</h3><p>Depending on the features you use, Voxoira may process text you type or dictate, translation input and output, AI prompts and responses, language preferences, and basic technical information required for the website to operate. Some settings may be stored locally in your browser.</p></article>
+      <article class="legal-card"><h3>2. Microphone and speech recognition</h3><p>When you activate dictation or translation, your browser may use its speech-recognition technology to process audio and return recognized text. Availability and processing behavior depend on your browser and its provider. Review your browser's privacy documentation for details.</p></article>
+      <article class="legal-card"><h3>3. Ask AI and third-party providers</h3><p>If you choose an external AI provider, the text you submit may be sent to that provider to generate a response. The provider may process the request under its own terms and privacy policy. Voxoira does not control third-party processing.</p></article>
+      <article class="legal-card"><h3>4. API keys</h3><p>Voxoira can store AI settings in your browser. API keys entered into the browser are sensitive credentials. Do not share them. For production deployments, a server-side integration can provide stronger protection than exposing provider credentials in client-side code.</p></article>
+      <article class="legal-card"><h3>5. Cookies and local storage</h3><p>Voxoira may use browser storage for preferences, consent choices, and application settings. Advertising technologies may use cookies or similar technologies when ads are enabled and consent or other applicable legal bases permit them.</p></article>
+      <article class="legal-card"><h3>6. Google advertising</h3><p>If Google AdSense is enabled, Google and its partners may use cookies or similar identifiers to serve, measure, and personalize advertising as permitted by applicable settings and consent. Users should review the advertising and privacy information presented by the site's consent system.</p></article>
+      <article class="legal-card"><h3>7. Your choices</h3><p>You can control microphone permissions through your browser, change applicable cookie/advertising choices through the site's consent controls, and contact Voxoira about privacy questions or requests.</p></article>
+      <article class="legal-card"><h3>8. Data security</h3><p>Reasonable technical measures should be used to protect information, but no online service can guarantee absolute security. Never submit passwords, payment details, API keys, or highly confidential information unless the feature specifically requires it and appropriate safeguards are in place.</p></article>
+      <article class="legal-card"><h3>9. Children's privacy</h3><p>Voxoira is not intended to encourage children to submit personal information. Parents or guardians should supervise use where appropriate.</p></article>
+      <article class="legal-card"><h3>10. Changes</h3><p>This Privacy Policy may be updated as Voxoira, providers, advertising systems, or applicable requirements change. The current version published on this page is the version that applies.</p></article>
+      <article class="legal-card legal-wide"><h3>11. Privacy contact</h3><p>For privacy questions or requests, contact <span class="contact-email">support@voxoira.com</span>. Replace this placeholder with your actual privacy/support email before publishing.</p></article>
+    </div>
+    <div class="trust-note"><b>Important:</b> These Terms and policies are provided for Voxoira users and govern use of voxoira.com. By using the service, you agree to these terms. For questions about legal, privacy, or compliance matters contact support@voxoira.com.</div>
+  </section>
+
+  <!-- ================= FAQ / HELP PAGE ================= -->
+  <section class="page legal-page" id="page-faq">
+    <div class="legal-hero"><div class="legal-hero-icon">?</div><div><span class="eyebrow">VOXOIRA · HELP</span><h2>FAQ & Help</h2><p>Answers to common questions about Voxoira's main features and AI connections.</p></div></div>
+    <div class="legal-grid">
+      <article class="legal-card"><h3>How do I start dictation?</h3><p>Open Dictate, choose your language, allow microphone access when your browser asks, and start the microphone. Interim speech is shown live while you speak.</p></article>
+      <article class="legal-card"><h3>Why isn't my microphone working?</h3><p>Check that the browser has microphone permission, the correct input device is selected, and another application is not blocking the microphone. HTTPS is recommended for production deployment.</p></article>
+      <article class="legal-card"><h3>How does Translate work?</h3><p>Choose the source and target languages, start speech input, review the original text, and use the translation controls to review or speak the result.</p></article>
+      <article class="legal-card"><h3>Why does Ask AI need an API key?</h3><p>External AI providers generally require authentication. Browser AI may work without a key when supported by the browser. Never publish a private provider key in client-side source code.</p></article>
+      <article class="legal-card"><h3>What does “401 / 403” mean?</h3><p>Usually the provider rejected the credential or account request. Check the API key, account permissions, billing/quota, and provider access.</p></article>
+      <article class="legal-card"><h3>What does “Failed to fetch” mean?</h3><p>It can indicate a network problem, incorrect endpoint, provider outage, or browser CORS restrictions. Verify the endpoint and provider documentation.</p></article>
+      <article class="legal-card"><h3>Can I rely on AI output?</h3><p>No. AI responses can be incorrect or incomplete. Review generated text before using it for legal, medical, financial, safety, or other high-impact decisions.</p></article>
+      <article class="legal-card"><h3>How do I request privacy help?</h3><p>Email the site's privacy/support address listed on the Contact page. Do not include passwords or API keys in your message.</p></article>
+    </div>
+  </section>
+
+  <!-- ================= TERMS OF USE PAGE ================= -->
+  <section class="page terms-page" id="page-terms">
+    <div class="terms-hero">
+      <div class="terms-hero-icon">✓</div>
+      <div>
+        <span class="eyebrow">VOXOIRA · TERMS OF USE</span>
+        <h2>Terms of Use</h2>
+        <p>By accessing or using Voxoira, you agree to these Terms of Use. If you do not agree with these terms, please do not use or access the service.</p>
+      </div>
+    </div>
+
+    <article class="terms-card">
+      <h3>1. Acceptance of terms</h3>
+      <p>By accessing this website or using Voxoira's dictation, translation, Ask AI, or related features, you agree to be bound by these Terms of Use, all applicable laws and regulations, and any applicable local laws. You are responsible for ensuring that your use of the service complies with the laws and rules that apply to you.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>2. Disclaimer</h3>
+      <p>Voxoira is provided on an “as is” and “as available” basis. Voxoira makes no warranties, express or implied, and disclaims, to the extent permitted by law, implied warranties or conditions of merchantability, fitness for a particular purpose, non-infringement, accuracy, availability, or reliability.</p>
+      <p>Voxoira does not warrant that transcriptions, translations, AI responses, or other generated results will be accurate, complete, uninterrupted, or suitable for a particular purpose. Results can depend on your browser, microphone, speech-recognition service, translation service, AI provider, network connection, and other third-party technologies.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>3. Fair use</h3>
+      <p>Voxoira is provided for reasonable and lawful use. You agree not to abuse, overload, disrupt, reverse engineer, interfere with, or attempt to circumvent technical or access controls of the service.</p>
+      <p>Users who abuse the service or violate these terms may have access restricted or permanently blocked where appropriate and permitted by law.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>4. AI providers and third-party services</h3>
+      <p>Ask AI may connect to third-party AI providers selected by you. Those providers may have their own terms, privacy policies, usage limits, pricing, and technical requirements. Voxoira is not responsible for third-party services or for their availability, policies, responses, or changes.</p>
+      <p>You are responsible for using API keys, endpoints, models, and provider accounts in accordance with the applicable provider's rules. Keep your API keys private and do not publish them in screenshots, source code, or public repositories.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>5. User content and generated results</h3>
+      <p>You remain responsible for the text, recordings, prompts, documents, and other content that you enter, dictate, translate, or submit through Voxoira. You are also responsible for reviewing AI-generated or translated results before relying on them.</p>
+      <p>Do not use Voxoira as a substitute for professional legal, medical, financial, safety, or other specialized advice where professional judgment is required.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>6. Intellectual property</h3>
+      <p>The Voxoira website, interface, branding, visual design, code, and other original materials are protected by applicable copyright, trademark, and other intellectual-property laws. You may not copy, reproduce, modify, redistribute, or commercially exploit protected materials except as permitted by law or with appropriate authorization.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>7. Limitation of liability</h3>
+      <p>To the maximum extent permitted by applicable law, Voxoira and its operators will not be liable for indirect, incidental, special, consequential, exemplary, or similar damages, including loss of data, loss of profits, loss of business, service interruption, or other losses arising from or related to your use of, or inability to use, the website or its materials and features.</p>
+      <p>Some jurisdictions do not allow certain warranty exclusions or limitations of liability, so some of these limitations may not apply to you.</p>
+    </article>
+
+    <article class="terms-card">
+      <h3>8. Changes to these terms</h3>
+      <p>Voxoira may update these Terms of Use from time to time as the service, features, or applicable requirements change. The updated version will apply when published on this website unless a different effective date is stated.</p>
+    </article>
+
+    <div class="terms-note">
+      <span>ⓘ</span>
+      <p><b>Important:</b> These Terms of Use govern the use of Voxoira. By using voxoira.com, you agree to these terms. Voxoira recommends periodic legal review to ensure compliance with applicable laws and regulations.</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="support-row">
+      <span class="support-copy">Find Voxoira useful?</span>
+      <a class="pill support-btn" href="https://ko-fi.com/YOUR_KOFI_USERNAME" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+    </div>
+    <div class="ad-slot" id="footer-ad-slot">
+      <!-- Replace data-ad-client and data-ad-slot with the real values from your AdSense account after approval. -->
+      <span class="ad-label">Advertisement</span>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
+    <div class="footer-meta">
+      <span>© 2026 Voxoira. All Rights Reserved.</span>
+      <span class="footer-links" aria-label="Website information">
+        <button type="button" data-legal-tab="about">About</button>
+        <button type="button" data-legal-tab="faq">FAQ & Help</button>
+        <button type="button" data-legal-tab="contact">Contact</button>
+        <button type="button" data-legal-tab="privacy">Privacy Policy</button>
+        <button type="button" data-legal-tab="terms">Terms of Use</button>
+        <button type="button" id="reopenCookieFooter">Privacy Choices</button>
+      </span>
+    </div>
+    <div class="trust-note"><b>Third-party disclosure:</b> Voxoira is independent and is not affiliated with Google, OpenAI, Anthropic, or other AI providers mentioned on this website.</div>
+  </footer>
+
+</div>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p>Voxoira may use cookies or local storage for preferences and advertising. Review the Privacy Policy and choose your advertising preference. <button type="button" class="footer-link-inline" data-legal-tab="privacy">Privacy Policy</button></p>
+  <div style="display:flex;gap:8px;">
+    <button class="pill" id="cookieDecline">Decline</button>
+    <button class="pill" id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <button class="icon-btn close-x" id="closeDrawer" aria-label="Close settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <h2>Settings</h2>
+  <p class="drawer-sub">Dark mode applies everywhere. The other options only affect the Dictate tab.</p>
+
+  <div class="setting-row">
+    <div><div class="label">Dark mode</div><div class="desc">Easier on the eyes for long sessions</div></div>
+    <label class="switch"><input type="checkbox" id="toggleDark" checked><span class="track"></span><span class="thumb"></span></label>
+  </div>
+
+  <div class="setting-row">
+    <div><div class="label">Voice commands</div><div class="desc">Say "comma", "new line" etc. to punctuate — Dictate tab</div></div>
+    <label class="switch"><input type="checkbox" id="toggleCommands" checked><span class="track"></span><span class="thumb"></span></label>
+  </div>
+
+  <div class="setting-row">
+    <div><div class="label">Auto-capitalize</div><div class="desc">Capitalize after "." "?" "!" — Dictate tab</div></div>
+    <label class="switch"><input type="checkbox" id="toggleCapitalize" checked><span class="track"></span><span class="thumb"></span></label>
+  </div>
+
+  <div class="setting-row">
+    <div><div class="label">Auto-save draft</div><div class="desc">Keep your dictated text if you close the tab</div></div>
+    <label class="switch"><input type="checkbox" id="toggleAutosave" checked><span class="track"></span><span class="thumb"></span></label>
+  </div>
+
+  <div class="setting-row">
+    <div><div class="label">Ad personalization</div><div class="desc">Change your cookie consent choice for ads</div></div>
+    <button class="pill" id="reopenCookieBanner">Change</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+
+/* ================= shared: theme, drawer, toast ================= */
+const themeBtn = document.getElementById('themeBtn');
+let dark = true;
+function themeIcon(isDark){
+  return isDark
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.5A8.5 8.5 0 1 1 11.5 3a7 7 0 0 0 9.5 9.5z"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19v2.5M4.9 4.9l1.7 1.7M17.3 17.3l1.7 1.7M2.5 12h2.5M19 12h2.5M4.9 19l1.7-1.7M17.3 6.6l1.7-1.7"/></svg>';
+}
+function setDark(on){
+  dark = on;
+  document.documentElement.classList.toggle('light', !on);
+  themeBtn.innerHTML = themeIcon(on);
+  document.getElementById('toggleDark').checked = on;
+  persistSettings();
+}
+themeBtn.addEventListener('click', ()=>setDark(!dark));
+document.getElementById('toggleDark').addEventListener('change', e=>setDark(e.target.checked));
+
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('drawer');
+document.getElementById('settingsBtn').addEventListener('click', ()=>{overlay.classList.add('open');drawer.classList.add('open');});
+document.getElementById('closeDrawer').addEventListener('click', ()=>{overlay.classList.remove('open');drawer.classList.remove('open');});
+overlay.addEventListener('click', ()=>{overlay.classList.remove('open');drawer.classList.remove('open');});
+
+const toastEl = document.getElementById('toast');
+function showToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>toastEl.classList.remove('show'), 1900);
+}
+
+/* ---- shared share menu ---- */
+const shareMenu=document.createElement('div');
+shareMenu.className='share-menu'; shareMenu.id='shareMenu';
+shareMenu.innerHTML=`<div class="share-menu-title">Share this text</div><button class="share-option" data-share="native">↗️ <span>More / device share</span></button><button class="share-option" data-share="whatsapp">💬 <span>WhatsApp</span></button><button class="share-option" data-share="email">✉️ <span>Email</span></button><button class="share-option" data-share="copy">📋 <span>Copy text</span></button>`;
+document.body.appendChild(shareMenu);
+let activeShareText='',activeShareTitle='Voxoira';
+function openShareMenu(anchor,text,title){activeShareText=(text||'').trim();activeShareTitle=title||'Voxoira';if(!activeShareText){showToast('Nothing to share yet');return;}const r=anchor.getBoundingClientRect();const left=Math.min(Math.max(12,r.right-230),Math.max(12,window.innerWidth-242));shareMenu.style.left=left+'px';shareMenu.style.top=Math.min(r.bottom+8,window.innerHeight-230)+'px';shareMenu.classList.add('open');}
+function closeShareMenu(){shareMenu.classList.remove('open');}
+async function performShare(kind){const text=activeShareText,title=activeShareTitle;if(!text)return;if(kind==='copy'){try{await navigator.clipboard.writeText(text);showToast('Copied to clipboard');}catch(e){showToast('Could not copy text');}}else if(kind==='native'){if(navigator.share){try{await navigator.share({title,text});}catch(e){if(e.name!=='AbortError')showToast('Sharing was not available');}}else showToast('Device sharing is not supported here');}else if(kind==='whatsapp'){window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');}else if(kind==='email'){window.location.href='mailto:?subject='+encodeURIComponent(title)+'&body='+encodeURIComponent(text);}closeShareMenu();}
+shareMenu.addEventListener('click',e=>{const b=e.target.closest('[data-share]');if(b)performShare(b.dataset.share);});
+document.addEventListener('click',e=>{if(shareMenu.classList.contains('open')&&!shareMenu.contains(e.target)&&!e.target.closest('[data-share-open]'))closeShareMenu();});
+window.addEventListener('resize',closeShareMenu);
+
+/* ---- shared download helpers ---- */
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function fileStamp(){
+  return new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+}
+function downloadBlob(content, filename, mime){
+  const blob = new Blob(['\ufeff'+content], {type: mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+function downloadTxt(text, filenameBase){
+  downloadBlob(text, `${filenameBase}.txt`, 'text/plain;charset=utf-8');
+}
+function downloadDoc(title, bodyHtml, filenameBase){
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>${escapeHtml(title)}</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+  body{font-family:Calibri,Arial,sans-serif;font-size:12pt;line-height:1.5;}
+  h1{font-size:16pt;margin-bottom:4px;}
+  .lang-tag{color:#666;font-size:10pt;font-weight:bold;margin:18px 0 6px;text-transform:uppercase;letter-spacing:.03em;}
+  p{white-space:pre-wrap;margin:0 0 10px;}
+</style></head>
+<body>${bodyHtml}</body></html>`;
+  downloadBlob(html, `${filenameBase}.doc`, 'application/msword');
+}
+
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if(!SR) document.getElementById('unsupportedNote').style.display = 'block';
+
+/* Plain localStorage wrapper — works on any real host. (Won't persist inside
+   Claude.ai's own sandboxed artifact preview, but does once you host this
+   file yourself, which is what it's built for.) */
+const storage = {
+  get(key){ try{ return localStorage.getItem(key); }catch(e){ return null; } },
+  set(key, value){ try{ localStorage.setItem(key, value); return true; }catch(e){ return false; } }
+};
+
+let dictSettings = { commands:true, capitalize:true, autosave:true };
+document.getElementById('toggleCommands').addEventListener('change', e=>{dictSettings.commands=e.target.checked; persistSettings();});
+document.getElementById('toggleCapitalize').addEventListener('change', e=>{dictSettings.capitalize=e.target.checked; persistSettings();});
+document.getElementById('toggleAutosave').addEventListener('change', e=>{
+  dictSettings.autosave=e.target.checked;
+  document.getElementById('d-autosaveNote').style.visibility = dictSettings.autosave ? 'visible':'hidden';
+  persistSettings();
+});
+
+function persistSettings(){
+  storage.set('voicecraft-settings', JSON.stringify({dark, ...dictSettings}));
+}
+
+/* ================= navbar switching ================= */
+let dictStop = ()=>{}, trStop = ()=>{};
+const pages = {
+  dictate: document.getElementById('page-dictate'),
+  translate: document.getElementById('page-translate'),
+  ai: document.getElementById('page-ai'),
+  setup: document.getElementById('page-setup'),
+  terms: document.getElementById('page-terms'),
+  about: document.getElementById('page-about'),
+  contact: document.getElementById('page-contact'),
+  privacy: document.getElementById('page-privacy'),
+  faq: document.getElementById('page-faq')
+};
+const navBtns = document.querySelectorAll('.nav-btn');
+function showTab(tab){
+  Object.keys(pages).forEach(k=>pages[k].classList.toggle('active', k===tab));
+  navBtns.forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  if(tab!=='dictate') dictStop();
+  if(tab!=='translate') trStop();
+  if(tab==='ai' && window.__voicecraftRefreshAISource) window.__voicecraftRefreshAISource();
+}
+navBtns.forEach(b=>b.addEventListener('click', ()=>showTab(b.dataset.tab)));
+const setupGoAsk=document.getElementById('setupGoAsk');
+if(setupGoAsk) setupGoAsk.addEventListener('click', ()=>showTab('ai'));
+const termsFooterBtn=document.getElementById('termsFooterBtn');
+if(termsFooterBtn) termsFooterBtn.addEventListener('click', ()=>showTab('terms'));
+document.querySelectorAll('[data-legal-tab]').forEach(btn=>btn.addEventListener('click',()=>showTab(btn.dataset.legalTab)));
+
+
+const reopenCookieFooter=document.getElementById('reopenCookieFooter');
+if(reopenCookieFooter) reopenCookieFooter.addEventListener('click',()=>{
+  const banner=document.getElementById('cookieBanner');
+  if(banner) banner.style.display='flex';
+});
+/* ================= DICTATE ================= */
+function initDictate(){
+  const LANGUAGES = [
+    ["en-US","English (US)"],["en-GB","English (UK)"],["en-AU","English (Australia)"],
+    ["en-IN","English (India)"],["en-CA","English (Canada)"],["en-NZ","English (New Zealand)"],
+    ["en-ZA","English (South Africa)"],["en-IE","English (Ireland)"],["en-PH","English (Philippines)"],
+    ["es-ES","Spanish (Spain)"],["es-MX","Spanish (Mexico)"],["es-AR","Spanish (Argentina)"],
+    ["es-CO","Spanish (Colombia)"],["es-US","Spanish (US)"],
+    ["fr-FR","French (France)"],["fr-CA","French (Canada)"],
+    ["de-DE","German (Germany)"],["de-AT","German (Austria)"],["de-CH","German (Switzerland)"],
+    ["it-IT","Italian"],["pt-PT","Portuguese (Portugal)"],["pt-BR","Portuguese (Brazil)"],
+    ["nl-NL","Dutch"],["nl-BE","Dutch (Belgium)"],["ru-RU","Russian"],
+    ["zh-CN","Chinese, Mandarin (Simplified)"],["zh-TW","Chinese, Mandarin (Traditional)"],
+    ["zh-HK","Chinese, Cantonese"],["ja-JP","Japanese"],["ko-KR","Korean"],
+    ["ar-SA","Arabic (Saudi Arabia)"],["ar-EG","Arabic (Egypt)"],["ar-AE","Arabic (UAE)"],
+    ["hi-IN","Hindi"],["bn-IN","Bengali (India)"],["bn-BD","Bengali (Bangladesh)"],
+    ["pa-IN","Punjabi"],["ta-IN","Tamil"],["te-IN","Telugu"],["mr-IN","Marathi"],
+    ["gu-IN","Gujarati"],["kn-IN","Kannada"],["ml-IN","Malayalam"],["ur-PK","Urdu"],
+    ["tr-TR","Turkish"],["pl-PL","Polish"],["uk-UA","Ukrainian"],["cs-CZ","Czech"],
+    ["sk-SK","Slovak"],["sv-SE","Swedish"],["no-NO","Norwegian"],["da-DK","Danish"],
+    ["fi-FI","Finnish"],["el-GR","Greek"],["he-IL","Hebrew"],["th-TH","Thai"],
+    ["vi-VN","Vietnamese"],["id-ID","Indonesian"],["ms-MY","Malay"],["fil-PH","Filipino"],
+    ["ro-RO","Romanian"],["hu-HU","Hungarian"],["bg-BG","Bulgarian"],["hr-HR","Croatian"],
+    ["sr-RS","Serbian"],["sl-SI","Slovenian"],["lt-LT","Lithuanian"],["lv-LV","Latvian"],
+    ["et-EE","Estonian"],["sw-KE","Swahili"],["af-ZA","Afrikaans"],["zu-ZA","Zulu"],
+    ["am-ET","Amharic"],["is-IS","Icelandic"],["ca-ES","Catalan"],["eu-ES","Basque"],
+    ["gl-ES","Galician"],["fa-IR","Persian"],["km-KH","Khmer"],["lo-LA","Lao"],
+    ["my-MM","Burmese"],["ne-NP","Nepali"],["si-LK","Sinhala"],["az-AZ","Azerbaijani"],
+    ["hy-AM","Armenian"],["ka-GE","Georgian"],["mn-MN","Mongolian"],["uz-UZ","Uzbek"],["kk-KZ","Kazakh"]
+  ];
+  const langSelect = document.getElementById('d-langSelect');
+  LANGUAGES.forEach(([code,label])=>{
+    const opt=document.createElement('option'); opt.value=code; opt.textContent=label;
+    if(code==='en-US') opt.selected=true;
+    langSelect.appendChild(opt);
+  });
+
+  const COMMANDS = [
+    {say:'new paragraph', does:'\\n\\n', re:/\bnew paragraph\b/gi, repl:'\n\n'},
+    {say:'new line', does:'\\n', re:/\bnew line\b/gi, repl:'\n'},
+    {say:'period / full stop', does:'.', re:/\b(full stop|period)\b/gi, repl:'.'},
+    {say:'comma', does:',', re:/\bcomma\b/gi, repl:','},
+    {say:'question mark', does:'?', re:/\bquestion mark\b/gi, repl:'?'},
+    {say:'exclamation mark/point', does:'!', re:/\bexclamation (mark|point)\b/gi, repl:'!'},
+    {say:'colon', does:':', re:/\bcolon\b/gi, repl:':'},
+    {say:'semicolon', does:';', re:/\bsemicolon\b/gi, repl:';'},
+    {say:'open quote', does:'"', re:/\bopen(ing)? quote(s)?\b/gi, repl:'"'},
+    {say:'close quote', does:'"', re:/\bclose(ing)? quote(s)?\b/gi, repl:'"'},
+    {say:'open parenthesis', does:'(', re:/\bopen(ing)? parenthesis\b/gi, repl:'('},
+    {say:'close parenthesis', does:')', re:/\bclose(ing)? parenthesis\b/gi, repl:')'},
+    {say:'hyphen', does:'-', re:/\bhyphen\b/gi, repl:'-'},
+    {say:'dash', does:'—', re:/\bdash\b/gi, repl:'—'},
+    {say:'ellipsis', does:'…', re:/\bellipsis\b/gi, repl:'…'},
+    {say:'at sign', does:'@', re:/\bat sign\b/gi, repl:'@'},
+    {say:'percent sign', does:'%', re:/\bpercent( sign)?\b/gi, repl:'%'},
+  ];
+  const cmdGrid = document.getElementById('d-cmdGrid');
+  COMMANDS.forEach(c=>{
+    const row=document.createElement('div'); row.className='cmd-row';
+    row.innerHTML = `<span class="say">"${c.say}"</span><span class="does">${c.does}</span>`;
+    cmdGrid.appendChild(row);
+  });
+  [['stop listening','turns mic off'],['clear text','wipes the editor'],['undo that','undoes last change']]
+  .forEach(([say,does])=>{
+    const row=document.createElement('div'); row.className='cmd-row';
+    row.innerHTML = `<span class="say">"${say}"</span><span class="does">${does}</span>`;
+    cmdGrid.appendChild(row);
+  });
+
+  const editor = document.getElementById('d-editor');
+  const micBtn = document.getElementById('d-micBtn');
+  const micWrap = document.getElementById('d-micWrap');
+  const micStatus = document.getElementById('d-micStatus');
+  const liveCard = document.getElementById('d-liveCard');
+  const liveText = document.getElementById('d-liveText');
+  const liveStatus = document.getElementById('d-liveStatus');
+  const wordCountEl = document.getElementById('d-wordCount');
+  const charCountEl = document.getElementById('d-charCount');
+
+  let baseText=''; let cursor=0; let capitalizeNext=true;
+  let undoStack=[]; let redoStack=[];
+  let listening=false; let recognition=null; let restartRequested=false; let saveTimer=null;
+  // Live speech is kept separate until a sentence finishes or the speaker pauses.
+  let liveInterim=''; let livePauseTimer=null; const LIVE_PAUSE_MS=950;
+
+  function render(displayText){
+    editor.value = displayText!==undefined ? displayText : baseText;
+    const words = baseText.trim().length ? baseText.trim().split(/\s+/).length : 0;
+    wordCountEl.textContent = words + (words===1?' word':' words');
+    charCountEl.textContent = baseText.length + (baseText.length===1?' character':' characters');
+    document.getElementById('d-undoBtn').disabled = undoStack.length===0;
+    document.getElementById('d-redoBtn').disabled = redoStack.length===0;
+    scheduleAutosave();
+  }
+  function pushHistory(){
+    undoStack.push({text:baseText, cursor});
+    if(undoStack.length>100) undoStack.shift();
+    redoStack=[];
+  }
+  function applyCapitalization(chunk, startCapital){
+    let out=''; let capNext=startCapital;
+    for(let i=0;i<chunk.length;i++){
+      let ch=chunk[i];
+      if(/[a-z]/i.test(ch) && capNext){ ch=ch.toUpperCase(); capNext=false; }
+      else if(/\S/.test(ch)){ capNext=false; }
+      if(/[.!?\n]/.test(ch)) capNext=true;
+      out+=ch;
+    }
+    return {text:out, endsCapital:capNext};
+  }
+  function fixSpacingAroundPunctuation(s){
+    return s.replace(/\s+([,.!?;:])/g,'$1').replace(/([.!?])(?=[^\s"'\n)])/g,'$1 ').replace(/ {2,}/g,' ');
+  }
+  function processTranscript(raw){
+    let t=raw.trim(); if(!t) return '';
+    if(dictSettings.commands){ COMMANDS.forEach(c=>{ t=t.replace(c.re,c.repl); }); }
+    t=fixSpacingAroundPunctuation(t);
+    t=t.replace(/\bi\b/g,'I');
+    if(dictSettings.capitalize){
+      const res=applyCapitalization(t, capitalizeNext);
+      t=res.text; capitalizeNext=res.endsCapital;
+    } else { capitalizeNext=false; }
+    const needsSpace = baseText.length>0 && cursor>0 &&
+      !/\s$/.test(baseText.slice(0,cursor)) && !/^[\n]/.test(t) && !/^[,.!?;:)]/.test(t);
+    return (needsSpace?' ':'') + t;
+  }
+  function commitChunk(rawTranscript){
+    const lower = rawTranscript.trim().toLowerCase();
+    if(/^(stop listening|stop dictation|pause dictation)\.?$/.test(lower)){ stopRecognition(); return; }
+    if(/^(clear text|clear all|delete everything)\.?$/.test(lower)){ doClear(); return; }
+    if(/^(undo|undo that)\.?$/.test(lower)){ doUndo(); return; }
+    if(/^(redo|redo that)\.?$/.test(lower)){ doRedo(); return; }
+    const processed = processTranscript(rawTranscript);
+    if(!processed) return;
+    pushHistory();
+    baseText = baseText.slice(0,cursor) + processed + baseText.slice(cursor);
+    cursor += processed.length;
+    render();
+    editor.selectionStart = editor.selectionEnd = cursor;
+  }
+  function clearLivePauseTimer(){ clearTimeout(livePauseTimer); livePauseTimer=null; }
+  function resetLiveTranscriptionCard(status){
+    liveInterim='';
+    clearLivePauseTimer();
+    liveCard.classList.remove('listening');
+    liveText.textContent='Start the microphone and speak. Live words will appear instantly.';
+    liveStatus.textContent=status || (listening ? 'Listening… ready for your next sentence' : 'Ready — your words will appear here while you speak');
+  }
+  function commitPausedLiveSpeech(){
+    clearLivePauseTimer();
+    const text=liveInterim.trim();
+    if(!text) return;
+    commitChunk(text);
+    // The live card is only for the CURRENT sentence. Once it is committed,
+    // clear it immediately so the next spoken sentence starts fresh.
+    resetLiveTranscriptionCard(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here while you speak');
+  }
+  function renderWithInterim(interim){
+    liveInterim=interim||'';
+    // Keep the main transcript continuously visible, while the current unfinished
+    // phrase is highlighted in the dedicated Live Transcription card.
+    const combined=baseText.slice(0,cursor)+(liveInterim||'')+baseText.slice(cursor);
+    if(!liveInterim){ render(); liveText.textContent=baseText.trim()||'Start the microphone and speak. Live words will appear instantly.'; return; }
+    render(combined); liveCard.classList.add('listening');
+    liveText.textContent=liveInterim.trim()||'Listening…';
+    liveStatus.textContent='Speaking… live words are appearing now';
+    clearLivePauseTimer();
+    livePauseTimer=setTimeout(commitPausedLiveSpeech,LIVE_PAUSE_MS);
+  }
+  function doUndo(){
+    if(undoStack.length===0) return;
+    redoStack.push({text:baseText, cursor});
+    const prev=undoStack.pop(); baseText=prev.text; cursor=prev.cursor;
+    render(); editor.selectionStart=editor.selectionEnd=cursor;
+  }
+  function doRedo(){
+    if(redoStack.length===0) return;
+    undoStack.push({text:baseText, cursor});
+    const next=redoStack.pop(); baseText=next.text; cursor=next.cursor;
+    render(); editor.selectionStart=editor.selectionEnd=cursor;
+  }
+  document.getElementById('d-undoBtn').addEventListener('click', doUndo);
+  document.getElementById('d-redoBtn').addEventListener('click', doRedo);
+
+  let typingBurstTimer=null;
+  editor.addEventListener('input', ()=>{
+    if(listening) return;
+    if(!typingBurstTimer) pushHistory();
+    clearTimeout(typingBurstTimer);
+    typingBurstTimer = setTimeout(()=>{ typingBurstTimer=null; }, 700);
+    baseText=editor.value; cursor=editor.selectionStart; render(baseText);
+  });
+  editor.addEventListener('click', ()=>{ cursor=editor.selectionStart; });
+  editor.addEventListener('keyup', ()=>{ cursor=editor.selectionStart; });
+
+  function doClear(){
+    if(baseText.length===0) return;
+    pushHistory(); baseText=''; cursor=0; capitalizeNext=true; render();
+    showToast('Editor cleared');
+  }
+  document.getElementById('d-clearBtn').addEventListener('click', ()=>{
+    if(baseText.trim().length && !confirm('Clear all text? This can be undone.')) return;
+    doClear();
+  });
+  document.getElementById('d-copyBtn').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(baseText); showToast('Copied to clipboard'); }
+    catch(e){ editor.select(); document.execCommand('copy'); showToast('Copied to clipboard'); }
+  });
+  document.getElementById('d-shareBtn').addEventListener('click', e=>{e.stopPropagation();openShareMenu(e.currentTarget,baseText,'Voxoira Dictation');});
+  document.getElementById('d-downloadBtn').addEventListener('click', ()=>{
+    if(!baseText.trim()){ showToast('Nothing to download yet'); return; }
+    downloadTxt(baseText, `dictation-${fileStamp()}`);
+    showToast('Transcript downloaded (.txt)');
+  });
+  document.getElementById('d-downloadDocBtn').addEventListener('click', ()=>{
+    if(!baseText.trim()){ showToast('Nothing to download yet'); return; }
+    const paragraphs = escapeHtml(baseText).split(/\n+/).map(p=>`<p>${p||'&nbsp;'}</p>`).join('');
+    downloadDoc('Dictation transcript', `<h1>Dictation transcript</h1>${paragraphs}`, `dictation-${fileStamp()}`);
+    showToast('Transcript downloaded (.doc)');
+  });
+  document.getElementById('d-fontSize').addEventListener('input', e=>{ editor.style.fontSize=e.target.value+'px'; });
+
+  if(SR){
+    recognition = new SR();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = langSelect.value;
+
+    recognition.onresult = (event)=>{
+      let interim='';
+      for(let i=event.resultIndex;i<event.results.length;i++){
+        const res=event.results[i];
+        if(res.isFinal){
+          // Final browser speech is committed to the main transcript, then the
+          // dedicated live card is cleared for the next sentence.
+          clearLivePauseTimer();
+          liveInterim='';
+          commitChunk(res[0].transcript);
+          resetLiveTranscriptionCard(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here while you speak');
+        } else interim += res[0].transcript;
+      }
+      if(interim) renderWithInterim(interim);
+    };
+    recognition.onend = ()=>{
+      // Chrome/Edge can end recognition after a short silence even with continuous=true.
+      // Promote any unfinished phrase before restarting so pauses never lose words.
+      if(liveInterim.trim()) commitPausedLiveSpeech();
+      if(restartRequested && listening){ try{recognition.start();}catch(e){} }
+      else { setListeningUI(false); render(); }
+    };
+    recognition.onerror = (e)=>{
+      if(e.error==='no-speech' || e.error==='audio-capture') return;
+      if(e.error==='not-allowed' || e.error==='service-not-allowed'){ showToast('Microphone access was blocked'); stopRecognition(); }
+    };
+  } else {
+    micBtn.disabled = true;
+  }
+
+  function startRecognition(){
+    if(!recognition) return;
+    recognition.lang = langSelect.value; restartRequested=true;
+    try{ recognition.start(); }catch(e){}
+    setListeningUI(true);
+  }
+  function stopRecognition(){
+    if(!recognition) return;
+    clearLivePauseTimer();
+    if(liveInterim.trim()) commitPausedLiveSpeech();
+    restartRequested=false; recognition.stop(); setListeningUI(false); render();
+  }
+  function setListeningUI(on){
+    listening=on;
+    micWrap.classList.toggle('listening',on);
+    micBtn.classList.toggle('active',on);
+    liveCard.classList.toggle('listening',on);
+    editor.readOnly = on;
+    micStatus.innerHTML = on ? 'Listening — <b>speak now</b>' : 'Tap the microphone to start dictating';
+    liveStatus.textContent = on ? 'Listening… live words will appear as you speak' : 'Ready — your words will appear here while you speak';
+    if(!on) resetLiveTranscriptionCard('Ready — your words will appear here while you speak');
+    micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
+  }
+  micBtn.addEventListener('click', ()=>{ if(!recognition) return; if(listening) stopRecognition(); else startRecognition(); });
+  langSelect.addEventListener('change', ()=>{
+    if(recognition) recognition.lang = langSelect.value;
+    if(listening){ stopRecognition(); startRecognition(); }
+  });
+  dictStop = stopRecognition;
+
+  document.addEventListener('keydown', (e)=>{
+    if(!pages.dictate.classList.contains('active')) return;
+    if(e.ctrlKey && e.code==='Space'){ e.preventDefault(); micBtn.click(); }
+    else if(e.key==='Escape' && listening){ stopRecognition(); }
+  });
+  editor.addEventListener('keydown', (e)=>{
+    if(e.ctrlKey && !e.shiftKey && e.key.toLowerCase()==='z'){ e.preventDefault(); doUndo(); }
+    if((e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='z') || (e.ctrlKey && e.key.toLowerCase()==='y')){ e.preventDefault(); doRedo(); }
+  });
+
+  function scheduleAutosave(){
+    if(!dictSettings.autosave) return;
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>{ storage.set('voicecraft-draft', baseText); },700);
+  }
+  function loadPersisted(){
+    try{
+      const s=storage.get('voicecraft-settings');
+      if(s){
+        const parsed=JSON.parse(s);
+        if(typeof parsed.dark==='boolean') setDark(parsed.dark);
+        dictSettings.commands = parsed.commands!==undefined ? parsed.commands : true;
+        dictSettings.capitalize = parsed.capitalize!==undefined ? parsed.capitalize : true;
+        dictSettings.autosave = parsed.autosave!==undefined ? parsed.autosave : true;
+      }
+    }catch(e){}
+    try{
+      const d=storage.get('voicecraft-draft');
+      if(d){ baseText=d; cursor=baseText.length; }
+    }catch(e){}
+    document.getElementById('toggleCommands').checked = dictSettings.commands;
+    document.getElementById('toggleCapitalize').checked = dictSettings.capitalize;
+    document.getElementById('toggleAutosave').checked = dictSettings.autosave;
+    document.getElementById('d-autosaveNote').style.visibility = dictSettings.autosave ? 'visible':'hidden';
+    render();
+    if(baseText) showToast('Restored your last draft');
+  }
+  loadPersisted();
+  window.__voicecraftGetDictateText = () => baseText;
+}
+
+/* ================= TRANSLATE ================= */
+function initTranslate(){
+  const LANGS = [
+    {short:'en', label:'English', recog:'en-US'},{short:'es', label:'Spanish', recog:'es-ES'},
+    {short:'fr', label:'French', recog:'fr-FR'},{short:'de', label:'German', recog:'de-DE'},
+    {short:'it', label:'Italian', recog:'it-IT'},{short:'pt', label:'Portuguese', recog:'pt-PT'},
+    {short:'nl', label:'Dutch', recog:'nl-NL'},{short:'ru', label:'Russian', recog:'ru-RU'},
+    {short:'zh-CN', label:'Chinese (Simplified)', recog:'zh-CN'},{short:'zh-TW', label:'Chinese (Traditional)', recog:'zh-TW'},
+    {short:'ja', label:'Japanese', recog:'ja-JP'},{short:'ko', label:'Korean', recog:'ko-KR'},
+    {short:'ar', label:'Arabic', recog:'ar-SA'},{short:'hi', label:'Hindi', recog:'hi-IN'},
+    {short:'bn', label:'Bengali', recog:'bn-IN'},{short:'pa', label:'Punjabi', recog:'pa-IN'},
+    {short:'ta', label:'Tamil', recog:'ta-IN'},{short:'te', label:'Telugu', recog:'te-IN'},
+    {short:'mr', label:'Marathi', recog:'mr-IN'},{short:'gu', label:'Gujarati', recog:'gu-IN'},
+    {short:'ur', label:'Urdu', recog:'ur-PK'},{short:'tr', label:'Turkish', recog:'tr-TR'},
+    {short:'pl', label:'Polish', recog:'pl-PL'},{short:'uk', label:'Ukrainian', recog:'uk-UA'},
+    {short:'cs', label:'Czech', recog:'cs-CZ'},{short:'sk', label:'Slovak', recog:'sk-SK'},
+    {short:'sv', label:'Swedish', recog:'sv-SE'},{short:'no', label:'Norwegian', recog:'nb-NO'},
+    {short:'da', label:'Danish', recog:'da-DK'},{short:'fi', label:'Finnish', recog:'fi-FI'},
+    {short:'el', label:'Greek', recog:'el-GR'},{short:'he', label:'Hebrew', recog:'he-IL'},
+    {short:'th', label:'Thai', recog:'th-TH'},{short:'vi', label:'Vietnamese', recog:'vi-VN'},
+    {short:'id', label:'Indonesian', recog:'id-ID'},{short:'ms', label:'Malay', recog:'ms-MY'},
+    {short:'fil', label:'Filipino', recog:'fil-PH'},{short:'ro', label:'Romanian', recog:'ro-RO'},
+    {short:'hu', label:'Hungarian', recog:'hu-HU'},{short:'bg', label:'Bulgarian', recog:'bg-BG'},
+    {short:'hr', label:'Croatian', recog:'hr-HR'},{short:'sr', label:'Serbian', recog:'sr-RS'},
+    {short:'sl', label:'Slovenian', recog:'sl-SI'},{short:'lt', label:'Lithuanian', recog:'lt-LT'},
+    {short:'lv', label:'Latvian', recog:'lv-LV'},{short:'et', label:'Estonian', recog:'et-EE'},
+    {short:'sw', label:'Swahili', recog:'sw-KE'},{short:'af', label:'Afrikaans', recog:'af-ZA'},
+    {short:'is', label:'Icelandic', recog:'is-IS'},{short:'ca', label:'Catalan', recog:'ca-ES'},
+    {short:'fa', label:'Persian', recog:'fa-IR'},{short:'ne', label:'Nepali', recog:'ne-NP'},
+    {short:'si', label:'Sinhala', recog:'si-LK'},{short:'az', label:'Azerbaijani', recog:'az-AZ'},
+    {short:'hy', label:'Armenian', recog:'hy-AM'},{short:'ka', label:'Georgian', recog:'ka-GE'},
+  ];
+  const sourceSel=document.getElementById('t-sourceLang');
+  const targetSel=document.getElementById('t-targetLang');
+  LANGS.forEach(l=>{
+    const o1=document.createElement('option'); o1.value=l.short; o1.textContent=l.label;
+    const o2=document.createElement('option'); o2.value=l.short; o2.textContent=l.label;
+    sourceSel.appendChild(o1); targetSel.appendChild(o2);
+  });
+  sourceSel.value='fi'; targetSel.value='en';
+  function langMeta(short){ return LANGS.find(l=>l.short===short) || LANGS[0]; }
+  function updateLangLabels(){
+    document.getElementById('t-origLangLabel').textContent = langMeta(sourceSel.value).label;
+    document.getElementById('t-targetLangLabel').textContent = langMeta(targetSel.value).label;
+  }
+  updateLangLabels();
+
+  const originalBox=document.getElementById('t-originalBox');
+  const translatedBox=document.getElementById('t-translatedBox');
+  const micBtn=document.getElementById('t-micBtn');
+  const micWrap=document.getElementById('t-micWrap');
+  const micStatus=document.getElementById('t-micStatus');
+  const translateState=document.getElementById('t-translateState');
+  const origCount=document.getElementById('t-origCount');
+  const liveCard=document.getElementById('t-liveCard');
+  const liveText=document.getElementById('t-liveText');
+  const liveStatus=document.getElementById('t-liveStatus');
+
+  /* ---- saved documents / downloadable archive ---- */
+  let savedDocs = [];
+  try{ savedDocs = JSON.parse(storage.get('voxoira-translate-saved-docs') || '[]'); }catch(e){ savedDocs = []; }
+  function persistSavedDocs(){ storage.set('voxoira-translate-saved-docs', JSON.stringify(savedDocs)); }
+  function fileStampFromTs(ts){ return new Date(ts).toISOString().slice(0,16).replace(/[:T]/g,'-'); }
+  function renderSavedDocs(){
+    const listEl=document.getElementById('t-savedDocsList');
+    const countEl=document.getElementById('t-savedDocsCount');
+    const emptyEl=document.getElementById('t-savedDocsEmpty');
+    countEl.textContent=savedDocs.length;
+    emptyEl.style.display=savedDocs.length?'none':'block';
+    listEl.style.display=savedDocs.length?'block':'none';
+    listEl.innerHTML=savedDocs.map(d=>{
+      const preview=escapeHtml((d.original||d.translated||'').slice(0,90));
+      return `<li class="saved-doc-item" data-id="${d.id}">
+        <div class="saved-doc-info">
+          <span class="saved-doc-langs">${escapeHtml(d.sourceLabel)} → ${escapeHtml(d.targetLabel)}</span>
+          <span class="saved-doc-meta">${new Date(d.ts).toLocaleString()} · ${d.words} word${d.words===1?'':'s'} · ${d.reason==='limit'?'saved':'saved manually'}</span>
+          <span class="saved-doc-preview">${preview}${(d.original||'').length>90?'…':''}</span>
+        </div>
+        <div class="saved-doc-actions">
+          <button class="pill" data-action="txt">.txt</button>
+          <button class="pill" data-action="doc">.doc</button>
+          <button class="pill danger" data-action="del">Delete</button>
+        </div>
+      </li>`;
+    }).join('');
+  }
+  function saveCurrentAsDocument(reason){
+    const orig=originalBox.value.trim(), trans=translatedBox.textContent.trim();
+    if(!orig && !trans) return false;
+    const doc={
+      id:'doc-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+      ts:Date.now(), reason:reason||'manual',
+      source:sourceSel.value, target:targetSel.value,
+      sourceLabel:langMeta(sourceSel.value).label, targetLabel:langMeta(targetSel.value).label,
+      original:orig, translated:trans,
+      words: orig ? orig.split(/\s+/).length : 0
+    };
+    savedDocs.unshift(doc);
+    if(savedDocs.length>60) savedDocs.length=60;
+    persistSavedDocs();
+    renderSavedDocs();
+    return true;
+  }
+  function clearActiveDocument(){
+    originalBox.value=''; translatedBox.textContent='';
+    updateCounts();
+    translateState.textContent='—';
+    translateUndoStack=[]; translateRedoStack=[]; updateTranslateHistoryButtons();
+    translateLastSnapshot=snapshotTranslate();
+  }
+  document.getElementById('t-newDocBtn').addEventListener('click', ()=>{
+    if(!saveCurrentAsDocument('manual')){ showToast('Nothing to save yet'); return; }
+    clearActiveDocument();
+    showToast('Saved as a document — new document started');
+  });
+  document.getElementById('t-savedDocsClearBtn').addEventListener('click', ()=>{
+    if(!savedDocs.length){ showToast('No saved documents to clear'); return; }
+    if(!confirm(`Delete all ${savedDocs.length} saved document(s)? This can't be undone.`)) return;
+    savedDocs=[]; persistSavedDocs(); renderSavedDocs();
+    showToast('Saved documents cleared');
+  });
+  document.getElementById('t-savedDocsList').addEventListener('click', (e)=>{
+    const btn=e.target.closest('button[data-action]'); if(!btn) return;
+    const li=e.target.closest('.saved-doc-item'); const id=li && li.dataset.id;
+    const doc=savedDocs.find(d=>d.id===id); if(!doc) return;
+    const action=btn.dataset.action;
+    if(action==='txt'){
+      const content=`Original (${doc.sourceLabel}):\n${doc.original}\n\nTranslation (${doc.targetLabel}):\n${doc.translated}\n`;
+      downloadTxt(content, `translation-${doc.source}-${doc.target}-${fileStampFromTs(doc.ts)}`);
+      showToast('Document downloaded (.txt)');
+    } else if(action==='doc'){
+      const para=s=>escapeHtml(s).split(/\n+/).map(p=>`<p>${p||'&nbsp;'}</p>`).join('');
+      const body=`<h1>Translation</h1><div class="lang-tag">Original — ${escapeHtml(doc.sourceLabel)}</div>${para(doc.original)}<div class="lang-tag">Translation — ${escapeHtml(doc.targetLabel)}</div>${para(doc.translated)}`;
+      downloadDoc('Translation', body, `translation-${doc.source}-${doc.target}-${fileStampFromTs(doc.ts)}`);
+      showToast('Document downloaded (.doc)');
+    } else if(action==='del'){
+      savedDocs=savedDocs.filter(d=>d.id!==id); persistSavedDocs(); renderSavedDocs();
+    }
+  });
+
+  let listening=false, recognition=null, restartRequested=false, translateTimer=null, translateSeq=0, recognitionRunning=false, recognitionRestartTimer=null, recognitionRestartAttempts=0;
+  let translateUndoStack=[], translateRedoStack=[], translateTypingTimer=null, translateTypingBurst=false;
+  let restoringTranslateHistory=false;
+  let translateLastSnapshot={original:'',translated:'',source:sourceSel.value,target:targetSel.value};
+  function snapshotTranslate(){return {original:originalBox.value,translated:translatedBox.textContent,source:sourceSel.value,target:targetSel.value};}
+  function updateTranslateHistoryButtons(){document.getElementById('t-undoBtn').disabled=translateUndoStack.length===0;document.getElementById('t-redoBtn').disabled=translateRedoStack.length===0;}
+  function pushTranslateSnapshot(snapshot){if(restoringTranslateHistory)return;translateUndoStack.push(snapshot||snapshotTranslate());if(translateUndoStack.length>100)translateUndoStack.shift();translateRedoStack=[];updateTranslateHistoryButtons();}
+  function restoreTranslateSnapshot(snap){restoringTranslateHistory=true;originalBox.value=snap.original;translatedBox.textContent=snap.translated;sourceSel.value=snap.source;targetSel.value=snap.target;updateLangLabels();updateCounts();translateState.textContent=snap.translated?'Restored':'—';restoringTranslateHistory=false;translateLastSnapshot=snapshotTranslate();updateTranslateHistoryButtons();}
+  function undoTranslate(){if(!translateUndoStack.length)return;translateRedoStack.push(snapshotTranslate());restoreTranslateSnapshot(translateUndoStack.pop());}
+  function redoTranslate(){if(!translateRedoStack.length)return;translateUndoStack.push(snapshotTranslate());restoreTranslateSnapshot(translateRedoStack.pop());}
+  // Final text goes to the source/translation panes; the unfinished phrase stays in Live Speech.
+  let liveInterim=''; let livePauseTimer=null; const LIVE_PAUSE_MS=950;
+
+  function updateCounts(){
+    const words = originalBox.value.trim().length ? originalBox.value.trim().split(/\s+/).length : 0;
+    origCount.textContent = words + (words===1?' word':' words');
+  }
+  function splitIntoChunks(text, maxLen){
+    const sentences = text.match(/[^.!?\n]+[.!?\n]*|\S+$/g) || [];
+    const chunks=[]; let cur='';
+    sentences.forEach(s=>{
+      if((cur+s).length>maxLen && cur){ chunks.push(cur); cur=s; } else cur+=s;
+    });
+    if(cur) chunks.push(cur);
+    return chunks.length?chunks:[text];
+  }
+  async function translateChunk(text, sl, tl){
+    const primary=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(sl)}|${encodeURIComponent(tl)}`;
+    try{
+      const r=await fetch(primary);
+      if(!r.ok) throw new Error('mymemory http '+r.status);
+      const data=await r.json();
+      const t=data && data.responseData && data.responseData.translatedText;
+      if(t && !/MYMEMORY WARNING|INVALID LANGUAGE PAIR/i.test(t)) return t;
+      throw new Error('mymemory quota/pair issue');
+    }catch(e){
+      const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${encodeURIComponent(sl)}&tl=${encodeURIComponent(tl)}&dt=t&q=${encodeURIComponent(text)}`;
+      const r2=await fetch(url);
+      if(!r2.ok) throw new Error('fallback http '+r2.status);
+      const data2=await r2.json();
+      return data2[0].map(seg=>seg[0]).join('');
+    }
+  }
+  async function translateFullText(){
+    const text=originalBox.value.trim();
+    if(!text){ translatedBox.textContent=''; committedTranslationText=''; livePreviewText=''; translateState.textContent='—'; return; }
+    const mySeq=++translateSeq, generation=liveTranslationGeneration;
+    translateState.textContent='Translating…';
+    const sl=sourceSel.value, tl=targetSel.value;
+    try{
+      const chunks=splitIntoChunks(text,450), results=[];
+      for(const chunk of chunks){
+        if(mySeq!==translateSeq || generation!==liveTranslationGeneration) return;
+        results.push(await translateChunk(chunk,sl,tl));
+      }
+      if(mySeq!==translateSeq || generation!==liveTranslationGeneration) return;
+      committedTranslationText=results.join(' ').replace(/\s+/g,' ').trim(); livePreviewText=''; renderTranslationOutput();
+      translateState.textContent='Translated just now';
+    }catch(err){
+      if(mySeq===translateSeq && generation===liveTranslationGeneration) translateState.textContent='Translation unavailable — check your connection';
+    }
+  }
+  function scheduleTranslate(delay){ clearTimeout(translateTimer); translateTimer=setTimeout(translateFullText, delay); }
+
+  function clearTranslateLivePauseTimer(){ clearTimeout(livePauseTimer); livePauseTimer=null; }
+  function resetTranslateLiveSpeech(status){
+    liveInterim='';
+    clearTranslateLivePauseTimer();
+    liveCard.classList.remove('listening');
+    liveText.textContent='Start the microphone and speak. Live words will appear here while you talk.';
+    liveStatus.textContent=status || (listening ? 'Listening… ready for your next sentence' : 'Ready — your spoken words will appear here instantly');
+  }
+  let liveTranslationQueue=Promise.resolve();
+  let liveTranslationGeneration=0;
+  let committedTranslationText='';
+  let livePreviewText='';
+  let livePreviewTimer=null;
+  let livePreviewSeq=0;
+
+  function renderTranslationOutput(){
+    const committed=committedTranslationText.trim();
+    const preview=livePreviewText.trim();
+    translatedBox.textContent=preview ? (committed ? committed+' ' : '')+preview : committed;
+  }
+
+  function clearLiveTranslationPreview(){
+    clearTimeout(livePreviewTimer); livePreviewTimer=null; livePreviewSeq++; livePreviewText=''; renderTranslationOutput();
+  }
+
+  function queueLivePreview(text){
+    const clean=(text||'').trim();
+    if(!clean){ clearLiveTranslationPreview(); return; }
+    const sl=sourceSel.value, tl=targetSel.value, generation=liveTranslationGeneration, seq=++livePreviewSeq;
+    clearTimeout(livePreviewTimer);
+    livePreviewTimer=setTimeout(async ()=>{
+      try{
+        const translated=(await translateChunk(clean,sl,tl)||'').trim();
+        if(generation!==liveTranslationGeneration || seq!==livePreviewSeq || clean!==liveInterim.trim()) return;
+        livePreviewText=translated; renderTranslationOutput();
+        translateState.textContent=translated ? 'Live translation…' : 'Listening…';
+      }catch(e){
+        if(generation===liveTranslationGeneration && seq===livePreviewSeq) translateState.textContent='Listening… (translation connection waiting)';
+      }
+    },700);
+  }
+
+  function queueLiveTranslation(text){
+    const clean=(text||'').trim(); if(!clean) return;
+    const sl=sourceSel.value, tl=targetSel.value, generation=liveTranslationGeneration;
+    liveTranslationQueue=liveTranslationQueue.then(async ()=>{
+      if(generation!==liveTranslationGeneration) return;
+      clearLiveTranslationPreview(); translateState.textContent='Translating…';
+      try{
+        const translated=(await translateChunk(clean,sl,tl)||'').trim();
+        if(generation!==liveTranslationGeneration) return;
+        if(translated){
+          committedTranslationText=committedTranslationText.trim() ? committedTranslationText.trim()+' '+translated : translated;
+          renderTranslationOutput(); translateState.textContent='Translated just now';
+        } else translateState.textContent='Translation returned no text — continuing to listen';
+      }catch(e){
+        if(generation===liveTranslationGeneration){ translateState.textContent='Translation unavailable — continuing to listen'; showToast('Live translation could not reach the translation service'); }
+      }
+    });
+  }
+
+  function appendFinalTranslationSpeech(raw){
+    const text=(raw||'').trim(); if(!text) return;
+    pushTranslateSnapshot(translateLastSnapshot);
+    const needsSpace=originalBox.value.length && !/\s$/.test(originalBox.value);
+    originalBox.value+=(needsSpace?' ':'')+text; updateCounts();
+    translateLastSnapshot=snapshotTranslate(); queueLiveTranslation(text);
+  }
+
+  function commitPausedTranslateSpeech(){
+    clearTranslateLivePauseTimer();
+    const text=liveInterim.trim();
+    if(!text) return;
+    liveInterim='';
+    appendFinalTranslationSpeech(text);
+    // Live Speech shows only the unfinished/current sentence. Clear it after
+    // the sentence is committed so the next spoken sentence starts clean.
+    resetTranslateLiveSpeech(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your spoken words will appear here instantly');
+  }
+  if(SR){
+    recognition=new SR();
+    recognition.continuous=true; recognition.interimResults=true;
+    recognition.lang = langMeta(sourceSel.value).recog;
+    recognition.onresult=(event)=>{
+      let finalChunk=''; let interim='';
+      for(let i=event.resultIndex;i<event.results.length;i++){
+        const res=event.results[i];
+        if(res.isFinal) finalChunk += res[0].transcript; else interim += res[0].transcript;
+      }
+      if(finalChunk){
+        clearTranslateLivePauseTimer();
+        liveInterim='';
+        appendFinalTranslationSpeech(finalChunk);
+        resetTranslateLiveSpeech(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your spoken words will appear here instantly');
+      }
+      if(interim.trim()){
+        // IMPORTANT: show ONLY the current unfinished sentence here. The
+        // previously committed sentences stay in the Original Text pane.
+        liveInterim=interim;
+        liveText.textContent=liveInterim.trim() || 'Listening…';
+        liveCard.classList.add('listening'); liveStatus.textContent='Speaking… live words are appearing now';
+        queueLivePreview(liveInterim);
+        clearTranslateLivePauseTimer();
+        livePauseTimer=setTimeout(commitPausedTranslateSpeech,LIVE_PAUSE_MS);
+      }
+    };
+    recognition.onstart=()=>{ recognitionRunning=true; recognitionRestartAttempts=0; };
+    recognition.onend=()=>{
+      recognitionRunning=false;
+      if(liveInterim.trim()) commitPausedTranslateSpeech();
+      if(restartRequested && listening){
+        clearTimeout(recognitionRestartTimer);
+        recognitionRestartTimer=setTimeout(()=>{
+          if(!restartRequested || !listening || recognitionRunning) return;
+          try{ recognition.start(); recognitionRestartAttempts=0; }
+          catch(e){
+            recognitionRestartAttempts++;
+            recognitionRestartTimer=setTimeout(()=>{ if(restartRequested && listening && !recognitionRunning) startRecognition(); }, Math.min(1500,200+recognitionRestartAttempts*200));
+          }
+        },180);
+      } else setListeningUI(false);
+    };
+    recognition.onerror=(e)=>{
+      if(e.error==='not-allowed'||e.error==='service-not-allowed'){
+        micStatus.classList.add('err'); micStatus.innerHTML='Microphone access was blocked — allow microphone access in your browser';
+        stopRecognition(); return;
+      }
+      if(e.error==='audio-capture'){
+        micStatus.classList.add('err'); micStatus.innerHTML='No microphone input detected — check your microphone';
+        return;
+      }
+      if(e.error==='network'){
+        translateState.textContent='Speech service connection interrupted — reconnecting…';
+        return;
+      }
+      // no-speech, aborted and transient browser errors are allowed to end the
+      // recognition instance; onend will restart it while Live Translate is on.
+    };
+  } else {
+    micBtn.disabled = true;
+  }
+
+  function startRecognition(){
+    if(!recognition) return;
+    restartRequested=true; micStatus.classList.remove('err'); setListeningUI(true);
+    if(recognitionRunning) return;
+    clearTimeout(recognitionRestartTimer); recognition.lang=langMeta(sourceSel.value).recog;
+    try{ recognition.start(); }catch(e){
+      recognitionRestartAttempts++;
+      recognitionRestartTimer=setTimeout(()=>{ if(restartRequested && listening && !recognitionRunning) startRecognition(); }, Math.min(1500,200+recognitionRestartAttempts*200));
+    }
+  }
+
+  function stopRecognition(){
+    if(!recognition) return;
+    restartRequested=false; clearTimeout(recognitionRestartTimer); clearTranslateLivePauseTimer(); clearLiveTranslationPreview();
+    if(liveInterim.trim()) commitPausedTranslateSpeech();
+    try{ if(recognitionRunning) recognition.stop(); else recognition.abort(); }catch(e){}
+    recognitionRunning=false; setListeningUI(false);
+  }
+
+  function setListeningUI(on){
+    listening=on;
+    micWrap.classList.toggle('listening',on);
+    micBtn.classList.toggle('active',on);
+    liveCard.classList.toggle('listening',on);
+    if(!micStatus.classList.contains('err')) micStatus.innerHTML=on?'Listening — <b>speak now</b>':'Tap the microphone and start speaking';
+    liveStatus.textContent=on?'Listening… live words will appear as you speak':'Ready — your spoken words will appear here instantly';
+    if(!on) resetTranslateLiveSpeech('Ready — your spoken words will appear here instantly');
+    micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
+  }
+  micBtn.addEventListener('click', ()=>{ if(!recognition) return; if(listening) stopRecognition(); else startRecognition(); });
+  trStop = stopRecognition;
+
+  originalBox.addEventListener('input', ()=>{
+    if(!restoringTranslateHistory){
+      if(!translateTypingBurst) pushTranslateSnapshot(translateLastSnapshot);
+      translateTypingBurst=true;
+      clearTimeout(translateTypingTimer);
+      translateTypingTimer=setTimeout(()=>{translateTypingBurst=false;translateLastSnapshot=snapshotTranslate();},650);
+    }
+    updateCounts(); scheduleTranslate(600);
+  });
+
+  sourceSel.addEventListener('change', ()=>{
+    liveTranslationGeneration++; // discard queued translations in the old language pair
+    updateLangLabels();
+    if(recognition) recognition.lang = langMeta(sourceSel.value).recog;
+    if(listening){ stopRecognition(); startRecognition(); }
+    if(originalBox.value.trim()) scheduleTranslate(200);
+  });
+  targetSel.addEventListener('change', ()=>{
+    liveTranslationGeneration++; // discard queued translations in the old target language
+    updateLangLabels();
+    if(originalBox.value.trim()) scheduleTranslate(200);
+  });
+
+  document.getElementById('t-swapBtn').addEventListener('click', ()=>{
+    pushTranslateSnapshot(snapshotTranslate());
+    const btn=document.getElementById('t-swapBtn');
+    btn.classList.add('spin'); setTimeout(()=>btn.classList.remove('spin'),250);
+    liveTranslationGeneration++; // invalidate any queued translations from the old pair
+    const s=sourceSel.value, t=targetSel.value;
+    sourceSel.value=t; targetSel.value=s;
+    updateLangLabels();
+    if(recognition) recognition.lang = langMeta(sourceSel.value).recog;
+    if(listening){ stopRecognition(); startRecognition(); }
+    const origText=originalBox.value, transText=translatedBox.textContent;
+    if(transText.trim()){
+      originalBox.value=transText; translatedBox.textContent=origText;
+      updateCounts(); translateState.textContent='Swapped';
+    }
+    translateLastSnapshot=snapshotTranslate();
+  });
+
+  document.getElementById('t-copyOrigBtn').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(originalBox.value); showToast('Original text copied'); }
+    catch(e){ originalBox.select(); document.execCommand('copy'); showToast('Original text copied'); }
+  });
+  document.getElementById('t-copyTransBtn').addEventListener('click', async ()=>{
+    const t=translatedBox.textContent; if(!t.trim()) return;
+    try{ await navigator.clipboard.writeText(t); showToast('Translation copied'); }
+    catch(e){ showToast('Could not copy'); }
+  });
+  function translateFilenameBase(){
+    return `translation-${langMeta(sourceSel.value).short}-${langMeta(targetSel.value).short}-${fileStamp()}`;
+  }
+  document.getElementById('t-downloadTxtBtn').addEventListener('click', ()=>{
+    const orig=originalBox.value.trim(), trans=translatedBox.textContent.trim();
+    if(!orig && !trans){ showToast('Nothing to download yet'); return; }
+    const content = `Original (${langMeta(sourceSel.value).label}):\n${orig}\n\nTranslation (${langMeta(targetSel.value).label}):\n${trans}\n`;
+    downloadTxt(content, translateFilenameBase());
+    showToast('Translation downloaded (.txt)');
+  });
+  document.getElementById('t-downloadDocBtn').addEventListener('click', ()=>{
+    const orig=originalBox.value.trim(), trans=translatedBox.textContent.trim();
+    if(!orig && !trans){ showToast('Nothing to download yet'); return; }
+    const para = s => escapeHtml(s).split(/\n+/).map(p=>`<p>${p||'&nbsp;'}</p>`).join('');
+    const body = `<h1>Translation</h1>
+      <div class="lang-tag">Original — ${escapeHtml(langMeta(sourceSel.value).label)}</div>${para(orig)}
+      <div class="lang-tag">Translation — ${escapeHtml(langMeta(targetSel.value).label)}</div>${para(trans)}`;
+    downloadDoc('Translation', body, translateFilenameBase());
+    showToast('Translation downloaded (.doc)');
+  });
+  document.getElementById('t-undoBtn').addEventListener('click', undoTranslate);
+  document.getElementById('t-redoBtn').addEventListener('click', redoTranslate);
+  document.getElementById('t-shareBtn').addEventListener('click', e=>{e.stopPropagation();const orig=originalBox.value.trim(),trans=translatedBox.textContent.trim();const text=orig&&trans?`Original (${langMeta(sourceSel.value).label}):\n${orig}\n\nTranslation (${langMeta(targetSel.value).label}):\n${trans}`:(orig||trans);openShareMenu(e.currentTarget,text,'Voxoira Translation');});
+  updateTranslateHistoryButtons();
+  renderSavedDocs();
+
+  document.getElementById('t-clearBtn').addEventListener('click', ()=>{
+    if(!originalBox.value.trim() && !translatedBox.textContent.trim()) return;
+    pushTranslateSnapshot(snapshotTranslate());
+    originalBox.value=''; translatedBox.textContent=''; updateCounts();
+    translateState.textContent='—'; translateSeq++; translateLastSnapshot=snapshotTranslate();
+  });
+  document.getElementById('t-speakBtn').addEventListener('click', ()=>{
+    const text=translatedBox.textContent.trim();
+    if(!text){ showToast('Nothing to speak yet'); return; }
+    if(!('speechSynthesis' in window)){ showToast('Speech playback not supported here'); return; }
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(text);
+    const meta=langMeta(targetSel.value);
+    utter.lang=meta.recog;
+    const voices=window.speechSynthesis.getVoices();
+    const match=voices.find(v=>v.lang===meta.recog) || voices.find(v=>v.lang && v.lang.startsWith(meta.short));
+    if(match) utter.voice=match;
+    window.speechSynthesis.speak(utter);
+  });
+  if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged = ()=>{}; }
+
+  updateCounts();
+  window.__voicecraftGetTranslateOriginal = () => originalBox.value;
+  window.__voicecraftGetTranslateTranslation = () => translatedBox.textContent;
+}
+
+/* ================= ASK AI ================= */
+  document.addEventListener('keydown',e=>{if(!document.getElementById('page-translate').classList.contains('active'))return;if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&e.key.toLowerCase()==='z'){e.preventDefault();undoTranslate();}else if((e.ctrlKey||e.metaKey)&&((e.shiftKey&&e.key.toLowerCase()==='z')||e.key.toLowerCase()==='y')){e.preventDefault();redoTranslate();}});
+
+function initAskAI(){
+  const providerSel = document.getElementById('ai-provider');
+  const keyRow = document.getElementById('ai-key-row');
+  const endpointRow = document.getElementById('ai-endpoint-row');
+  const modelRow = document.getElementById('ai-model-row');
+  const keyInput = document.getElementById('ai-apikey');
+  const endpointInput = document.getElementById('ai-endpoint');
+  const modelInput = document.getElementById('ai-model');
+  const hintEl = document.getElementById('ai-provider-hint');
+  const sourceSel = document.getElementById('ai-source');
+  const sourceCount = document.getElementById('ai-source-count');
+  const chatEl = document.getElementById('aiChat');
+  const questionBox = document.getElementById('ai-question');
+  const sendBtn = document.getElementById('ai-send-btn');
+  const clearChatBtn = document.getElementById('ai-clear-btn');
+  const statusEl = document.getElementById('ai-status');
+  const aiLiveText = document.getElementById('ai-live-text');
+  const aiLiveStatus = document.getElementById('ai-live-status');
+  const quickPromptsEl = document.getElementById('aiQuickPrompts');
+
+  const PROVIDER_DEFAULTS = {
+    openai:    { endpoint:'https://api.openai.com/v1/chat/completions', modelPlaceholder:'e.g. gpt-4o-mini' },
+    anthropic: { modelPlaceholder:'e.g. claude-haiku-4-5-20251001' },
+    gemini:    { modelPlaceholder:'e.g. gemini-1.5-flash' }
+  };
+  const HINTS = {
+    browser: 'Uses your browser\'s built-in on-device AI — free, private, no key. Currently only available in recent Chrome/Edge with the on-device model enabled (chrome://flags → "Prompt API for Gemini Nano"), and answers are more limited than a cloud model.',
+    openai: 'Works with OpenAI or any OpenAI-compatible endpoint (Groq, OpenRouter, a local Ollama server, etc). Your key is sent only to the endpoint below, straight from your browser — never through any server of ours.',
+    anthropic: 'Calls the Anthropic API directly from your browser. Your key never leaves this device except to Anthropic.',
+    gemini: 'Calls the Google Gemini API directly from your browser — Google AI Studio gives free-tier keys with no card required.'
+  };
+
+  const QUICK_PROMPTS = ['Summarize this','Explain the key points','List any action items','Simplify the language','What questions does this raise?'];
+  QUICK_PROMPTS.forEach(p=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className='chip'; b.textContent=p;
+    b.addEventListener('click', ()=>{ questionBox.value=p; handleAsk(); });
+    quickPromptsEl.appendChild(b);
+  });
+
+  function updateProviderUI(){
+    const p = providerSel.value;
+    keyRow.style.display = p==='browser' ? 'none':'flex';
+    endpointRow.style.display = p==='openai' ? 'flex':'none';
+    modelRow.style.display = p==='browser' ? 'none':'flex';
+    if(p!=='browser'){
+      modelInput.placeholder = PROVIDER_DEFAULTS[p].modelPlaceholder;
+      if(p==='openai' && !endpointInput.value) endpointInput.value = PROVIDER_DEFAULTS.openai.endpoint;
+    }
+    hintEl.textContent = HINTS[p];
+    saveAISettings();
+  }
+  providerSel.addEventListener('change', updateProviderUI);
+  [keyInput, endpointInput, modelInput].forEach(el=>el.addEventListener('change', saveAISettings));
+
+  function saveAISettings(){
+    storage.set('voicecraft-ai-settings', JSON.stringify({
+      provider: providerSel.value, key: keyInput.value, endpoint: endpointInput.value, model: modelInput.value
+    }));
+  }
+  function loadAISettings(){
+    const raw = storage.get('voicecraft-ai-settings');
+    if(raw){
+      try{
+        const s = JSON.parse(raw);
+        providerSel.value = s.provider || 'browser';
+        keyInput.value = s.key || '';
+        endpointInput.value = s.endpoint || '';
+        modelInput.value = s.model || '';
+      }catch(e){}
+    }
+    updateProviderUI();
+  }
+
+  function getSourceText(){
+    const v = sourceSel.value;
+    if(v==='dictate') return (window.__voicecraftGetDictateText && window.__voicecraftGetDictateText()) || '';
+    if(v==='orig') return (window.__voicecraftGetTranslateOriginal && window.__voicecraftGetTranslateOriginal()) || '';
+    if(v==='trans') return (window.__voicecraftGetTranslateTranslation && window.__voicecraftGetTranslateTranslation()) || '';
+    return '';
+  }
+  function updateSourceCount(){
+    const t = getSourceText().trim();
+    const words = t ? t.split(/\s+/).length : 0;
+    sourceCount.textContent = t ? `${words} word${words===1?'':'s'} available` : 'No text yet — dictate or translate something first';
+    aiLiveText.textContent=t||'No source text yet. Dictate or translate something first.';
+    aiLiveStatus.textContent=t?`${words} word${words===1?'':'s'} ready for Ask AI`:'Waiting for transcript or translation';
+  }
+  sourceSel.addEventListener('change', updateSourceCount);
+  window.__voicecraftRefreshAISource = updateSourceCount;
+  setInterval(updateSourceCount,450);
+
+  function addMessage(role, text){
+    const div=document.createElement('div');
+    div.className = 'ai-msg ' + role;
+    div.textContent = text;
+    chatEl.appendChild(div);
+    chatEl.scrollTop = chatEl.scrollHeight;
+    return div;
+  }
+
+  async function askBrowserAI(fullPrompt){
+    let session;
+    if(window.LanguageModel && window.LanguageModel.create){
+      session = await window.LanguageModel.create();
+    } else if(window.ai && window.ai.languageModel && window.ai.languageModel.create){
+      session = await window.ai.languageModel.create();
+    } else {
+      throw new Error('Browser AI isn\'t available here yet. Try a recent Chrome/Edge with the on-device model enabled, or switch providers above.');
+    }
+    return await session.prompt(fullPrompt);
+  }
+  async function askOpenAICompatible(prompt, sysPrompt){
+    const key = keyInput.value.trim();
+    const endpoint = endpointInput.value.trim() || PROVIDER_DEFAULTS.openai.endpoint;
+    const model = modelInput.value.trim();
+    if(!key) throw new Error('Add your API key above first.');
+    if(!model) throw new Error('Add a model name above first.');
+    const res = await fetch(endpoint, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+      body: JSON.stringify({ model, messages:[{role:'system',content:sysPrompt},{role:'user',content:prompt}] })
+    });
+    if(!res.ok) throw new Error(`API error (${res.status}). Check your key, endpoint and model name.`);
+    const data = await res.json();
+    return (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '(no response)';
+  }
+  async function askAnthropic(prompt, sysPrompt){
+    const key = keyInput.value.trim();
+    const model = modelInput.value.trim();
+    if(!key) throw new Error('Add your API key above first.');
+    if(!model) throw new Error('Add a model name above first.');
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body: JSON.stringify({ model, max_tokens:1024, system: sysPrompt, messages:[{role:'user',content:prompt}] })
+    });
+    if(!res.ok) throw new Error(`API error (${res.status}). Check your key and model name.`);
+    const data = await res.json();
+    return (data.content||[]).map(b=>b.text||'').join('') || '(no response)';
+  }
+  async function askGemini(prompt, sysPrompt){
+    const key = keyInput.value.trim();
+    const model = modelInput.value.trim() || 'gemini-1.5-flash';
+    if(!key) throw new Error('Add your API key above first.');
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+    const res = await fetch(url, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ contents:[{parts:[{text: sysPrompt+'\n\n'+prompt}]}] })
+    });
+    if(!res.ok) throw new Error(`API error (${res.status}). Check your key and model name.`);
+    const data = await res.json();
+    return (data.candidates && data.candidates[0] && data.candidates[0].content &&
+      data.candidates[0].content.parts.map(p=>p.text).join('')) || '(no response)';
+  }
+
+  let asking = false;
+  async function handleAsk(){
+    if(asking) return;
+    const question = questionBox.value.trim();
+    if(!question) return;
+    const sourceText = getSourceText().trim();
+    if(!sourceText){ showToast('Nothing to ask about yet — dictate or translate some text first'); return; }
+
+    addMessage('user', question);
+    questionBox.value='';
+    statusEl.textContent = 'Thinking…';
+    sendBtn.disabled = true;
+    asking = true;
+
+    const MAX_CHARS = 6000;
+    const trimmedSource = sourceText.length > MAX_CHARS ? sourceText.slice(0, MAX_CHARS) + '…' : sourceText;
+    const sysPrompt = 'You are a helpful assistant answering questions about a piece of transcribed or translated text the user provides. Be concise and clear.';
+    const prompt = `Here is the text:\n"""\n${trimmedSource}\n"""\n\nQuestion: ${question}`;
+
+    try{
+      let answer;
+      const provider = providerSel.value;
+      if(provider==='browser') answer = await askBrowserAI(sysPrompt + '\n\n' + prompt);
+      else if(provider==='openai') answer = await askOpenAICompatible(prompt, sysPrompt);
+      else if(provider==='anthropic') answer = await askAnthropic(prompt, sysPrompt);
+      else if(provider==='gemini') answer = await askGemini(prompt, sysPrompt);
+      addMessage('assistant', (answer||'').trim() || '(no response)');
+    }catch(err){
+      addMessage('assistant', '⚠️ ' + (err && err.message ? err.message : 'Something went wrong.'));
+    }finally{
+      statusEl.textContent = '';
+      sendBtn.disabled = false;
+      asking = false;
+    }
+  }
+  sendBtn.addEventListener('click', handleAsk);
+  questionBox.addEventListener('keydown', e=>{
+    if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); handleAsk(); }
+  });
+  clearChatBtn.addEventListener('click', ()=>{ chatEl.innerHTML=''; });
+
+  loadAISettings();
+  updateSourceCount();
+}
+
+/* ================= MONETIZATION: consent-gated ads (minimal) ================= */
+function initMonetization(){
+  // Replace with your real AdSense publisher ID from adsense.google.com
+  const AD_CLIENT = 'ca-pub-0000000000000000';
+  const ADS_CONFIGURED = /^ca-pub-\d{10,}$/.test(AD_CLIENT) && AD_CLIENT !== 'ca-pub-0000000000000000';
+  const banner = document.getElementById('cookieBanner');
+  const adSlot = document.getElementById('footer-ad-slot');
+  if(!banner || !adSlot) return;
+
+  function loadAds(){
+    if(!ADS_CONFIGURED) return;
+    if(document.getElementById('adsbygoogle-js')){
+      try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){}
+      return;
+    }
+    const s = document.createElement('script');
+    s.id = 'adsbygoogle-js';
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CLIENT}`;
+    s.onload = ()=>{ try{ (window.adsbygoogle = window.adsbygoogle || []).push({}); }catch(e){} };
+    document.head.appendChild(s);
+  }
+  function applyChoice(choice){
+    if(choice==='accepted' && ADS_CONFIGURED){ adSlot.style.display='flex'; loadAds(); }
+    else { adSlot.style.display='none'; }
+  }
+
+  const saved = storage.get('voxoira-ad-consent');
+  if(saved){ banner.style.display='none'; applyChoice(saved); }
+  else{ banner.style.display='flex'; adSlot.style.display='none'; }
+
+  document.getElementById('cookieAccept').addEventListener('click', ()=>{
+    storage.set('voxoira-ad-consent','accepted');
+    banner.style.display='none';
+    applyChoice('accepted');
+  });
+  document.getElementById('cookieDecline').addEventListener('click', ()=>{
+    storage.set('voxoira-ad-consent','declined');
+    banner.style.display='none';
+    applyChoice('declined');
+  });
+  const reopenBtn = document.getElementById('reopenCookieBanner');
+  if(reopenBtn){
+    reopenBtn.addEventListener('click', ()=>{
+      overlay.classList.remove('open'); drawer.classList.remove('open');
+      banner.style.display='flex';
+    });
+  }
+}
+
+setDark(true);
+initDictate();
+initTranslate();
+initAskAI();
+initMonetization();
+})();
+</script>
+</body>
+</html>
