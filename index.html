@@ -1268,7 +1268,16 @@ function initDictate(){
   let undoStack=[]; let redoStack=[];
   let listening=false; let recognition=null; let restartRequested=false; let saveTimer=null;
   // Live speech is kept separate until a sentence finishes or the speaker pauses.
-  let liveInterim=''; let livePauseTimer=null; const LIVE_PAUSE_MS=950;
+  // Android Chrome/WebView can replay/retain old SpeechRecognition results when
+  // continuous recognition is restarted. We avoid that entire class of bugs by
+  // using ONE non-continuous recognition session per utterance.
+  let liveInterim='';
+  let livePauseTimer=null;
+  const LIVE_PAUSE_MS=950; // kept for UI timing compatibility; interim is NEVER committed
+  let recognitionSessionId=0;
+  let sessionFinalReceived=false;
+  let pendingInterim='';
+  let recognitionRestartTimer=null;
 
   function render(displayText){
     editor.value = displayText!==undefined ? displayText : baseText;
@@ -1326,34 +1335,43 @@ function initDictate(){
     editor.selectionStart = editor.selectionEnd = cursor;
   }
   function clearLivePauseTimer(){ clearTimeout(livePauseTimer); livePauseTimer=null; }
+
   function resetLiveTranscriptionCard(status){
     liveInterim='';
+    pendingInterim='';
     clearLivePauseTimer();
     liveCard.classList.remove('listening');
     liveText.textContent='Start the microphone and speak. Live words will appear instantly.';
     liveStatus.textContent=status || (listening ? 'Listening… ready for your next sentence' : 'Ready — your words will appear here while you speak');
   }
-  function commitPausedLiveSpeech(){
-    clearLivePauseTimer();
-    const text=liveInterim.trim();
-    if(!text) return;
-    commitChunk(text);
-    // The live card is only for the CURRENT sentence. Once it is committed,
-    // clear it immediately so the next spoken sentence starts fresh.
-    resetLiveTranscriptionCard(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here while you speak');
-  }
+
+  // Interim speech is DISPLAY ONLY. It must never be committed to the document,
+  // because Android may later return the exact same phrase as a final result.
   function renderWithInterim(interim){
-    liveInterim=interim||'';
-    // Keep the main transcript continuously visible, while the current unfinished
-    // phrase is highlighted in the dedicated Live Transcription card.
-    const combined=baseText.slice(0,cursor)+(liveInterim||'')+baseText.slice(cursor);
-    if(!liveInterim){ render(); liveText.textContent=baseText.trim()||'Start the microphone and speak. Live words will appear instantly.'; return; }
-    render(combined); liveCard.classList.add('listening');
-    liveText.textContent=liveInterim.trim()||'Listening…';
+    liveInterim=(interim||'').trim();
+    pendingInterim=liveInterim;
+    if(!liveInterim){
+      liveCard.classList.remove('listening');
+      liveText.textContent=baseText.trim()||'Start the microphone and speak. Live words will appear instantly.';
+      return;
+    }
+    liveCard.classList.add('listening');
+    liveText.textContent=liveInterim;
     liveStatus.textContent='Speaking… live words are appearing now';
-    clearLivePauseTimer();
-    livePauseTimer=setTimeout(commitPausedLiveSpeech,LIVE_PAUSE_MS);
   }
+
+  function commitPendingAfterEnd(sessionId){
+    // Only used when Android ends a session without ever delivering a final
+    // result. Wait briefly so a delayed final result gets first chance to arrive.
+    setTimeout(()=>{
+      if(sessionId!==recognitionSessionId || sessionFinalReceived || !listening) return;
+      const text=(pendingInterim||'').trim();
+      pendingInterim=''; liveInterim='';
+      if(text) commitChunk(text);
+      resetLiveTranscriptionCard('Listening… ready for your next sentence');
+    },300);
+  }
+
   function doUndo(){
     if(undoStack.length===0) return;
     redoStack.push({text:baseText, cursor});
@@ -1407,54 +1425,139 @@ function initDictate(){
   });
   document.getElementById('d-fontSize').addEventListener('input', e=>{ editor.style.fontSize=e.target.value+'px'; });
 
-  if(SR){
-    recognition = new SR();
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = langSelect.value;
+  function createDictationRecognition(){
+    if(!SR) return null;
 
-    recognition.onresult = (event)=>{
-      let interim='';
-      for(let i=event.resultIndex;i<event.results.length;i++){
-        const res=event.results[i];
-        if(res.isFinal){
-          // Final browser speech is committed to the main transcript, then the
-          // dedicated live card is cleared for the next sentence.
-          clearLivePauseTimer();
-          liveInterim='';
-          commitChunk(res[0].transcript);
-          resetLiveTranscriptionCard(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here while you speak');
-        } else interim += res[0].transcript;
+    const sessionId=++recognitionSessionId;
+    const r=new SR();
+
+    // CRITICAL MOBILE FIX:
+    // continuous=false gives Android one bounded result set per utterance.
+    // We then create a fresh recognizer after onend. This prevents Android from
+    // replaying old final results when a continuous recognizer is restarted.
+    r.continuous=false;
+    r.interimResults=true;
+    r.maxAlternatives=1;
+    r.lang=langSelect.value;
+
+    sessionFinalReceived=false;
+    pendingInterim='';
+    clearLivePauseTimer();
+
+    r.onstart=()=>{
+      if(sessionId!==recognitionSessionId) return;
+      setListeningUI(true);
+    };
+
+    r.onresult=(event)=>{
+      if(sessionId!==recognitionSessionId) return;
+
+      // With continuous=false there is normally one active result. Use only the
+      // current result instead of iterating the browser's historical result list.
+      const index=event.resultIndex >= 0 ? event.resultIndex : 0;
+      const result=event.results[index];
+      if(!result) return;
+
+      const text=(result[0] && result[0].transcript || '').trim();
+      if(!text) return;
+
+      if(result.isFinal){
+        sessionFinalReceived=true;
+        pendingInterim='';
+        liveInterim='';
+        clearLivePauseTimer();
+
+        commitChunk(text);
+        resetLiveTranscriptionCard(
+          listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here while you speak'
+        );
+      } else {
+        // NEVER commit interim text. Android can emit the same text again as final.
+        renderWithInterim(text);
       }
-      if(interim) renderWithInterim(interim);
     };
-    recognition.onend = ()=>{
-      // Chrome/Edge can end recognition after a short silence even with continuous=true.
-      // Promote any unfinished phrase before restarting so pauses never lose words.
-      if(liveInterim.trim()) commitPausedLiveSpeech();
-      if(restartRequested && listening){ try{recognition.start();}catch(e){} }
-      else { setListeningUI(false); render(); }
+
+    r.onerror=(event)=>{
+      if(sessionId!==recognitionSessionId) return;
+      if(event.error==='not-allowed' || event.error==='service-not-allowed'){
+        restartRequested=false;
+        showToast('Microphone access was blocked');
+        setListeningUI(false);
+      } else if(event.error==='audio-capture'){
+        showToast('No microphone input detected — check your microphone');
+      }
+      // no-speech, aborted, and transient network errors are allowed to end;
+      // onend decides whether another fresh session is needed.
     };
-    recognition.onerror = (e)=>{
-      if(e.error==='no-speech' || e.error==='audio-capture') return;
-      if(e.error==='not-allowed' || e.error==='service-not-allowed'){ showToast('Microphone access was blocked'); stopRecognition(); }
+
+    r.onend=()=>{
+      if(sessionId!==recognitionSessionId) return;
+      recognition=null;
+
+      if(restartRequested && listening){
+        const hasPending=!sessionFinalReceived && pendingInterim.trim();
+        if(hasPending) commitPendingAfterEnd(sessionId);
+        clearTimeout(recognitionRestartTimer);
+        recognitionRestartTimer=setTimeout(()=>{
+          if(sessionId!==recognitionSessionId || !restartRequested || !listening) return;
+          startRecognition();
+        },hasPending ? 360 : 120);
+      } else {
+        setListeningUI(false);
+        render();
+      }
     };
+
+    recognition=r;
+    return r;
+  }
+
+  if(SR){
+    // Create the first bounded recognition session when the user starts dictating.
   } else {
-    micBtn.disabled = true;
+    micBtn.disabled=true;
   }
 
   function startRecognition(){
+    if(!SR) return;
+
+    restartRequested=true;
+    clearTimeout(recognitionRestartTimer);
+
+    // If a recognizer is already running, do not create a second one.
+    if(recognition) return;
+
+    recognition=createDictationRecognition();
     if(!recognition) return;
-    recognition.lang = langSelect.value; restartRequested=true;
-    try{ recognition.start(); }catch(e){}
-    setListeningUI(true);
+
+    try{
+      recognition.start();
+      setListeningUI(true);
+    }catch(e){
+      recognition=null;
+      setTimeout(()=>{
+        if(restartRequested && listening) startRecognition();
+      },250);
+    }
   }
+
   function stopRecognition(){
-    if(!recognition) return;
+    restartRequested=false;
+    clearTimeout(recognitionRestartTimer);
     clearLivePauseTimer();
-    if(liveInterim.trim()) commitPausedLiveSpeech();
-    restartRequested=false; recognition.stop(); setListeningUI(false); render();
+
+    // Keep the current session alive until onend. SpeechRecognition.stop()
+    // normally delivers a final result first; invalidating the session here
+    // would discard that final result.
+    const r=recognition;
+    if(r){
+      try{ r.stop(); }catch(e){ try{ r.abort(); }catch(_){} }
+    } else {
+      setListeningUI(false);
+      render();
+    }
   }
+
   function setListeningUI(on){
     listening=on;
     micWrap.classList.toggle('listening',on);
@@ -1466,10 +1569,15 @@ function initDictate(){
     if(!on) resetLiveTranscriptionCard('Ready — your words will appear here while you speak');
     micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
   }
-  micBtn.addEventListener('click', ()=>{ if(!recognition) return; if(listening) stopRecognition(); else startRecognition(); });
+  micBtn.addEventListener('click', ()=>{
+    if(listening) stopRecognition();
+    else startRecognition();
+  });
   langSelect.addEventListener('change', ()=>{
-    if(recognition) recognition.lang = langSelect.value;
-    if(listening){ stopRecognition(); startRecognition(); }
+    if(listening){
+      stopRecognition();
+      startRecognition();
+    }
   });
   dictStop = stopRecognition;
 
@@ -1665,7 +1773,14 @@ function initTranslate(){
   function undoTranslate(){if(!translateUndoStack.length)return;translateRedoStack.push(snapshotTranslate());restoreTranslateSnapshot(translateUndoStack.pop());}
   function redoTranslate(){if(!translateRedoStack.length)return;translateUndoStack.push(snapshotTranslate());restoreTranslateSnapshot(translateRedoStack.pop());}
   // Final text goes to the source/translation panes; the unfinished phrase stays in Live Speech.
-  let liveInterim=''; let livePauseTimer=null; const LIVE_PAUSE_MS=950;
+  // Use one non-continuous recognition session per utterance on mobile.
+  // Interim text is preview-only and is never committed.
+  let liveInterim='';
+  let livePauseTimer=null;
+  const LIVE_PAUSE_MS=950;
+  let recognitionSessionId=0;
+  let sessionFinalReceived=false;
+  let pendingInterim='';
 
   function updateCounts(){
     const words = originalBox.value.trim().length ? originalBox.value.trim().split(/\s+/).length : 0;
@@ -1797,86 +1912,153 @@ function initTranslate(){
     // the sentence is committed so the next spoken sentence starts clean.
     resetTranslateLiveSpeech(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your spoken words will appear here instantly');
   }
-  if(SR){
-    recognition=new SR();
-    recognition.continuous=true; recognition.interimResults=true;
-    recognition.lang = langMeta(sourceSel.value).recog;
-    recognition.onresult=(event)=>{
-      let finalChunk=''; let interim='';
-      for(let i=event.resultIndex;i<event.results.length;i++){
-        const res=event.results[i];
-        if(res.isFinal) finalChunk += res[0].transcript; else interim += res[0].transcript;
-      }
-      if(finalChunk){
-        clearTranslateLivePauseTimer();
+  function createTranslateRecognition(){
+    if(!SR) return null;
+
+    const sessionId=++recognitionSessionId;
+    const r=new SR();
+
+    r.continuous=false;
+    r.interimResults=true;
+    r.maxAlternatives=1;
+    r.lang=langMeta(sourceSel.value).recog;
+
+    sessionFinalReceived=false;
+    pendingInterim='';
+    recognitionRunning=false;
+    clearTranslateLivePauseTimer();
+
+    r.onstart=()=>{
+      if(sessionId!==recognitionSessionId) return;
+      recognitionRunning=true;
+      recognitionRestartAttempts=0;
+    };
+
+    r.onresult=(event)=>{
+      if(sessionId!==recognitionSessionId) return;
+
+      const index=event.resultIndex >= 0 ? event.resultIndex : 0;
+      const result=event.results[index];
+      if(!result) return;
+
+      const text=(result[0] && result[0].transcript || '').trim();
+      if(!text) return;
+
+      if(result.isFinal){
+        sessionFinalReceived=true;
+        pendingInterim='';
         liveInterim='';
-        appendFinalTranslationSpeech(finalChunk);
-        resetTranslateLiveSpeech(listening ? 'Sentence saved — speak your next sentence' : 'Ready — your spoken words will appear here instantly');
-      }
-      if(interim.trim()){
-        // IMPORTANT: show ONLY the current unfinished sentence here. The
-        // previously committed sentences stay in the Original Text pane.
-        liveInterim=interim;
-        liveText.textContent=liveInterim.trim() || 'Listening…';
-        liveCard.classList.add('listening'); liveStatus.textContent='Speaking… live words are appearing now';
-        queueLivePreview(liveInterim);
         clearTranslateLivePauseTimer();
-        livePauseTimer=setTimeout(commitPausedTranslateSpeech,LIVE_PAUSE_MS);
+
+        appendFinalTranslationSpeech(text);
+        resetTranslateLiveSpeech(
+          listening ? 'Sentence saved — speak your next sentence' : 'Ready — your words will appear here instantly'
+        );
+      } else {
+        // Preview only. Never append interim speech to Original Text.
+        liveInterim=text;
+        pendingInterim=text;
+        liveText.textContent=text;
+        liveCard.classList.add('listening');
+        liveStatus.textContent='Speaking… live words are appearing now';
+        queueLivePreview(text);
       }
     };
-    recognition.onstart=()=>{ recognitionRunning=true; recognitionRestartAttempts=0; };
-    recognition.onend=()=>{
+
+    r.onerror=(event)=>{
+      if(sessionId!==recognitionSessionId) return;
+      if(event.error==='not-allowed' || event.error==='service-not-allowed'){
+        restartRequested=false;
+        micStatus.classList.add('err');
+        micStatus.innerHTML='Microphone access was blocked — allow microphone access in your browser';
+        setListeningUI(false);
+      } else if(event.error==='audio-capture'){
+        micStatus.classList.add('err');
+        micStatus.innerHTML='No microphone input detected — check your microphone';
+      } else if(event.error==='network'){
+        translateState.textContent='Speech service connection interrupted — reconnecting…';
+      }
+    };
+
+    r.onend=()=>{
+      if(sessionId!==recognitionSessionId) return;
       recognitionRunning=false;
-      if(liveInterim.trim()) commitPausedTranslateSpeech();
+      recognition=null;
+
       if(restartRequested && listening){
+        // Only use interim as a last-resort fallback if no final result arrived.
+        // A delayed final result has priority.
+        const hasPending=!sessionFinalReceived && pendingInterim.trim();
+        if(hasPending){
+          setTimeout(()=>{
+            if(sessionId!==recognitionSessionId || sessionFinalReceived || !listening) return;
+            const text=pendingInterim.trim();
+            pendingInterim=''; liveInterim='';
+            if(text) appendFinalTranslationSpeech(text);
+            resetTranslateLiveSpeech('Listening… ready for your next sentence');
+          },300);
+        }
+
         clearTimeout(recognitionRestartTimer);
         recognitionRestartTimer=setTimeout(()=>{
-          if(!restartRequested || !listening || recognitionRunning) return;
-          try{ recognition.start(); recognitionRestartAttempts=0; }
-          catch(e){
-            recognitionRestartAttempts++;
-            recognitionRestartTimer=setTimeout(()=>{ if(restartRequested && listening && !recognitionRunning) startRecognition(); }, Math.min(1500,200+recognitionRestartAttempts*200));
-          }
-        },180);
-      } else setListeningUI(false);
+          if(sessionId!==recognitionSessionId || !restartRequested || !listening || recognitionRunning) return;
+          startRecognition();
+        },hasPending ? 360 : 120);
+      } else {
+        setListeningUI(false);
+      }
     };
-    recognition.onerror=(e)=>{
-      if(e.error==='not-allowed'||e.error==='service-not-allowed'){
-        micStatus.classList.add('err'); micStatus.innerHTML='Microphone access was blocked — allow microphone access in your browser';
-        stopRecognition(); return;
-      }
-      if(e.error==='audio-capture'){
-        micStatus.classList.add('err'); micStatus.innerHTML='No microphone input detected — check your microphone';
-        return;
-      }
-      if(e.error==='network'){
-        translateState.textContent='Speech service connection interrupted — reconnecting…';
-        return;
-      }
-      // no-speech, aborted and transient browser errors are allowed to end the
-      // recognition instance; onend will restart it while Live Translate is on.
-    };
+
+    recognition=r;
+    return r;
+  }
+
+  if(SR){
+    // A session is created lazily by startRecognition().
   } else {
-    micBtn.disabled = true;
+    micBtn.disabled=true;
   }
 
   function startRecognition(){
+    if(!SR) return;
+
+    restartRequested=true;
+    micStatus.classList.remove('err');
+    setListeningUI(true);
+    clearTimeout(recognitionRestartTimer);
+
+    if(recognitionRunning || recognition) return;
+
+    recognition=createTranslateRecognition();
     if(!recognition) return;
-    restartRequested=true; micStatus.classList.remove('err'); setListeningUI(true);
-    if(recognitionRunning) return;
-    clearTimeout(recognitionRestartTimer); recognition.lang=langMeta(sourceSel.value).recog;
-    try{ recognition.start(); }catch(e){
+
+    try{
+      recognition.start();
+    }catch(e){
+      recognition=null;
+      recognitionRunning=false;
       recognitionRestartAttempts++;
-      recognitionRestartTimer=setTimeout(()=>{ if(restartRequested && listening && !recognitionRunning) startRecognition(); }, Math.min(1500,200+recognitionRestartAttempts*200));
+      setTimeout(()=>{
+        if(restartRequested && listening) startRecognition();
+      },Math.min(1200,250+recognitionRestartAttempts*200));
     }
   }
 
   function stopRecognition(){
-    if(!recognition) return;
-    restartRequested=false; clearTimeout(recognitionRestartTimer); clearTranslateLivePauseTimer(); clearLiveTranslationPreview();
-    if(liveInterim.trim()) commitPausedTranslateSpeech();
-    try{ if(recognitionRunning) recognition.stop(); else recognition.abort(); }catch(e){}
-    recognitionRunning=false; setListeningUI(false);
+    restartRequested=false;
+    clearTimeout(recognitionRestartTimer);
+    clearTranslateLivePauseTimer();
+    clearLiveTranslationPreview();
+
+    // Keep the current session alive until onend so a final result emitted by
+    // stop() is still accepted and committed exactly once.
+    const r=recognition;
+    if(r){
+      try{ r.stop(); }catch(e){ try{ r.abort(); }catch(_){} }
+    } else {
+      recognitionRunning=false;
+      setListeningUI(false);
+    }
   }
 
   function setListeningUI(on){
@@ -1889,7 +2071,10 @@ function initTranslate(){
     if(!on) resetTranslateLiveSpeech('Ready — your spoken words will appear here instantly');
     micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
   }
-  micBtn.addEventListener('click', ()=>{ if(!recognition) return; if(listening) stopRecognition(); else startRecognition(); });
+  micBtn.addEventListener('click', ()=>{
+    if(listening) stopRecognition();
+    else startRecognition();
+  });
   trStop = stopRecognition;
 
   originalBox.addEventListener('input', ()=>{
@@ -1905,7 +2090,6 @@ function initTranslate(){
   sourceSel.addEventListener('change', ()=>{
     liveTranslationGeneration++; // discard queued translations in the old language pair
     updateLangLabels();
-    if(recognition) recognition.lang = langMeta(sourceSel.value).recog;
     if(listening){ stopRecognition(); startRecognition(); }
     if(originalBox.value.trim()) scheduleTranslate(200);
   });
@@ -1923,7 +2107,6 @@ function initTranslate(){
     const s=sourceSel.value, t=targetSel.value;
     sourceSel.value=t; targetSel.value=s;
     updateLangLabels();
-    if(recognition) recognition.lang = langMeta(sourceSel.value).recog;
     if(listening){ stopRecognition(); startRecognition(); }
     const origText=originalBox.value, transText=translatedBox.textContent;
     if(transText.trim()){
