@@ -1,4 +1,4 @@
-name: Update ads.txt
+name: Update Ezoic ads.txt
 
 on:
   schedule:
@@ -18,7 +18,7 @@ jobs:
 
       - name: Download Ezoic ads.txt
         run: |
-          curl -L "https://srv.adstxtmanager.com/19390/voxoira.com" -o ads.txt
+          curl -fL "https://srv.adstxtmanager.com/19390/voxoira.com" -o ads.txt
 
       - name: Commit changes
         run: |
@@ -28,8 +28,9 @@ jobs:
           git add ads.txt
 
           if git diff --cached --quiet; then
-            echo "ads.txt is already up to date."
+            echo "No changes to ads.txt"
           else
-            git commit -m "Update ads.txt"
+            git commit -m "Update Ezoic ads.txt"
             git push
           fi
+
