@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Voxoira — Free Voice to Text, Translator &amp; AI Transcript Tool</title>
 <meta name="description" content="Free online voice to text (speech to text), live language translator, and AI transcript assistant. No sign-up, no install — everything runs in your browser.">
 <meta name="keywords" content="voice to text, speech to text, online dictation, voice translator, live translation, transcribe audio, AI transcript summarizer, free dictation tool">
@@ -17,33 +17,21 @@
 <meta property="og:url" content="https://voxoira.com/">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
-<script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
-<script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
 <meta name="twitter:title" content="Voxoira — Free Voice to Text, Translator & AI Transcript Tool">
 <meta name="twitter:description" content="Speak, translate live, and ask AI about your transcript — free, no sign-up, runs entirely in your browser.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E8A33D'/%3E%3Cstop offset='1' stop-color='%234FA79B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='%2314171C'/%3E%3Cpath d='M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z' fill='none' stroke='url(%23g)' stroke-width='1.8'/%3E%3Cpath d='M6.5 11.5a5.5 5.5 0 0 0 11 0' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M12 17v3M9 20h6' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237657F6'/%3E%3Cstop offset='0.55' stop-color='%234285F4'/%3E%3Cstop offset='1' stop-color='%2355D9F5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='24' height='24' rx='6' fill='%2320243A'/%3E%3Cpath d='M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z' fill='none' stroke='url(%23g)' stroke-width='1.8'/%3E%3Cpath d='M6.5 11.5a5.5 5.5 0 0 0 11 0' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M12 17v3M9 20h6' fill='none' stroke='url(%23g)' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root{
-  --bg:#14171C; --panel:#1B2027; --panel-2:#20262E; --paper:#191D23; --border:#2A313B;
-  --text:#EDEAE2; --text-muted:#8D93A0;
-  --accent:#E8A33D; --accent-dim:#7A5A28;
-  --accent-2:#4FA79B; --accent-2-dim:#28564F;
-  --accent-3:#9B86E8; --accent-3-dim:#4A3E80;
-  --danger:#D9614F;
-  --ring: rgba(232,163,61,0.28); --ring-2: rgba(79,167,155,0.28);
-  --radius:10px; --mono:'JetBrains Mono', ui-monospace, monospace; --sans:'Space Grotesk', -apple-system, sans-serif;
-  color-scheme: dark;
-}
-:root.light{
-  --bg:#EEF1EF; --panel:#FFFFFF; --panel-2:#F5F6F4; --paper:#FFFFFF; --border:#D9DCD7;
-  --text:#1D2126; --text-muted:#666F78;
-  --accent:#C97D1F; --accent-dim:#F0D3A5;
-  --accent-2:#2E7B71; --accent-2-dim:#CDE7E3;
-  --accent-3:#6E56CF; --accent-3-dim:#E4DCFB;
-  --danger:#B8432F;
-  --ring: rgba(201,125,31,0.18); --ring-2: rgba(46,123,113,0.18);
+  --bg:#FFFFFF; --panel:#FFFFFF; --panel-2:#F7F6F3; --paper:#FFFFFF; --border:#E4E1DA;
+  --text:#16140F; --text-muted:#6B665B;
+  --accent:#C93A1B; --accent-dim:#F3CFC4;
+  --accent-2:#16140F; --accent-2-dim:#E4E1DA;
+  --accent-3:#8A5A2B; --accent-3-dim:#EDE0D0;
+  --danger:#C93A1B;
+  --ring: transparent; --ring-2: transparent;
+  --radius:2px; --mono:'IBM Plex Mono', ui-monospace, monospace; --sans:'Public Sans', -apple-system, 'Segoe UI', sans-serif; --serif:'Fraunces', Georgia, 'Times New Roman', serif;
   color-scheme: light;
 }
 *{box-sizing:border-box;}
@@ -311,19 +299,19 @@ select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
 .setup-hero{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;align-items:start;background:radial-gradient(circle at top right,rgba(155,134,232,.16),transparent 45%),var(--panel);border:1px solid var(--border);border-radius:18px;padding:clamp(16px,3vw,22px);margin-bottom:14px;}.setup-hero-icon{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:1.5rem;color:var(--accent-3);background:var(--accent-3-dim);}.setup-hero h2{margin:4px 0 6px;font-size:clamp(1.15rem,3vw,1.45rem);}.setup-hero p,.security-card p,.guide-card p,.guide-card li,.error-grid span{line-height:1.55;overflow-wrap:anywhere;}
 .eyebrow{font-size:.62rem;letter-spacing:.14em;font-weight:700;color:var(--accent-3);}.security-card{display:flex;gap:12px;background:var(--panel);border:1px solid var(--accent-dim);border-radius:14px;padding:14px 16px;margin-bottom:14px;}.security-card>div{min-width:0;}.security-card p{margin:3px 0 0;color:var(--text-muted);font-size:.72rem;}.setup-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:16px;}.setup-step{display:flex;gap:9px;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:11px;}.setup-step>div{min-width:0;}.step-no{width:26px;height:26px;flex:none;border-radius:8px;display:grid;place-items:center;background:var(--accent-3-dim);color:var(--accent-3);font-family:var(--mono);font-size:.7rem;font-weight:700;}.setup-step b{display:block;font-size:.72rem;}.setup-step span:last-child{display:block;color:var(--text-muted);font-size:.62rem;margin-top:2px;}.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.guide-card{min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px;position:relative;overflow:hidden;}.guide-number{font-family:var(--mono);font-size:.66rem;color:var(--accent-3);margin-bottom:5px;}.guide-card h3{font-size:1rem;margin:0 0 5px;}.guide-card ul{padding-left:18px;margin:8px 0 12px;color:var(--text-muted);font-size:.7rem;}.guide-visual{border:1px dashed var(--border);background:var(--paper);border-radius:11px;padding:10px 11px;margin:12px 0;}.guide-visual span,.guide-visual small{display:block;font-size:.58rem;color:var(--text-muted);}.guide-visual div{margin-top:5px;background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:8px;font-family:var(--mono);font-size:.68rem;overflow-wrap:anywhere;}.danger-tip{color:var(--danger)!important;}.error-card,.before-ai{min-width:0;}.error-card{margin-top:14px;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:17px;}.error-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:11px;}.error-grid>div{min-width:0;padding:10px 11px;border-radius:10px;background:var(--panel-2);border:1px solid var(--border);}.error-grid b{display:block;font-size:.7rem;margin-bottom:3px;}.error-grid span{display:block;color:var(--text-muted);font-size:.66rem;}.before-ai{margin-top:14px;background:linear-gradient(135deg,var(--accent-3-dim),var(--panel));border:1px solid var(--accent-3-dim);border-radius:15px;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;}.before-ai h3{margin:3px 0 0;font-size:.95rem;}.check-list{grid-column:1 / -1;display:flex;gap:8px;flex-wrap:wrap;}.check-list span{background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:6px 9px;font-size:.65rem;}.setup-go{grid-column:2;grid-row:1 / span 2;min-height:44px;background:var(--accent-3);color:#1B1330;border:0;border-radius:10px;padding:9px 13px;font-weight:700;cursor:pointer;}
 .drawer{width:min(360px,92vw);max-width:100%;}.cookie-banner{left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));width:auto;max-width:min(640px,calc(100vw - 20px));}.cookie-banner p{min-width:0;}.toast{max-width:calc(100vw - 24px);white-space:normal;text-align:center;}
-@media (width < 768px){
+@media (max-width:767px){
   .navbar{justify-content:flex-start;margin-bottom:18px;scroll-snap-type:x proximity;}.nav-btn{scroll-snap-align:start;}
   .top-actions{margin-left:auto;}.panes{grid-template-columns:1fr;}.pane textarea,.pane .translated-text{min-height:180px;}
   .t-lang-row{flex-wrap:wrap;}.lang-pick{flex-basis:calc(50% - 28px);} #t-swapBtn{margin-top:17px;}
   .setup-row{flex-direction:column;align-items:stretch;gap:6px;}.setup-row label{padding-top:0;}.ai-source-row{align-items:stretch;}.ai-source-row label{width:100%;}.ai-source-row select{width:100%;flex-basis:100%;min-height:42px;}.ai-input-row{flex-direction:column;align-items:stretch;}button.ai-send{width:100%;min-height:44px;}
   .setup-steps,.guide-grid,.error-grid{grid-template-columns:1fr;}.before-ai{grid-template-columns:1fr;}.setup-go{grid-column:1;grid-row:auto;width:100%;}.setup-hero{grid-template-columns:44px minmax(0,1fr);}.setup-hero-icon{width:44px;height:44px;border-radius:12px;}.check-list{grid-column:1;}
 }
-@media (width < 420px){
+@media (max-width:419px){
   .wrap{padding-inline:10px;}.brand{flex-basis:100%;}.top-actions{width:100%;justify-content:flex-end;}.nav-btn{padding-inline:11px;}.nav-btn svg{width:15px;height:15px;}.editor-toolbar{padding:8px;}.size-slider{width:100%;justify-content:flex-end;}.tbtn-group{width:100%;}.lang-pick{flex-basis:100%;}.t-lang-row{justify-content:center;}#t-swapBtn{margin:0 auto;}.pane-tab{padding-inline:10px;}.footer-actions{width:100%;}.footer-actions .pill{flex:1 1 auto;justify-content:center;min-height:40px;}.setup-hero{grid-template-columns:1fr;}.setup-hero-icon{width:42px;height:42px;}.security-card{align-items:flex-start;}.check-list span{flex:1 1 100%;}
 }
-@media (width >= 768px){.wrap{padding-inline:clamp(20px,3vw,28px);}.navbar{overflow-x:visible;}.setup-row{flex-direction:row;}}
-@media (width >= 1024px){.wrap{max-width:min(920px,calc(100vw - 48px));}}
-@media (width >= 1440px){.wrap{max-width:920px;}}
+@media (min-width:768px){.wrap{padding-inline:clamp(20px,3vw,28px);}.navbar{overflow-x:visible;}.setup-row{flex-direction:row;}}
+@media (min-width:1024px){.wrap{max-width:min(920px,calc(100vw - 48px));}}
+@media (min-width:1440px){.wrap{max-width:920px;}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}}
 
 
@@ -341,8 +329,8 @@ select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
 .terms-note{display:flex;gap:10px;align-items:flex-start;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:14px;}
 .terms-note span{flex:0 0 auto;font-size:1.05rem;}
 .terms-note p{margin:0;font-size:.9rem;}
-@media (width < 768px){.terms-hero{grid-template-columns:44px minmax(0,1fr);}.terms-hero-icon{width:44px;height:44px;border-radius:12px;}}
-@media (width < 420px){.terms-hero{grid-template-columns:1fr;}.terms-hero-icon{width:42px;height:42px;}}
+@media (max-width:767px){.terms-hero{grid-template-columns:44px minmax(0,1fr);}.terms-hero-icon{width:44px;height:44px;border-radius:12px;}}
+@media (max-width:419px){.terms-hero{grid-template-columns:1fr;}.terms-hero-icon{width:42px;height:42px;}}
 
 
 .footer-link-inline{border:0;background:none;color:var(--accent-3);cursor:pointer;text-decoration:underline;font:inherit;padding:0;}
@@ -359,7 +347,7 @@ select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
 .feature-visual{margin:18px 0 0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--panel);}
 .feature-visual img,.feature-visual svg{display:block;width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;}
 .feature-visual figcaption{padding:9px 12px;color:var(--text-muted);font-size:.75rem;}
-@media (width < 700px){.visual-gallery{grid-template-columns:1fr;}.visual-guide-header{display:block;}.visual-guide-header p{margin-top:5px;}}
+@media (max-width:699px){.visual-gallery{grid-template-columns:1fr;}.visual-guide-header{display:block;}.visual-guide-header p{margin-top:5px;}}
 /* ================= LEGAL / TRUST PAGES ================= */
 .legal-page{max-width:980px;margin:0 auto;}
 .legal-hero{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin-bottom:18px;padding:22px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,var(--panel),var(--panel-2));}
@@ -379,7 +367,7 @@ select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
 .footer-links button{border:0;background:transparent;color:var(--text-muted);cursor:pointer;font:inherit;padding:6px 8px;border-radius:8px;}
 .footer-links button:hover{color:var(--text);background:var(--panel-2);}
 .trust-note{margin-top:14px;padding:13px 15px;border-left:3px solid var(--accent-2);background:var(--panel-2);border-radius:0 10px 10px 0;color:var(--text-muted);font-size:.8rem;line-height:1.6;}
-@media (width < 768px){.legal-grid{grid-template-columns:1fr;}.legal-wide{grid-column:auto;}.legal-hero{grid-template-columns:1fr;}.footer-meta{align-items:flex-start;}.footer-links{width:100%;}}
+@media (max-width:767px){.legal-grid{grid-template-columns:1fr;}.legal-wide{grid-column:auto;}.legal-hero{grid-template-columns:1fr;}.footer-meta{align-items:flex-start;}.footer-links{width:100%;}}
 /* ---- undo / redo / share actions ---- */
 .share-menu{position:fixed;z-index:10000;min-width:220px;max-width:calc(100vw - 24px);padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.28);display:none;}
 .share-menu.open{display:block;}
@@ -390,61 +378,216 @@ select.langsel{min-height:42px;max-width:100%;} .lang-row{max-width:100%;}
 .translate-toolbar .tbtn{width:38px;height:38px;}
 @media (max-width:520px){.translate-toolbar{justify-content:stretch}.translate-toolbar .tbtn,.translate-toolbar .pill{flex:1}.share-menu{left:12px!important;right:12px!important;width:auto;max-width:none;}}
 
-/* Modern 2026 refresh */
-:root{--radius:16px !important;}
-.editor-card,.pane,.legal-card,.terms-card,.feature-visual,.visual-frame,.ai-chat,.ai-setup{box-shadow:0 20px 50px rgba(0,0,0,.18);border-radius:18px!important;}
-.navbar{backdrop-filter:blur(14px);position:sticky;top:0;background:rgba(20,23,28,.75);z-index:50;}
-.mic-btn,.pill,.icon-btn{transition:all .25s ease;}
-body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), transparent 30%), radial-gradient(circle at top left, rgba(232,163,61,.08), transparent 30%), var(--bg);}
+/* ---- editorial restyle: flat paper, hairlines, one accent ---- */
+.navbar{position:sticky;top:0;background:var(--bg);z-index:50;}
+.live-speech-card,.ai-live-card,.live-speech-text,.cookie-banner,.nav-btn,.setup-hero,.security-card,.contact-box,.trust-note{border-radius:3px!important;box-shadow:none!important;}
+.cookie-banner{border-color:var(--text);background:var(--panel);}
+body,body[class]{background:var(--bg)!important;font-size:15px;line-height:1.55;}
+.brand h1,.legal-hero h2,.terms-hero h2,.setup-hero h2,.page h2,.page h3,.legal-card h3,.terms-card h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;}
+.brand h1{font-size:1.5rem;}
+.brand-dot{width:9px;height:9px;border-radius:0;background:var(--accent);box-shadow:none;transform:rotate(45deg);}
+.icon-btn,.pill,.tbtn,button,select,input,textarea{border-radius:var(--radius)!important;}
+.icon-btn{box-shadow:none;}
+.navbar{justify-content:flex-start;gap:0;border-bottom:1px solid var(--text);}
+.nav-btn{font-weight:500;letter-spacing:.02em;padding:11px 18px;border-bottom-width:3px;margin-bottom:-1px;}
+.nav-btn[data-tab].active{border-bottom-color:var(--accent)!important;}
+.editor-card,.pane,.legal-card,.terms-card,.feature-visual,.visual-frame,.ai-chat,.ai-setup,.share-menu{box-shadow:none!important;border-radius:var(--radius)!important;border:1px solid var(--border);}
+.live-speech-card,.ai-live-card,.setup-hero,.terms-hero,.legal-hero{background:var(--panel)!important;border-radius:var(--radius)!important;box-shadow:none!important;}
+.ring{display:none;}
+button.mic-btn{border-radius:50%!important;background:var(--paper);border:1.5px solid var(--text);box-shadow:none;}
+button.mic-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.mic-btn-wrap.listening button.mic-btn{animation:none;}
+.eyebrow{letter-spacing:.12em;color:var(--accent);font-weight:600;}
+.support-btn{border:1px solid var(--text);background:transparent;color:var(--text);}
+.footer-links button{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border);}
+::selection{background:var(--accent);color:#fff;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
+/* ---- white redesign ---- */
+.wrap{max-width:880px;padding-top:0;}
+header.top{padding:22px 0 16px;margin-bottom:0;border-top:6px solid var(--text);}
+.brand h1{font-size:1.9rem;letter-spacing:-.02em;}
+.brand span.sub{font-size:.78rem;margin-top:3px;}
+.navbar{border-bottom:1px solid var(--border);margin-bottom:30px;}
+.nav-btn{padding:13px 22px 12px;font-size:.88rem;}
+.nav-btn.active{font-weight:600;}
+.editor-card,.pane,.legal-card,.terms-card,.ai-chat,.ai-setup,.live-speech-card,.ai-live-card,.setup-hero,.terms-hero,.legal-hero{border-color:var(--border)!important;background:#fff!important;}
+.editor-toolbar,.editor-footer,.pane-head,.pane-tab{background:var(--panel-2);}
+.live-speech-text{background:var(--panel-2)!important;border-color:var(--border)!important;}
+button.mic-btn{width:84px;height:84px;background:var(--text);border-color:var(--text);color:#fff;}
+button.mic-btn:hover{background:var(--accent);border-color:var(--accent);}
+select,input,textarea{background:#fff;border:1px solid #CFCAC0;}
+select:focus,input:focus,textarea:focus{border-color:var(--text);outline:none;}
+.pill,.tbtn{border:1px solid #CFCAC0;background:#fff;}
+.pill:hover,.tbtn:hover{border-color:var(--text);}
+.site-footer{border-top:1px solid var(--text);}
+.cookie-banner{box-shadow:0 2px 0 var(--text)!important;}
+
+.ui-lang{display:flex;flex-wrap:wrap;gap:4px;padding:14px 0 0;}
+.ui-lang button{border:1px solid var(--border);background:#fff;color:var(--text-muted);font:inherit;font-size:.78rem;padding:5px 10px;cursor:pointer;border-radius:2px!important;}
+.ui-lang button:hover{color:var(--text);border-color:var(--text);}
+.ui-lang button[aria-pressed="true"]{background:var(--text);color:#fff;border-color:var(--text);}
+.ui-lang{align-items:center;}
+.ui-lang select{font-size:.78rem;padding:5px 8px;min-height:0;}
+[dir=rtl] .footer-meta,[dir=rtl] .ui-lang{direction:rtl;}
+.feature-visual svg,.visual-frame svg{aspect-ratio:2/1!important;object-fit:contain!important;}
+
+/* ============ Voxoira SaaS theme: pastel purple / blue / cyan (overrides earlier layers) ============ */
+:root,:root.light{
+  --purple:#7657F6; --violet:#5145CD; --blue:#4285F4; --cyan:#55D9F5; --lavender:#F0EEFF; --soft-blue:#F4F7FF;
+  --bg:#FFFFFF; --panel:#FFFFFF; --panel-2:#F4F7FF; --paper:#FFFFFF; --border:#E7E9F5;
+  --text:#20243A; --text-muted:#747B94;
+  --accent:#7657F6; --accent-dim:#F0EEFF; --accent-2:#4285F4; --accent-2-dim:#E8F1FE; --accent-3:#5145CD; --accent-3-dim:#F0EEFF;
+  --danger:#D6455D; --ring:rgba(118,87,246,.22); --ring-2:rgba(85,217,245,.28);
+  --grad:linear-gradient(135deg,#7657F6 0%,#4285F4 100%);
+  --grad-soft:linear-gradient(135deg,#F0EEFF 0%,#F4F7FF 55%,#E8FAFE 100%);
+  --shadow-sm:0 1px 2px rgba(81,69,205,.06),0 6px 18px -6px rgba(81,69,205,.12);
+  --shadow-md:0 14px 36px -12px rgba(81,69,205,.28);
+  --radius:14px; --r-lg:22px; --r-pill:999px;
+  --sans:'Plus Jakarta Sans','Public Sans',-apple-system,'Segoe UI',system-ui,sans-serif; --serif:var(--sans);
+}
+html,body{overflow-x:clip;}
+body,body[class]{background:linear-gradient(180deg,#F4F7FF 0,#FFFFFF 420px)!important;color:var(--text);font-size:15px;}
+.wrap{max-width:980px;}
+h1,h2,h3,.page h2,.page h3,.brand h1,.legal-card h3,.terms-card h3,.legal-hero h2,.terms-hero h2,.setup-hero h2{font-family:var(--sans);font-weight:700;letter-spacing:-.02em;color:var(--text);}
+header.top{border-top:0;padding:22px 0 14px;}
+.brand h1{font-size:1.7rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.brand-dot{width:14px;height:14px;border-radius:50%;transform:none;background:var(--grad);box-shadow:0 0 0 4px var(--ring-2);}
+.icon-btn{border-radius:12px!important;border:1px solid var(--border);background:#fff;box-shadow:var(--shadow-sm);}
+.icon-btn:hover{border-color:var(--purple);color:var(--violet);}
+
+/* navigation: segmented pill bar */
+.navbar{position:sticky;top:8px;z-index:50;display:flex;gap:4px;padding:5px;margin:4px 0 28px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:var(--r-pill)!important;box-shadow:var(--shadow-sm);overflow-x:auto;scrollbar-width:none;}
+.navbar::-webkit-scrollbar{display:none;}
+.nav-btn{flex:1 1 0;min-width:max-content;display:flex;align-items:center;justify-content:center;gap:7px;border:0!important;border-radius:var(--r-pill)!important;margin:0;padding:10px 18px;font-size:.88rem;font-weight:600;letter-spacing:0;color:var(--text-muted);background:transparent;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s;}
+.nav-btn:hover{background:var(--lavender);color:var(--violet);}
+.nav-btn.active,.nav-btn[data-tab].active{background:var(--grad)!important;color:#fff!important;box-shadow:0 8px 20px -8px rgba(118,87,246,.6)!important;border-bottom-color:transparent!important;}
+
+/* surfaces */
+.editor-card,.pane,.legal-card,.terms-card,.ai-chat,.ai-setup,.live-speech-card,.ai-live-card,.saved-docs-card,.guide-card,.security-card,.error-card,.before-ai,.contact-box,.trust-note,.feature-visual,.visual-frame,.share-menu{background:#fff!important;border:1px solid var(--border)!important;border-radius:var(--r-lg)!important;box-shadow:var(--shadow-sm)!important;}
+.setup-hero,.terms-hero,.legal-hero{background:var(--grad-soft)!important;border:1px solid var(--border)!important;border-radius:var(--r-lg)!important;box-shadow:var(--shadow-sm)!important;}
+.setup-hero-icon,.terms-hero-icon,.legal-hero-icon{background:var(--grad)!important;color:#fff!important;border-radius:16px!important;}
+.editor-toolbar,.editor-footer,.pane-head,.pane-tab{background:var(--soft-blue);border-color:var(--border);}
+.live-speech-text{background:var(--lavender)!important;border:1px solid var(--border)!important;border-radius:14px!important;color:var(--text);}
+.live-speech-card.listening{border-color:var(--purple)!important;box-shadow:0 0 0 4px var(--ring),var(--shadow-sm)!important;}
+.eyebrow{color:var(--violet);letter-spacing:.12em;font-weight:700;}
+.cookie-banner{background:#fff;border:1px solid var(--border)!important;border-radius:18px!important;box-shadow:var(--shadow-md)!important;}
+
+/* microphone */
+.ring{display:block;border-color:var(--cyan);}
+button.mic-btn{width:clamp(72px,20vw,88px);height:clamp(72px,20vw,88px);background:var(--grad)!important;border:0!important;color:#fff!important;box-shadow:0 14px 32px -10px rgba(118,87,246,.6);transition:transform .2s,box-shadow .2s;}
+button.mic-btn:hover{transform:scale(1.05);box-shadow:0 18px 38px -10px rgba(66,133,244,.65);}
+button.mic-btn.active,.mic-btn-wrap.listening button.mic-btn{background:var(--grad)!important;box-shadow:0 0 0 8px var(--ring-2),0 14px 32px -10px rgba(118,87,246,.6);}
+
+/* buttons */
+.pill,.tbtn,button.chip{background:#fff;color:var(--text);border:1px solid var(--border)!important;transition:background .18s,border-color .18s,color .18s,transform .18s,box-shadow .18s;}
+.pill{border-radius:var(--r-pill)!important;}
+.tbtn{border-radius:10px!important;}
+button.chip{border-radius:var(--r-pill)!important;background:var(--lavender);color:var(--violet);border-color:transparent!important;}
+.pill:hover:not(:disabled),.tbtn:hover:not(:disabled),button.chip:hover{background:var(--lavender);border-color:var(--purple)!important;color:var(--violet);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+button.ai-send,.support-btn,a.support-btn{background:var(--grad)!important;color:#fff!important;border:0!important;border-radius:var(--r-pill)!important;box-shadow:0 10px 24px -10px rgba(118,87,246,.6);}
+button.ai-send:hover:not(:disabled),.support-btn:hover{filter:brightness(1.06);transform:translateY(-1px);}
+button:disabled{opacity:.55;}
+
+/* form controls */
+select,input,textarea{background:#fff;color:var(--text);border:1px solid var(--border)!important;border-radius:12px!important;transition:border-color .18s,box-shadow .18s;}
+select:focus,input:focus,textarea:focus{border-color:var(--purple)!important;box-shadow:0 0 0 4px var(--ring);outline:none;}
+.pane textarea,.pane .translated-text{background:#fff;}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;}
+::selection{background:var(--purple);color:#fff;}
+
+/* language chips + footer */
+.ui-lang button{border-radius:var(--r-pill)!important;background:#fff;border:1px solid var(--border);color:var(--text-muted);}
+.ui-lang button:hover{background:var(--lavender);border-color:var(--purple);color:var(--violet);}
+.ui-lang button[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:#fff;}
+.site-footer{border-top:0;margin-top:44px;}
+.footer-links button{text-decoration:none;color:var(--text-muted);}
+.footer-links button:hover{color:var(--violet);}
+.footer-banner{display:none;margin:0 0 22px;border-radius:var(--r-lg);overflow:hidden;background:var(--grad-soft);border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.footer-banner.has-img{display:block;}
+.footer-banner img{display:block;width:100%;height:auto;max-height:280px;object-fit:cover;}
+
+/* illustrations: keep aspect ratio, never crop */
+.feature-visual{padding:clamp(12px,3vw,22px);background:var(--grad-soft)!important;}
+.feature-visual .fv-img{display:none;width:100%;height:auto;object-fit:contain;}
+.feature-visual.has-img .fv-img{display:block;}
+.feature-visual.has-img svg{display:none;}
+.feature-visual.img-only:not(.has-img){display:none;}
+.feature-visual svg,.visual-frame svg{aspect-ratio:2/1!important;object-fit:contain!important;max-width:100%;height:auto;}
+.feature-visual figcaption{color:var(--text-muted);}
+
+@media (max-width:640px){
+  .wrap{padding-left:14px;padding-right:14px;}
+  .brand h1{font-size:1.45rem;}
+  .nav-btn{padding:10px 14px;font-size:.82rem;}
+  .editor-card,.pane,.legal-card,.terms-card,.feature-visual,.setup-hero,.terms-hero,.legal-hero{border-radius:18px!important;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+
+/* ===== Mobile Safari + Android Chrome hardening ===== */
+html { -webkit-text-size-adjust: 100%; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+@supports (backdrop-filter: blur(1px)) {
+  .navbar { -webkit-backdrop-filter: blur(10px); }
+}
+.drawer {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  overscroll-behavior: contain;
+}
+@media (max-width:767px) {
+  /* Prevent iOS Safari from zooming the page when a form control receives focus. */
+  input:not([type="checkbox"]):not([type="range"]),
+  select, textarea { font-size: 16px !important; }
+  .drawer { width: min(360px, 92vw); }
+  .cookie-banner { padding-bottom: calc(14px + env(safe-area-inset-bottom)); }
+  .toast { bottom: calc(22px + env(safe-area-inset-bottom)); }
+}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrap">
 
   <header class="top">
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-<script>
-    window.ezstandalone = window.ezstandalone || {};
-    ezstandalone.cmd = ezstandalone.cmd || [];
-</script>
-<script src="//ezoicanalytics.com/analytics.js"></script>
     <div class="brand">
       <span class="brand-dot"></span>
       <div>
         <h1>Voxoira
-          <span class="sub">free voice to text, live translator &amp; AI transcript assistant</span>
+          <span class="sub" data-i18n="sub">free voice to text, live translator &amp; AI transcript assistant</span>
         </h1>
       </div>
     </div>
     <div class="top-actions">
-      <button class="icon-btn" id="themeBtn" title="Toggle dark / light" aria-label="Toggle theme"></button>
-      <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Open settings">
+      <button type="button" class="icon-btn" id="settingsBtn" title="Settings" aria-label="Open settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.5-2-3.4-2.4.6a7.6 7.6 0 0 0-1.7-1L15 3h-6l-.3 2.7a7.6 7.6 0 0 0-1.7 1l-2.4-.6-2 3.4L4.6 11a7.6 7.6 0 0 0 0 2l-2 1.5 2 3.4 2.4-.6a7.6 7.6 0 0 0 1.7 1L9 21h6l.3-2.7a7.6 7.6 0 0 0 1.7-1l2.4.6 2-3.4-2-1.5z"/></svg>
       </button>
     </div>
   </header>
 
   <div id="unsupportedNote" class="unsupported" style="display:none;">
-    <b>Heads up —</b> this browser doesn't support live speech recognition, so the microphone won't work on either tab. Voxoira works best in Chrome or Edge on desktop or Android — typing still works everywhere.
+    <b>Heads up —</b> this browser doesn't support live speech recognition, so the microphone won't work on either tab. If your browser does not support live speech recognition, the microphone will be unavailable — typing still works everywhere.
   </div>
 
   <nav class="navbar">
-    <button class="nav-btn active" data-tab="dictate" id="navDictate">
+    <button type="button" class="nav-btn active" data-tab="dictate" id="navDictate">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/></svg>
-      Dictate
+      <span data-i18n="nav.dictate">Dictate</span>
     </button>
-    <button class="nav-btn" data-tab="translate" id="navTranslate">
+    <button type="button" class="nav-btn" data-tab="translate" id="navTranslate">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
-      Translate
+      <span data-i18n="nav.translate">Translate</span>
     </button>
-    <button class="nav-btn" data-tab="ai" id="navAI">
+    <button type="button" class="nav-btn" data-tab="ai" id="navAI">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg>
-      Ask AI
+      <span data-i18n="nav.ai">Ask AI</span>
     </button>
-    <button class="nav-btn" data-tab="setup" id="navSetup">
+    <button type="button" class="nav-btn" data-tab="setup" id="navSetup">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>
-      Setup AI
+      <span data-i18n="nav.setup">Setup AI</span>
     </button>
   </nav>
 
@@ -458,14 +601,14 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="mic-hero">
       <div class="mic-btn-wrap" id="d-micWrap">
         <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
-        <button class="mic-btn" id="d-micBtn" aria-label="Start dictation">
+        <button type="button" class="mic-btn" id="d-micBtn" aria-label="Start dictation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/>
             <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/>
           </svg>
         </button>
       </div>
-      <div class="mic-status" id="d-micStatus">Tap the microphone to start dictating</div>
+      <div class="mic-status" id="d-micStatus" data-i18n="tapDict">Tap the microphone to start dictating</div>
       <div class="kbd-hint">Toggle with <kbd>Ctrl</kbd>+<kbd>Space</kbd> · Undo <kbd>Ctrl</kbd>+<kbd>Z</kbd></div>
     </div>
 
@@ -477,10 +620,10 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="editor-card">
       <div class="editor-toolbar">
         <div class="tbtn-group">
-          <button class="tbtn" id="d-undoBtn" title="Undo" disabled>
+          <button type="button" class="tbtn" id="d-undoBtn" aria-label="Undo" title="Undo" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg>
           </button>
-          <button class="tbtn" id="d-redoBtn" title="Redo" disabled>
+          <button type="button" class="tbtn" id="d-redoBtn" aria-label="Redo" title="Redo" disabled>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 7 5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg>
           </button>
         </div>
@@ -491,7 +634,7 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
         </div>
       </div>
 
-      <textarea id="d-editor" placeholder="Your words will appear here as you speak — or just start typing."></textarea>
+      <textarea id="d-editor" data-i18n-ph="phEditor" placeholder="Your words will appear here as you speak — or just start typing."></textarea>
 
       <div class="editor-footer">
         <div class="counts">
@@ -499,23 +642,23 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
           <span id="d-charCount">0 characters</span>
         </div>
         <div class="footer-actions">
-          <button class="pill" id="d-copyBtn">
+          <button type="button" class="pill" id="d-copyBtn" aria-label="Copy dictation">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a1.5 1.5 0 0 1 1.5-1.5H15"/></svg>
             Copy
           </button>
-          <button class="pill" id="d-downloadBtn">
+          <button type="button" class="pill" id="d-downloadBtn" aria-label="Download dictation as text">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
             .txt
           </button>
-          <button class="pill" id="d-downloadDocBtn">
+          <button type="button" class="pill" id="d-downloadDocBtn" aria-label="Download dictation as document">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
             .doc
           </button>
-          <button class="pill" id="d-shareBtn" data-share-open title="Share transcript">
+          <button type="button" class="pill" id="d-shareBtn" aria-label="Share dictation" data-share-open title="Share transcript">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"/></svg>
             Share
           </button>
-          <button class="pill danger" id="d-clearBtn">
+          <button type="button" class="pill danger" id="d-clearBtn" aria-label="Clear dictation">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a1.5 1.5 0 0 0 1.5 1.4h7a1.5 1.5 0 0 0 1.5-1.4L18 7"/><path d="M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></svg>
             Clear
           </button>
@@ -531,46 +674,7 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     </details>
 
   
-    <figure class="feature-visual" id="page-dictate-visual"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-dictate-title" xmlns="http://www.w3.org/2000/svg">
-<title id="ill-dictate-title">Live transcription and the main Voxoira workflow.</title>
-<defs>
-<linearGradient id="dict-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
-<radialGradient id="dict-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
-</defs>
-<rect width="1200" height="675" fill="var(--paper)"/>
-<circle cx="960" cy="140" r="260" fill="url(#dict-glow)"/>
-<circle cx="130" cy="560" r="190" fill="var(--accent-2)" opacity="0.08"/>
-<g opacity="0.5" stroke="var(--border)" stroke-width="1">
-<line x1="0" y1="225" x2="1200" y2="225"/><line x1="0" y1="450" x2="1200" y2="450"/>
-</g>
-<g transform="translate(150,255)">
-<rect x="-40" y="-40" width="245" height="245" rx="32" fill="var(--panel-2)" stroke="var(--border)"/>
-<g transform="translate(82,82)" stroke="url(#dict-g1)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path d="M0 -38a22 22 0 0 1 22 22v34a22 22 0 0 1-44 0v-34a22 22 0 0 1 22-22z"/>
-<path d="M-35 8a35 35 0 0 0 70 0"/>
-<path d="M0 43v22M-19 65h38"/>
-</g>
-</g>
-<g transform="translate(455,150)" stroke="url(#dict-g1)" stroke-linecap="round" fill="none">
-<rect x="0" y="0" width="10" height="70" rx="5" transform="translate(0,95)" fill="url(#dict-g1)" stroke="none" opacity="0.9"/>
-<rect x="34" y="0" width="10" height="140" rx="5" transform="translate(0,25)" fill="url(#dict-g1)" stroke="none" opacity="0.65"/>
-<rect x="68" y="0" width="10" height="100" rx="5" transform="translate(0,75)" fill="url(#dict-g1)" stroke="none" opacity="0.9"/>
-<rect x="102" y="0" width="10" height="175" rx="5" transform="translate(0,0)" fill="url(#dict-g1)" stroke="none" opacity="0.5"/>
-<rect x="136" y="0" width="10" height="90" rx="5" transform="translate(0,85)" fill="url(#dict-g1)" stroke="none" opacity="0.85"/>
-<rect x="170" y="0" width="10" height="130" rx="5" transform="translate(0,45)" fill="url(#dict-g1)" stroke="none" opacity="0.6"/>
-</g>
-<g transform="translate(700,180)">
-<rect x="0" y="0" width="420" height="290" rx="20" fill="var(--panel)" stroke="var(--border)"/>
-<rect x="34" y="42" width="352" height="14" rx="7" fill="var(--text)" opacity="0.85"/>
-<rect x="34" y="76" width="300" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
-<rect x="34" y="110" width="330" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
-<rect x="34" y="144" width="220" height="14" rx="7" fill="var(--text)" opacity="0.55"/>
-<rect x="34" y="187" width="150" height="14" rx="7" fill="url(#dict-g1)" opacity="0.9"/>
-<rect x="192" y="187" width="6" height="16" fill="var(--accent)"/>
-<rect x="34" y="230" width="200" height="34" rx="17" fill="var(--panel-2)" stroke="var(--border)"/>
-<text x="60" y="253" font-family="var(--sans)" font-size="14" fill="var(--text-muted)">Autosaving…</text>
-</g>
-</svg><figcaption>Live transcription and the main Voxoira workflow.</figcaption></figure>
+    <figure class="feature-visual" id="page-dictate-visual"><img class="fv-img" src="images/dictation.webp" alt="Voxoira voice-to-text illustration: speech turning into editable text" loading="lazy" decoding="async" onload="this.closest('.feature-visual').classList.add('has-img')"><svg class="feature-illustration" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Live transcription and the main Voxoira workflow." style="width:100%;height:auto;display:block"><rect width="1200" height="600" fill="var(--panel-2)"/><g transform="translate(190,270) scale(1.55)"><path d="M-95 130 C-95 55 -55 40 0 40 C55 40 95 55 95 130Z" fill="var(--text)"/><rect x="-15" y="0" width="30" height="50" fill="#E3B48F"/><circle cx="0" cy="-35" r="52" fill="#E3B48F"/><path d="M-54 -38 A54 54 0 0 1 54 -38 C34 -64 -22 -66 -54 -38Z" fill="var(--text)"/><circle cx="-15" cy="-32" r="4.5" fill="var(--text)"/><circle cx="21" cy="-32" r="4.5" fill="var(--text)"/><ellipse cx="4" cy="-8" rx="10" ry="7" fill="#7A2E1E"/></g><rect x="150" y="470" width="40" height="0" fill="none"/><path d="M290 246 q14 16 0 32" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/><path d="M320 232 q22 30 0 60" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/><path d="M350 218 q30 44 0 88" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"/><rect x="430" y="265" width="22" height="70" fill="var(--text)"/><rect x="472" y="225" width="22" height="150" fill="var(--text)"/><rect x="514" y="185" width="22" height="230" fill="var(--accent)"/><rect x="556" y="225" width="22" height="150" fill="var(--text)"/><rect x="598" y="265" width="22" height="70" fill="var(--text)"/><rect x="730" y="120" width="370" height="340" fill="#fff" stroke="var(--text)" stroke-width="2"/><rect x="768" y="168" width="290" height="12" fill="var(--border)"/><rect x="768" y="210" width="250" height="12" fill="var(--border)"/><rect x="768" y="252" width="290" height="12" fill="var(--border)"/><rect x="768" y="294" width="200" height="12" fill="var(--border)"/><rect x="768" y="338" width="150" height="12" fill="var(--text)"/><rect x="926" y="330" width="5" height="28" fill="var(--accent)"/><rect x="768" y="392" width="170" height="40" fill="none" stroke="var(--text)" stroke-width="2"/><text x="853" y="420" font-family="var(--sans)" font-size="20" font-weight="500" fill="var(--text)" text-anchor="middle">Autosaved</text><text x="190" y="520" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--text)" text-anchor="middle">Speak</text><text x="520" y="520" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--text)" text-anchor="middle">Recognise</text><text x="915" y="520" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--text)" text-anchor="middle">Edit &amp; download</text></svg><figcaption>Live transcription and the main Voxoira workflow.</figcaption></figure>
 </section>
 
   <!-- ================= TRANSLATE PAGE ================= -->
@@ -578,14 +682,14 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
 
     <div class="t-lang-row">
       <div class="lang-pick">
-        <label>Speaking in</label>
+        <label data-i18n="speakingIn">Speaking in</label>
         <select id="t-sourceLang" class="langsel" aria-label="Source language"></select>
       </div>
-      <button id="t-swapBtn" title="Swap languages" aria-label="Swap languages">
+      <button type="button" id="t-swapBtn" title="Swap languages" aria-label="Swap languages">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h13l-4-4"/><path d="M17 17H4l4 4"/></svg>
       </button>
       <div class="lang-pick">
-        <label>Translate to</label>
+        <label data-i18n="translateTo">Translate to</label>
         <select id="t-targetLang" class="langsel" aria-label="Target language"></select>
       </div>
     </div>
@@ -593,14 +697,14 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="mic-hero">
       <div class="mic-btn-wrap" id="t-micWrap">
         <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
-        <button class="mic-btn" id="t-micBtn" aria-label="Start dictation">
+        <button type="button" class="mic-btn" id="t-micBtn" aria-label="Start dictation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M12 15a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 0 0-7 0v5.5A3.5 3.5 0 0 0 12 15z"/>
             <path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3"/><path d="M9 20h6"/>
           </svg>
         </button>
       </div>
-      <div class="mic-status" id="t-micStatus">Tap the microphone and start speaking</div>
+      <div class="mic-status" id="t-micStatus" data-i18n="tapTrans">Tap the microphone and start speaking</div>
     </div>
 
     <div class="live-speech-card live-translate-card" id="t-liveCard" aria-live="polite">
@@ -609,35 +713,35 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     </div>
 
     <div class="translate-toolbar" aria-label="Translation editing actions">
-      <button class="tbtn" id="t-undoBtn" title="Undo" aria-label="Undo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg></button>
-      <button class="tbtn" id="t-redoBtn" title="Redo" aria-label="Redo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 7 5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg></button>
-      <button class="pill" id="t-shareBtn" data-share-open title="Share translation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"/></svg>Share</button>
-      <button class="pill" id="t-newDocBtn" title="Save the current text as a document and start a new one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Save &amp; start new</button>
+      <button type="button" class="tbtn" id="t-undoBtn" title="Undo" aria-label="Undo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7 4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-1"/></svg></button>
+      <button type="button" class="tbtn" id="t-redoBtn" title="Redo" aria-label="Redo" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 7 5 5-5 5"/><path d="M20 12H9a5 5 0 0 0 0 10h1"/></svg></button>
+      <button type="button" class="pill" id="t-shareBtn" aria-label="Share translation" data-share-open title="Share translation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.4M8.2 13.2l7.5 4.4"/></svg>Share</button>
+      <button type="button" class="pill" id="t-newDocBtn" aria-label="Save translation and start a new document" title="Save the current text as a document and start a new one"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Save &amp; start new</button>
     </div>
 
     <div class="panes">
       <div class="pane original">
-        <div class="pane-tab"><span><span class="dot"></span>Original</span><span id="t-origLangLabel"></span></div>
+        <div class="pane-tab"><span><span class="dot"></span><span data-i18n="original">Original</span></span><span id="t-origLangLabel"></span></div>
         <textarea id="t-originalBox" placeholder="What you say (or type) appears here…"></textarea>
         <div class="pane-foot">
           <span id="t-origCount">0 words</span>
           <div class="actions">
-            <button class="pill" id="t-copyOrigBtn">Copy</button>
-            <button class="pill danger" id="t-clearBtn">Clear</button>
+            <button type="button" class="pill" id="t-copyOrigBtn" aria-label="Copy original text">Copy</button>
+            <button type="button" class="pill danger" id="t-clearBtn" aria-label="Clear translation">Clear</button>
           </div>
         </div>
       </div>
 
       <div class="pane translated">
-        <div class="pane-tab"><span><span class="dot"></span>Translation</span><span id="t-targetLangLabel"></span></div>
+        <div class="pane-tab"><span><span class="dot"></span><span data-i18n="translation">Translation</span></span><span id="t-targetLangLabel"></span></div>
         <div class="translated-text" id="t-translatedBox" aria-live="polite"></div>
         <div class="pane-foot">
           <span id="t-translateState">—</span>
           <div class="actions">
-            <button class="pill" id="t-speakBtn">🔊 Speak</button>
-            <button class="pill" id="t-copyTransBtn">Copy</button>
-            <button class="pill" id="t-downloadTxtBtn">.txt</button>
-            <button class="pill" id="t-downloadDocBtn">.doc</button>
+            <button type="button" class="pill" id="t-speakBtn" aria-label="Speak translation aloud">Speak</button>
+            <button type="button" class="pill" id="t-copyTransBtn" aria-label="Copy translated text">Copy</button>
+            <button type="button" class="pill" id="t-downloadTxtBtn" aria-label="Download translation as text">.txt</button>
+            <button type="button" class="pill" id="t-downloadDocBtn" aria-label="Download translation as document">.doc</button>
           </div>
         </div>
       </div>
@@ -652,53 +756,13 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="saved-docs-card" id="t-savedDocsCard">
       <div class="saved-docs-head">
         <div class="saved-docs-title"><span>Saved documents</span><span class="saved-docs-count" id="t-savedDocsCount">0</span></div>
-        <button class="pill danger" id="t-savedDocsClearBtn" title="Delete all saved documents">Clear all</button>
+        <button type="button" class="pill danger" id="t-savedDocsClearBtn" aria-label="Clear saved translations" title="Delete all saved documents">Clear all</button>
       </div>
       <p class="saved-docs-empty" id="t-savedDocsEmpty">Nothing saved yet. Documents you save manually will appear here, ready to download.</p>
       <ul class="saved-docs-list" id="t-savedDocsList"></ul>
     </div>
 
-    <figure class="feature-visual" id="page-translate-visual"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-translate-title" xmlns="http://www.w3.org/2000/svg">
-<title id="ill-translate-title">Live speech translation and language workflow.</title>
-<defs>
-<linearGradient id="tr-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-3)"/></linearGradient>
-<radialGradient id="tr-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-2)" stop-opacity="0.25"/><stop offset="1" stop-color="var(--accent-2)" stop-opacity="0"/></radialGradient>
-</defs>
-<rect width="1200" height="675" fill="var(--paper)"/>
-<circle cx="980" cy="130" r="250" fill="url(#tr-glow)"/>
-<circle cx="150" cy="540" r="170" fill="var(--accent-3)" opacity="0.08"/>
-<g transform="translate(120,150)">
-<rect x="0" y="0" width="430" height="190" rx="22" fill="var(--panel-2)" stroke="var(--border)"/>
-<rect x="0" y="0" width="430" height="190" rx="22" fill="none" stroke="var(--accent)" stroke-opacity="0.35"/>
-<text x="30" y="42" font-family="var(--sans)" font-size="15" font-weight="600" fill="var(--accent)">FI</text>
-<rect x="30" y="62" width="330" height="13" rx="6.5" fill="var(--text)" opacity="0.8"/>
-<rect x="30" y="92" width="280" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-<rect x="30" y="122" width="220" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-<g transform="translate(30,152)" stroke-linecap="round">
-<path d="M0 0a14 14 0 0 0 14 12" fill="none" stroke="var(--accent)" stroke-width="3"/>
-</g>
-</g>
-<g transform="translate(640,320)">
-<rect x="0" y="0" width="430" height="190" rx="22" fill="var(--panel-2)" stroke="var(--border)"/>
-<rect x="0" y="0" width="430" height="190" rx="22" fill="none" stroke="var(--accent-2)" stroke-opacity="0.35"/>
-<text x="30" y="42" font-family="var(--sans)" font-size="15" font-weight="600" fill="var(--accent-2)">EN</text>
-<rect x="30" y="62" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.8"/>
-<rect x="30" y="92" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-<rect x="30" y="122" width="240" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-</g>
-<g transform="translate(455,300)">
-<circle cx="55" cy="55" r="55" fill="var(--panel)" stroke="var(--border)"/>
-<g transform="translate(55,55)" fill="none" stroke="url(#tr-g1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-<path d="M-24 -12h34l-11-11"/>
-<path d="M24 12h-34l11 11"/>
-</g>
-</g>
-<g transform="translate(60,60)" fill="none" stroke="var(--accent-3)" stroke-width="4" stroke-linecap="round" opacity="0.55">
-<circle cx="0" cy="0" r="3" fill="var(--accent-3)" stroke="none"/>
-<circle cx="26" cy="14" r="3" fill="var(--accent-3)" stroke="none"/>
-<circle cx="14" cy="34" r="3" fill="var(--accent-3)" stroke="none"/>
-</g>
-</svg><figcaption>Live speech translation and language workflow.</figcaption></figure>
+    <figure class="feature-visual" id="page-translate-visual"><img class="fv-img" src="images/translation.webp" alt="Voxoira live translation illustration: spoken words translated between languages" loading="lazy" decoding="async" onload="this.closest('.feature-visual').classList.add('has-img')"><svg class="feature-illustration" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Live speech translation and language workflow." style="width:100%;height:auto;display:block"><rect width="1200" height="600" fill="var(--panel-2)"/><rect x="70" y="110" width="360" height="160" fill="#fff" stroke="var(--text)" stroke-width="2"/><path d="M160 270 l24 38 l22 -38" fill="#fff" stroke="var(--text)" stroke-width="2"/><rect x="161" y="268" width="46" height="4" fill="#fff"/><rect x="92" y="93" width="64" height="34" fill="var(--text)"/><text x="124" y="117" font-family="var(--sans)" font-size="20" font-weight="600" fill="#fff" text-anchor="middle">EN</text><rect x="104" y="160" width="290" height="12" fill="var(--border)"/><rect x="104" y="196" width="230" height="12" fill="var(--border)"/><rect x="104" y="232" width="270" height="12" fill="var(--border)"/><g transform="translate(170,405) scale(1.0)"><path d="M-58 -30 A58 58 0 0 1 58 -30 L62 40 L38 40 L38 -30 L-38 -30 L-38 40 L-62 40Z" fill="var(--text)"/><path d="M-95 130 C-95 55 -55 40 0 40 C55 40 95 55 95 130Z" fill="var(--text)"/><rect x="-15" y="0" width="30" height="50" fill="#E3B48F"/><circle cx="0" cy="-35" r="52" fill="#E3B48F"/><path d="M-54 -38 A54 54 0 0 1 54 -38 C34 -64 -22 -66 -54 -38Z" fill="var(--text)"/><circle cx="-15" cy="-32" r="4.5" fill="var(--text)"/><circle cx="21" cy="-32" r="4.5" fill="var(--text)"/><ellipse cx="4" cy="-8" rx="10" ry="7" fill="#7A2E1E"/></g><line x1="460" y1="190" x2="740" y2="190" stroke="var(--text)" stroke-width="4"/><path d="M724 172l22 18-22 18" fill="none" stroke="var(--text)" stroke-width="4"/><circle cx="600" cy="190" r="38" fill="var(--accent)"/><text x="600" y="200" font-family="var(--sans)" font-size="24" font-weight="600" fill="#fff" text-anchor="middle">AI</text><rect x="770" y="110" width="360" height="160" fill="#fff" stroke="var(--text)" stroke-width="2"/><path d="M930 270 l24 38 l22 -38" fill="#fff" stroke="var(--text)" stroke-width="2"/><rect x="931" y="268" width="46" height="4" fill="#fff"/><rect x="792" y="93" width="64" height="34" fill="var(--accent)"/><text x="824" y="117" font-family="var(--sans)" font-size="20" font-weight="600" fill="#fff" text-anchor="middle">ES</text><rect x="804" y="160" width="300" height="12" fill="var(--border)"/><rect x="804" y="196" width="250" height="12" fill="var(--border)"/><rect x="804" y="232" width="280" height="12" fill="var(--border)"/><g transform="translate(1030,405) scale(1.0)"><path d="M-95 130 C-95 55 -55 40 0 40 C55 40 95 55 95 130Z" fill="var(--accent)"/><rect x="-15" y="0" width="30" height="50" fill="#E3B48F"/><circle cx="0" cy="-35" r="52" fill="#E3B48F"/><path d="M-54 -38 A54 54 0 0 1 54 -38 C34 -64 -22 -66 -54 -38Z" fill="#5A3A22"/><circle cx="-21" cy="-32" r="4.5" fill="var(--text)"/><circle cx="15" cy="-32" r="4.5" fill="var(--text)"/><ellipse cx="-4" cy="-8" rx="10" ry="7" fill="#7A2E1E"/></g><text x="170" y="588" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--text)" text-anchor="middle">You speak</text><text x="1030" y="588" font-family="var(--sans)" font-size="26" font-weight="600" fill="var(--text)" text-anchor="middle">They read &amp; hear</text></svg><figcaption>Live speech translation and language workflow.</figcaption></figure>
 </section>
 
   <!-- ================= ASK AI PAGE ================= -->
@@ -746,16 +810,17 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="ai-quick-prompts" id="aiQuickPrompts"></div>
 
     <div class="ai-foot-row">
-      <button class="pill" id="ai-clear-btn">Clear conversation</button>
+      <button type="button" class="pill" id="ai-clear-btn" aria-label="Clear AI conversation">Clear conversation</button>
     </div>
     <div class="ai-chat" id="aiChat"></div>
 
     <div class="ai-input-row">
       <textarea id="ai-question" placeholder="Ask something about the text above… e.g. “Summarize the key points”" rows="2"></textarea>
-      <button class="pill ai-send" id="ai-send-btn">Ask</button>
+      <button type="button" class="pill ai-send" id="ai-send-btn" aria-label="Send question to AI">Ask</button>
     </div>
     <div class="ai-status" id="ai-status"></div>
 
+    <figure class="feature-visual img-only" id="page-ai-visual"><img class="fv-img" src="images/ask-ai.webp" alt="Voxoira Ask AI illustration: an assistant answering questions about your transcript" loading="lazy" decoding="async" onload="this.closest('.feature-visual').classList.add('has-img')"></figure>
   </section>
 
   <!-- ================= SETUP AI PAGE ================= -->
@@ -783,82 +848,8 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
     <div class="visual-guide-section" id="setupVisualGuide">
       <div class="visual-guide-header"><div><span class="eyebrow">VISUAL GUIDE</span><h3>See how Voxoira works</h3></div><p>Quick visual references for the main Voxoira workflow and AI connection setup.</p></div>
       <div class="visual-gallery">
-        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-ai-overview-title" xmlns="http://www.w3.org/2000/svg">
-<title id="ill-ai-overview-title">Voxoira overview showing Dictate, Translate, Ask AI and Setup AI features</title>
-<defs>
-<linearGradient id="ai1-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-3)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
-<radialGradient id="ai1-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-3)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent-3)" stop-opacity="0"/></radialGradient>
-</defs>
-<rect width="1200" height="675" fill="var(--paper)"/>
-<circle cx="920" cy="150" r="270" fill="url(#ai1-glow)"/>
-<circle cx="170" cy="540" r="170" fill="var(--accent-2)" opacity="0.08"/>
-<g stroke="var(--border)" stroke-width="1.5" opacity="0.7">
-<line x1="230" y1="230" x2="360" y2="150"/><line x1="230" y1="230" x2="330" y2="330"/>
-<line x1="360" y1="150" x2="500" y2="210"/><line x1="330" y1="330" x2="480" y2="360"/>
-<line x1="500" y1="210" x2="480" y2="360"/>
-</g>
-<g fill="url(#ai1-g1)">
-<circle cx="230" cy="230" r="7"/><circle cx="360" cy="150" r="5"/>
-<circle cx="330" cy="330" r="6"/><circle cx="500" cy="210" r="8"/>
-<circle cx="480" cy="360" r="5"/>
-</g>
-<g transform="translate(345,225)" fill="url(#ai1-g1)">
-<path d="M0 -46 L12 -12 L46 0 L12 12 L0 46 L-12 12 L-46 0 L-12 -12 Z"/>
-</g>
-<g transform="translate(650,140)">
-<rect x="0" y="0" width="440" height="150" rx="20" fill="var(--panel-2)" stroke="var(--border)"/>
-<circle cx="34" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" repeatCount="indefinite"/></circle>
-<circle cx="50" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.2s" repeatCount="indefinite"/></circle>
-<circle cx="66" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.4s" repeatCount="indefinite"/></circle>
-<rect x="30" y="66" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.75"/>
-<rect x="30" y="96" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-<rect x="30" y="122" width="200" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-</g>
-<g transform="translate(700,340)">
-<rect x="0" y="0" width="360" height="120" rx="18" fill="var(--panel)" stroke="var(--border)"/>
-<rect x="26" y="28" width="140" height="12" rx="6" fill="var(--accent)" opacity="0.85"/>
-<rect x="26" y="54" width="270" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
-<rect x="26" y="78" width="230" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
-</g>
-</svg><figcaption>Voxoira feature overview — Dictate, Translate, Ask AI and Setup AI.</figcaption></figure>
-        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ill-ai-providers-title" xmlns="http://www.w3.org/2000/svg">
-<title id="ill-ai-providers-title">Voxoira interface showing live transcription, translation, Ask AI and connected AI providers</title>
-<defs>
-<linearGradient id="ai2-g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-3)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient>
-<radialGradient id="ai2-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="var(--accent-3)" stop-opacity="0.28"/><stop offset="1" stop-color="var(--accent-3)" stop-opacity="0"/></radialGradient>
-</defs>
-<rect width="1200" height="675" fill="var(--paper)"/>
-<circle cx="920" cy="150" r="270" fill="url(#ai2-glow)"/>
-<circle cx="170" cy="540" r="170" fill="var(--accent-2)" opacity="0.08"/>
-<g stroke="var(--border)" stroke-width="1.5" opacity="0.7">
-<line x1="230" y1="230" x2="360" y2="150"/><line x1="230" y1="230" x2="330" y2="330"/>
-<line x1="360" y1="150" x2="500" y2="210"/><line x1="330" y1="330" x2="480" y2="360"/>
-<line x1="500" y1="210" x2="480" y2="360"/>
-</g>
-<g fill="url(#ai2-g1)">
-<circle cx="230" cy="230" r="7"/><circle cx="360" cy="150" r="5"/>
-<circle cx="330" cy="330" r="6"/><circle cx="500" cy="210" r="8"/>
-<circle cx="480" cy="360" r="5"/>
-</g>
-<g transform="translate(345,225)" fill="url(#ai2-g1)">
-<path d="M0 -46 L12 -12 L46 0 L12 12 L0 46 L-12 12 L-46 0 L-12 -12 Z"/>
-</g>
-<g transform="translate(650,140)">
-<rect x="0" y="0" width="440" height="150" rx="20" fill="var(--panel-2)" stroke="var(--border)"/>
-<circle cx="34" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" repeatCount="indefinite"/></circle>
-<circle cx="50" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.2s" repeatCount="indefinite"/></circle>
-<circle cx="66" cy="35" r="4" fill="var(--accent-2)"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.6s" begin="0.4s" repeatCount="indefinite"/></circle>
-<rect x="30" y="66" width="360" height="13" rx="6.5" fill="var(--text)" opacity="0.75"/>
-<rect x="30" y="96" width="300" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-<rect x="30" y="122" width="200" height="13" rx="6.5" fill="var(--text)" opacity="0.5"/>
-</g>
-<g transform="translate(700,340)">
-<rect x="0" y="0" width="360" height="120" rx="18" fill="var(--panel)" stroke="var(--border)"/>
-<rect x="26" y="28" width="140" height="12" rx="6" fill="var(--accent)" opacity="0.85"/>
-<rect x="26" y="54" width="270" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
-<rect x="26" y="78" width="230" height="11" rx="5.5" fill="var(--text)" opacity="0.55"/>
-</g>
-</svg><figcaption>Voxoira interface preview — live transcription, translation and AI provider connections.</figcaption></figure>
+        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Voxoira feature overview — Dictate, Translate, Ask AI and Setup AI." style="width:100%;height:auto;display:block"><rect width="1200" height="600" fill="var(--panel-2)"/><rect x="60" y="190" width="220" height="220" fill="var(--text)" stroke="var(--text)" stroke-width="2"/><rect x="152" y="236" width="36" height="64" rx="18" fill="#fff"/><path d="M132 280a38 38 0 0 0 76 0" fill="none" stroke="#fff" stroke-width="7"/><text x="170" y="460" font-family="var(--sans)" font-size="40" font-weight="600" fill="var(--text)" text-anchor="middle">Dictate</text><rect x="330" y="190" width="220" height="220" fill="#fff" stroke="var(--text)" stroke-width="2"/><text x="440" y="296" font-family="var(--serif)" font-size="82" fill="var(--text)" text-anchor="middle">A→文</text><text x="440" y="460" font-family="var(--sans)" font-size="40" font-weight="600" fill="var(--text)" text-anchor="middle">Translate</text><rect x="600" y="190" width="220" height="220" fill="#fff" stroke="var(--text)" stroke-width="2"/><rect x="640" y="240" width="140" height="84" fill="none" stroke="var(--text)" stroke-width="7"/><path d="M666 324l-8 30 34-30" fill="var(--text)"/><rect x="660" y="270" width="80" height="9" fill="var(--text)"/><rect x="660" y="292" width="50" height="9" fill="var(--text)"/><text x="710" y="460" font-family="var(--sans)" font-size="40" font-weight="600" fill="var(--text)" text-anchor="middle">Ask AI</text><rect x="870" y="190" width="220" height="220" fill="#fff" stroke="var(--text)" stroke-width="2"/><circle cx="980" cy="300" r="34" fill="none" stroke="var(--text)" stroke-width="9" stroke-dasharray="14 8"/><circle cx="980" cy="300" r="12" fill="var(--text)"/><text x="980" y="460" font-family="var(--sans)" font-size="40" font-weight="600" fill="var(--text)" text-anchor="middle">Setup AI</text><line x1="286" y1="300" x2="324" y2="300" stroke="var(--text)" stroke-width="3" stroke-dasharray="6 8"/><line x1="556" y1="300" x2="594" y2="300" stroke="var(--text)" stroke-width="3" stroke-dasharray="6 8"/><line x1="826" y1="300" x2="864" y2="300" stroke="var(--text)" stroke-width="3" stroke-dasharray="6 8"/><text x="600" y="120" font-family="var(--sans)" font-size="54" font-weight="600" fill="var(--text)" text-anchor="middle">One workspace, four tools</text></svg><figcaption>Voxoira feature overview — Dictate, Translate, Ask AI and Setup AI.</figcaption></figure>
+        <figure class="visual-frame"><svg class="feature-illustration" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Voxoira interface preview — live transcription, translation and AI provider connections." style="width:100%;height:auto;display:block"><rect width="1200" height="600" fill="var(--panel-2)"/><g transform="translate(200,300) scale(1.45)"><path d="M-58 -30 A58 58 0 0 1 58 -30 L62 40 L38 40 L38 -30 L-38 -30 L-38 40 L-62 40Z" fill="var(--text)"/><path d="M-95 130 C-95 55 -55 40 0 40 C55 40 95 55 95 130Z" fill="var(--text)"/><rect x="-15" y="0" width="30" height="50" fill="#E3B48F"/><circle cx="0" cy="-35" r="52" fill="#E3B48F"/><path d="M-54 -38 A54 54 0 0 1 54 -38 C34 -64 -22 -66 -54 -38Z" fill="var(--text)"/><circle cx="-15" cy="-32" r="4.5" fill="var(--text)"/><circle cx="21" cy="-32" r="4.5" fill="var(--text)"/><ellipse cx="4" cy="-8" rx="10" ry="7" fill="#7A2E1E"/></g><line x1="380" y1="270" x2="450" y2="270" stroke="var(--text)" stroke-width="4"/><path d="M436 252l22 18-22 18" fill="none" stroke="var(--text)" stroke-width="4"/><rect x="480" y="100" width="660" height="250" fill="#fff" stroke="var(--text)" stroke-width="2"/><rect x="508" y="82" width="116" height="36" fill="var(--accent)"/><text x="566" y="108" font-family="var(--sans)" font-size="20" font-weight="600" fill="#fff" text-anchor="middle">ASK AI</text><text x="520" y="196" font-family="var(--sans)" font-size="34" font-weight="500" fill="var(--text-muted)" text-anchor="start">Summarise the key points</text><rect x="520" y="236" width="500" height="12" fill="var(--border)"/><rect x="520" y="280" width="420" height="12" fill="var(--border)"/><rect x="480" y="392" width="176" height="54" fill="#fff" stroke="var(--text)" stroke-width="2"/><text x="568" y="428" font-family="var(--sans)" font-size="26" font-weight="500" fill="var(--text)" text-anchor="middle">Browser AI</text><rect x="672" y="392" width="136" height="54" fill="#fff" stroke="var(--text)" stroke-width="2"/><text x="740" y="428" font-family="var(--sans)" font-size="26" font-weight="500" fill="var(--text)" text-anchor="middle">OpenAI</text><rect x="824" y="392" width="136" height="54" fill="#fff" stroke="var(--text)" stroke-width="2"/><text x="892" y="428" font-family="var(--sans)" font-size="26" font-weight="500" fill="var(--text)" text-anchor="middle">Claude</text><rect x="976" y="392" width="130" height="54" fill="#fff" stroke="var(--text)" stroke-width="2"/><text x="1041" y="428" font-family="var(--sans)" font-size="26" font-weight="500" fill="var(--text)" text-anchor="middle">Gemini</text><text x="810" y="500" font-family="var(--sans)" font-size="30" font-weight="500" fill="var(--text-muted)" text-anchor="middle">Use browser AI or your own key</text></svg><figcaption>Voxoira interface preview — live transcription, translation and AI provider connections.</figcaption></figure>
       </div>
     </div>
 </section>
@@ -880,7 +871,7 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
   <section class="page legal-page" id="page-contact">
     <div class="legal-hero"><div class="legal-hero-icon">@</div><div><span class="eyebrow">VOXOIRA · CONTACT</span><h2>Contact Voxoira</h2><p>For support, feedback, privacy requests, bug reports, or business inquiries, contact us by email.</p></div></div>
     <div class="legal-grid">
-      <article class="legal-card legal-wide"><h3>Support email</h3><div class="contact-box"><span class="contact-email">support@voxoira.com</span><span style="color:var(--text-muted)">Replace this placeholder with your real support address before publishing.</span></div></article>
+      <article class="legal-card legal-wide"><h3>Support email</h3><div class="contact-box"><span class="contact-email">voxoira@gmail.com</span></div></article>
       <article class="legal-card"><h3>Technical support</h3><p>Tell us what feature you were using, what browser/device you use, and what happened. Do not send passwords, API keys, or other secrets.</p></article>
       <article class="legal-card"><h3>Privacy requests</h3><p>For questions about personal data, cookies, consent, or deletion requests, use the same support address and include “Privacy Request” in the subject.</p></article>
       <article class="legal-card legal-wide"><h3>Before contacting us</h3><ul><li>Do not email API keys or authentication credentials.</li><li>Remove private or confidential text from screenshots.</li><li>For AI-provider billing or account issues, contact the relevant provider directly.</li></ul></article>
@@ -901,9 +892,9 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
       <article class="legal-card"><h3>8. Data security</h3><p>Reasonable technical measures should be used to protect information, but no online service can guarantee absolute security. Never submit passwords, payment details, API keys, or highly confidential information unless the feature specifically requires it and appropriate safeguards are in place.</p></article>
       <article class="legal-card"><h3>9. Children's privacy</h3><p>Voxoira is not intended to encourage children to submit personal information. Parents or guardians should supervise use where appropriate.</p></article>
       <article class="legal-card"><h3>10. Changes</h3><p>This Privacy Policy may be updated as Voxoira, providers, advertising systems, or applicable requirements change. The current version published on this page is the version that applies.</p></article>
-      <article class="legal-card legal-wide"><h3>11. Privacy contact</h3><p>For privacy questions or requests, contact <span class="contact-email">support@voxoira.com</span>. Replace this placeholder with your actual privacy/support email before publishing.</p></article>
+      <article class="legal-card legal-wide"><h3>11. Privacy contact</h3><p>For privacy questions or requests, contact <span class="contact-email">voxoira@gmail.com</span>.</p></article>
     </div>
-    <div class="trust-note"><b>Important:</b> These Terms and policies are provided for Voxoira users and govern use of voxoira.com. By using the service, you agree to these terms. For questions about legal, privacy, or compliance matters contact support@voxoira.com.</div>
+    <div class="trust-note"><b>Important:</b> These Terms and policies are provided for Voxoira users and govern use of voxoira.com. By using the service, you agree to these terms. For questions about legal, privacy, or compliance matters contact voxoira@gmail.com.</div>
   </section>
 
   <!-- ================= FAQ / HELP PAGE ================= -->
@@ -984,24 +975,26 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
   </section>
 
   <footer class="site-footer">
+    <div class="footer-banner"><img src="images/footer-banner.webp" alt="Voxoira — speak, translate and ask AI in your browser" loading="lazy" decoding="async" onload="this.parentNode.classList.add('has-img')"></div>
     <div class="support-row">
-      <span class="support-copy">Find Voxoira useful?</span>
-      <a class="pill support-btn" href="https://ko-fi.com/voxoira" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+      <span class="support-copy" data-i18n="useful">Find Voxoira useful?</span>
+      <a class="pill support-btn" data-i18n="coffee" href="https://ko-fi.com/voxoira" target="_blank" rel="noopener">Buy me a coffee</a>
     </div>
     <div class="ad-slot" id="footer-ad-slot">
       <!-- Replace data-ad-client and data-ad-slot with the real values from your AdSense account after approval. -->
       <span class="ad-label">Advertisement</span>
       <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0000000000000000" data-ad-slot="0000000000" data-ad-format="auto" data-full-width-responsive="true"></ins>
     </div>
+    <div class="ui-lang" role="group" aria-label="Language"></div>
     <div class="footer-meta">
       <span>© 2026 Voxoira. All Rights Reserved.</span>
       <span class="footer-links" aria-label="Website information">
-        <button type="button" data-legal-tab="about">About</button>
-        <button type="button" data-legal-tab="faq">FAQ & Help</button>
-        <button type="button" data-legal-tab="contact">Contact</button>
-        <button type="button" data-legal-tab="privacy">Privacy Policy</button>
-        <button type="button" data-legal-tab="terms">Terms of Use</button>
-        <button type="button" id="reopenCookieFooter">Privacy Choices</button>
+        <button type="button" data-i18n="fAbout" data-legal-tab="about">About</button>
+        <button type="button" data-i18n="fFaq" data-legal-tab="faq">FAQ & Help</button>
+        <button type="button" data-i18n="fContact" data-legal-tab="contact">Contact</button>
+        <button type="button" data-i18n="fPrivacy" data-legal-tab="privacy">Privacy Policy</button>
+        <button type="button" data-i18n="fTerms" data-legal-tab="terms">Terms of Use</button>
+        <button type="button" data-i18n="fChoices" id="reopenCookieFooter">Privacy Choices</button>
       </span>
     </div>
     <div class="trust-note"><b>Third-party disclosure:</b> Voxoira is independent and is not affiliated with Google, OpenAI, Anthropic, or other AI providers mentioned on this website.</div>
@@ -1012,23 +1005,19 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
 <div class="cookie-banner" id="cookieBanner">
   <p>Voxoira may use cookies or local storage for preferences and advertising. Review the Privacy Policy and choose your advertising preference. <button type="button" class="footer-link-inline" data-legal-tab="privacy">Privacy Policy</button></p>
   <div style="display:flex;gap:8px;">
-    <button class="pill" id="cookieDecline">Decline</button>
-    <button class="pill" id="cookieAccept">Accept</button>
+    <button type="button" class="pill" data-i18n="decline" id="cookieDecline" aria-label="Decline cookies">Decline</button>
+    <button type="button" class="pill" data-i18n="accept" id="cookieAccept" aria-label="Accept cookies">Accept</button>
   </div>
 </div>
 
 <div class="overlay" id="overlay"></div>
 <div class="drawer" id="drawer">
-  <button class="icon-btn close-x" id="closeDrawer" aria-label="Close settings">
+  <button type="button" class="icon-btn close-x" id="closeDrawer" aria-label="Close settings" aria-label="Close settings">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
   </button>
   <h2>Settings</h2>
-  <p class="drawer-sub">Dark mode applies everywhere. The other options only affect the Dictate tab.</p>
+  <p class="drawer-sub">These options only affect the Dictate tab.</p>
 
-  <div class="setting-row">
-    <div><div class="label">Dark mode</div><div class="desc">Easier on the eyes for long sessions</div></div>
-    <label class="switch"><input type="checkbox" id="toggleDark" checked><span class="track"></span><span class="thumb"></span></label>
-  </div>
 
   <div class="setting-row">
     <div><div class="label">Voice commands</div><div class="desc">Say "comma", "new line" etc. to punctuate — Dictate tab</div></div>
@@ -1047,7 +1036,7 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
 
   <div class="setting-row">
     <div><div class="label">Ad personalization</div><div class="desc">Change your cookie consent choice for ads</div></div>
-    <button class="pill" id="reopenCookieBanner">Change</button>
+    <button type="button" class="pill" id="reopenCookieBanner">Change</button>
   </div>
 </div>
 
@@ -1059,28 +1048,16 @@ body{background:radial-gradient(circle at top right, rgba(79,167,155,.08), trans
 
 
 /* ================= shared: theme, drawer, toast ================= */
-const themeBtn = document.getElementById('themeBtn');
-let dark = true;
-function themeIcon(isDark){
-  return isDark
-    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.5A8.5 8.5 0 1 1 11.5 3a7 7 0 0 0 9.5 9.5z"/></svg>'
-    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19v2.5M4.9 4.9l1.7 1.7M17.3 17.3l1.7 1.7M2.5 12h2.5M19 12h2.5M4.9 19l1.7-1.7M17.3 6.6l1.7-1.7"/></svg>';
-}
-function setDark(on){
-  dark = on;
-  document.documentElement.classList.toggle('light', !on);
-  themeBtn.innerHTML = themeIcon(on);
-  document.getElementById('toggleDark').checked = on;
-  persistSettings();
-}
-themeBtn.addEventListener('click', ()=>setDark(!dark));
-document.getElementById('toggleDark').addEventListener('change', e=>setDark(e.target.checked));
+/* light theme only */
+let dark = false;
+function setDark(){}
 
 const overlay = document.getElementById('overlay');
 const drawer = document.getElementById('drawer');
 document.getElementById('settingsBtn').addEventListener('click', ()=>{overlay.classList.add('open');drawer.classList.add('open');});
 document.getElementById('closeDrawer').addEventListener('click', ()=>{overlay.classList.remove('open');drawer.classList.remove('open');});
 overlay.addEventListener('click', ()=>{overlay.classList.remove('open');drawer.classList.remove('open');});
+window.addEventListener('keydown', e=>{ if(e.key==='Escape'){ overlay.classList.remove('open'); drawer.classList.remove('open'); } });
 
 const toastEl = document.getElementById('toast');
 function showToast(msg){
@@ -1093,7 +1070,7 @@ function showToast(msg){
 /* ---- shared share menu ---- */
 const shareMenu=document.createElement('div');
 shareMenu.className='share-menu'; shareMenu.id='shareMenu';
-shareMenu.innerHTML=`<div class="share-menu-title">Share this text</div><button class="share-option" data-share="native">↗️ <span>More / device share</span></button><button class="share-option" data-share="whatsapp">💬 <span>WhatsApp</span></button><button class="share-option" data-share="email">✉️ <span>Email</span></button><button class="share-option" data-share="copy">📋 <span>Copy text</span></button>`;
+shareMenu.innerHTML=`<div class="share-menu-title">Share this text</div><button type="button" class="share-option" data-share="native">↗️ <span>More / device share</span></button><button type="button" class="share-option" data-share="whatsapp">💬 <span>WhatsApp</span></button><button type="button" class="share-option" data-share="email">✉️ <span>Email</span></button><button type="button" class="share-option" data-share="copy">📋 <span>Copy text</span></button>`;
 document.body.appendChild(shareMenu);
 let activeShareText='',activeShareTitle='Voxoira';
 function openShareMenu(anchor,text,title){activeShareText=(text||'').trim();activeShareTitle=title||'Voxoira';if(!activeShareText){showToast('Nothing to share yet');return;}const r=anchor.getBoundingClientRect();const left=Math.min(Math.max(12,r.right-230),Math.max(12,window.innerWidth-242));shareMenu.style.left=left+'px';shareMenu.style.top=Math.min(r.bottom+8,window.innerHeight-230)+'px';shareMenu.classList.add('open');}
@@ -1145,6 +1122,82 @@ const storage = {
   get(key){ try{ return localStorage.getItem(key); }catch(e){ return null; } },
   set(key, value){ try{ localStorage.setItem(key, value); return true; }catch(e){ return false; } }
 };
+
+/* ================= UI language (auto-detect, footer switch overrides) ================= */
+const I18N={
+en:{sub:'free voice to text, live translator & AI transcript assistant','nav.dictate':'Dictate','nav.translate':'Translate','nav.ai':'Ask AI','nav.setup':'Setup AI',tapDict:'Tap the microphone to start dictating',tapTrans:'Tap the microphone and start speaking',listening:'Listening — <b>speak now</b>',speakingIn:'Speaking in',translateTo:'Translate to',original:'Original',translation:'Translation',useful:'Find Voxoira useful?',coffee:'Buy me a coffee',fAbout:'About',fFaq:'FAQ & Help',fContact:'Contact',fPrivacy:'Privacy Policy',fTerms:'Terms of Use',fChoices:'Privacy Choices',decline:'Decline',accept:'Accept',phEditor:'Your words will appear here as you speak — or just start typing.'},
+es:{sub:'voz a texto gratis, traductor en vivo y asistente de transcripción con IA','nav.dictate':'Dictar','nav.translate':'Traducir','nav.ai':'Preguntar a la IA','nav.setup':'Configurar IA',tapDict:'Toca el micrófono para empezar a dictar',tapTrans:'Toca el micrófono y empieza a hablar',listening:'Escuchando — <b>habla ahora</b>',speakingIn:'Hablas en',translateTo:'Traducir a',original:'Original',translation:'Traducción',useful:'¿Te resulta útil Voxoira?',coffee:'Invítame a un café',fAbout:'Acerca de',fFaq:'Preguntas y ayuda',fContact:'Contacto',fPrivacy:'Política de privacidad',fTerms:'Términos de uso',fChoices:'Opciones de privacidad',decline:'Rechazar',accept:'Aceptar',phEditor:'Tus palabras aparecerán aquí mientras hablas, o simplemente empieza a escribir.'},
+fr:{sub:'dictée vocale gratuite, traducteur en direct et assistant de transcription IA','nav.dictate':'Dicter','nav.translate':'Traduire','nav.ai':'Demander à l’IA','nav.setup':'Configurer l’IA',tapDict:'Touchez le micro pour commencer à dicter',tapTrans:'Touchez le micro et commencez à parler',listening:'À l’écoute — <b>parlez maintenant</b>',speakingIn:'Langue parlée',translateTo:'Traduire vers',original:'Original',translation:'Traduction',useful:'Voxoira vous est utile ?',coffee:'Offrez-moi un café',fAbout:'À propos',fFaq:'FAQ et aide',fContact:'Contact',fPrivacy:'Politique de confidentialité',fTerms:'Conditions d’utilisation',fChoices:'Choix de confidentialité',decline:'Refuser',accept:'Accepter',phEditor:'Vos mots apparaîtront ici pendant que vous parlez, ou commencez simplement à écrire.'},
+de:{sub:'kostenlose Sprache-zu-Text-Funktion, Live-Übersetzer und KI-Transkriptionsassistent','nav.dictate':'Diktieren','nav.translate':'Übersetzen','nav.ai':'KI fragen','nav.setup':'KI einrichten',tapDict:'Tippe auf das Mikrofon, um zu diktieren',tapTrans:'Tippe auf das Mikrofon und sprich los',listening:'Ich höre zu — <b>jetzt sprechen</b>',speakingIn:'Gesprochene Sprache',translateTo:'Übersetzen in',original:'Original',translation:'Übersetzung',useful:'Gefällt dir Voxoira?',coffee:'Spendier mir einen Kaffee',fAbout:'Über uns',fFaq:'FAQ & Hilfe',fContact:'Kontakt',fPrivacy:'Datenschutzerklärung',fTerms:'Nutzungsbedingungen',fChoices:'Datenschutzoptionen',decline:'Ablehnen',accept:'Akzeptieren',phEditor:'Deine Worte erscheinen hier, während du sprichst – oder tippe einfach los.'},
+fi:{sub:'ilmainen puheesta tekstiksi, live-kääntäjä ja tekoälyavusteinen litterointi','nav.dictate':'Sanele','nav.translate':'Käännä','nav.ai':'Kysy tekoälyltä','nav.setup':'Tekoälyn asetukset',tapDict:'Aloita sanelu napauttamalla mikrofonia',tapTrans:'Napauta mikrofonia ja aloita puhuminen',listening:'Kuuntelen — <b>puhu nyt</b>',speakingIn:'Puhuttu kieli',translateTo:'Käännä kielelle',original:'Alkuperäinen',translation:'Käännös',useful:'Onko Voxoira hyödyllinen?',coffee:'Tarjoa minulle kahvit',fAbout:'Tietoa',fFaq:'UKK ja ohje',fContact:'Yhteystiedot',fPrivacy:'Tietosuojaseloste',fTerms:'Käyttöehdot',fChoices:'Tietosuojavalinnat',decline:'Hylkää',accept:'Hyväksy',phEditor:'Sanasi ilmestyvät tähän puhuessasi – tai aloita kirjoittaminen.'},
+pt:{sub:'voz para texto grátis, tradutor ao vivo e assistente de transcrição com IA','nav.dictate':'Ditar','nav.translate':'Traduzir','nav.ai':'Perguntar à IA','nav.setup':'Configurar IA',tapDict:'Toque no microfone para começar a ditar',tapTrans:'Toque no microfone e comece a falar',listening:'Ouvindo — <b>fale agora</b>',speakingIn:'Idioma falado',translateTo:'Traduzir para',original:'Original',translation:'Tradução',useful:'Está gostando do Voxoira?',coffee:'Pague-me um café',fAbout:'Sobre',fFaq:'Perguntas e ajuda',fContact:'Contato',fPrivacy:'Política de privacidade',fTerms:'Termos de uso',fChoices:'Opções de privacidade',decline:'Recusar',accept:'Aceitar',phEditor:'Suas palavras aparecerão aqui enquanto você fala — ou comece a digitar.'}
+};
+const KEYS=['sub','nav.dictate','nav.translate','nav.ai','nav.setup','tapDict','tapTrans','listening','speakingIn','translateTo','original','translation','useful','coffee','fAbout','fFaq','fContact','fPrivacy','fTerms','fChoices','decline','accept','phEditor'];
+function addLang(c,v){ I18N[c]={}; KEYS.forEach((k,i)=>I18N[c][k]=v[i]); }
+addLang('it',['dettatura gratuita, traduttore dal vivo e assistente di trascrizione con IA','Detta','Traduci','Chiedi all’IA','Configura IA','Tocca il microfono per iniziare a dettare','Tocca il microfono e inizia a parlare','In ascolto — <b>parla ora</b>','Lingua parlata','Traduci in','Originale','Traduzione','Ti piace Voxoira?','Offrimi un caffè','Chi siamo','FAQ e aiuto','Contatti','Informativa sulla privacy','Termini di utilizzo','Scelte sulla privacy','Rifiuta','Accetta','Le tue parole appariranno qui mentre parli, oppure inizia a scrivere.']);
+addLang('nl',['gratis spraak-naar-tekst, live vertaler en AI-transcriptieassistent','Dicteren','Vertalen','Vraag de AI','AI instellen','Tik op de microfoon om te dicteren','Tik op de microfoon en begin te praten','Luisteren — <b>spreek nu</b>','Gesproken taal','Vertaal naar','Origineel','Vertaling','Vind je Voxoira nuttig?','Trakteer me op koffie','Over ons','Veelgestelde vragen','Contact','Privacybeleid','Gebruiksvoorwaarden','Privacykeuzes','Weigeren','Accepteren','Je woorden verschijnen hier terwijl je praat, of begin gewoon te typen.']);
+addLang('ru',['бесплатный голос в текст, переводчик в реальном времени и ИИ-помощник для расшифровки','Диктовка','Перевод','Спросить ИИ','Настройка ИИ','Нажмите на микрофон, чтобы начать диктовку','Нажмите на микрофон и начните говорить','Слушаю — <b>говорите</b>','Язык речи','Перевести на','Оригинал','Перевод','Нравится Voxoira?','Угостите меня кофе','О сервисе','Вопросы и помощь','Контакты','Политика конфиденциальности','Условия использования','Настройки конфиденциальности','Отклонить','Принять','Ваши слова появятся здесь по мере речи — или просто начните печатать.']);
+addLang('tr',['ücretsiz sesten yazıya, canlı çeviri ve yapay zekâ transkripsiyon asistanı','Dikte et','Çevir','Yapay zekâya sor','Yapay zekâ ayarı','Dikte etmek için mikrofona dokunun','Mikrofona dokunun ve konuşmaya başlayın','Dinliyorum — <b>şimdi konuşun</b>','Konuşulan dil','Çevrilecek dil','Orijinal','Çeviri','Voxoira işinize yarıyor mu?','Bana kahve ısmarla','Hakkında','SSS ve yardım','İletişim','Gizlilik Politikası','Kullanım Şartları','Gizlilik tercihleri','Reddet','Kabul et','Konuştukça sözleriniz burada görünür — ya da yazmaya başlayın.']);
+addLang('ja',['無料の音声入力、リアルタイム翻訳、AI文字起こしアシスタント','音声入力','翻訳','AIに質問','AI設定','マイクをタップして音声入力を開始','マイクをタップして話し始めてください','聞き取り中 — <b>話してください</b>','話す言語','翻訳先','原文','翻訳','Voxoiraは役に立ちましたか？','コーヒーをおごる','概要','FAQ・ヘルプ','お問い合わせ','プライバシーポリシー','利用規約','プライバシー設定','拒否','同意する','話した内容がここに表示されます。直接入力もできます。']);
+addLang('zh-CN',['免费语音转文字、实时翻译与 AI 转写助手','听写','翻译','询问 AI','设置 AI','点击麦克风开始听写','点击麦克风并开始说话','正在聆听 — <b>请说话</b>','说话语言','翻译为','原文','译文','觉得 Voxoira 有用吗？','请我喝杯咖啡','关于','常见问题与帮助','联系我们','隐私政策','使用条款','隐私选项','拒绝','接受','你说的话会显示在这里，也可以直接输入。']);
+addLang('ar',['تحويل الصوت إلى نص مجانًا، وترجمة فورية، ومساعد نسخ بالذكاء الاصطناعي','إملاء','ترجمة','اسأل الذكاء الاصطناعي','إعداد الذكاء الاصطناعي','اضغط على الميكروفون لبدء الإملاء','اضغط على الميكروفون وابدأ التحدث','جارٍ الاستماع — <b>تحدث الآن</b>','لغة الكلام','الترجمة إلى','النص الأصلي','الترجمة','هل وجدت Voxoira مفيدًا؟','اشترِ لي قهوة','حول','الأسئلة الشائعة والمساعدة','اتصل بنا','سياسة الخصوصية','شروط الاستخدام','خيارات الخصوصية','رفض','قبول','ستظهر كلماتك هنا أثناء حديثك، أو ابدأ الكتابة مباشرة.']);
+addLang('hi',['मुफ़्त वॉइस-टू-टेक्स्ट, लाइव अनुवादक और AI ट्रांसक्रिप्शन सहायक','बोलकर लिखें','अनुवाद','AI से पूछें','AI सेटअप','बोलकर लिखने के लिए माइक्रोफ़ोन दबाएँ','माइक्रोफ़ोन दबाएँ और बोलना शुरू करें','सुन रहा है — <b>अब बोलें</b>','बोली जाने वाली भाषा','इसमें अनुवाद करें','मूल पाठ','अनुवाद','क्या Voxoira आपके काम आया?','मुझे एक कॉफ़ी पिलाएँ','परिचय','अक्सर पूछे जाने वाले प्रश्न','संपर्क','गोपनीयता नीति','उपयोग की शर्तें','गोपनीयता विकल्प','अस्वीकार करें','स्वीकार करें','आप जो बोलेंगे वह यहाँ दिखेगा, या सीधे टाइप करना शुरू करें।']);
+const UI_NAMES={en:'English',es:'Español',fr:'Français',de:'Deutsch',fi:'Suomi',pt:'Português',it:'Italiano',nl:'Nederlands',ru:'Русский',tr:'Türkçe',ja:'日本語','zh-CN':'中文',ar:'العربية',hi:'हिन्दी'};
+const RTL=['ar','he','fa','ur'];
+let uiLang='en';
+function T(k){ return (I18N[uiLang]&&I18N[uiLang][k]) || I18N.en[k] || k; }
+/* any other language: translate the ~23 interface strings once, cache in this browser */
+async function trStr(text,tl){
+  try{ const r=await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl='+encodeURIComponent(tl)+'&dt=t&q='+encodeURIComponent(text)); if(r.ok){ const d=await r.json(); const o=d[0].map(x=>x[0]).join(''); if(o) return o; } }catch(e){}
+  try{ const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair=en|'+encodeURIComponent(tl)); const d=await r.json(); if(d.responseStatus==200) return d.responseData.translatedText; }catch(e){}
+  return null;
+}
+async function loadAutoLang(code){
+  const key='voxoira-ui-tr-'+code, cached=storage.get(key);
+  if(cached){ try{ const o=JSON.parse(cached); if(o&&o.tapDict){ I18N[code]=o; return true; } }catch(e){} }
+  const en=I18N.en, out={};
+  const jobs=KEYS.map(async k=>{
+    if(k==='listening'){ const a=await trStr('Listening',code), b=await trStr('speak now',code); out[k]=(a&&b)?a+' — <b>'+b.replace(/[<>]/g,'')+'</b>':null; }
+    else out[k]=await trStr(en[k],code);
+  });
+  await Promise.all(jobs);
+  if(KEYS.some(k=>!out[k])) return false;
+  I18N[code]=out; storage.set(key,JSON.stringify(out)); return true;
+}
+function isTranslatable(base){ const sel=document.getElementById('t-sourceLang'); return !!sel && [...sel.options].some(o=>o.value===base); }
+function pickUiLang(){
+  const saved=storage.get('voxoira-ui-lang'); if(saved) return saved;
+  const prefs=(navigator.languages&&navigator.languages.length)?[navigator.language].concat(navigator.languages):[navigator.language];
+  for(const raw of prefs){
+    if(!raw) continue; const t=String(raw).replace('_','-'), l=t.toLowerCase(); let b=l.split('-')[0];
+    if(l.startsWith('zh')) b=/tw|hk|hant/.test(l)?'zh-TW':'zh-CN'; if(b==='nb'||b==='nn') b='no'; if(b==='tl') b='fil';
+    if(I18N[b]) return b; if(isTranslatable(b)) return b;
+  }
+  return 'en';
+}
+function renderUi(code){
+  uiLang=I18N[code]?code:'en';
+  document.documentElement.lang=uiLang; document.documentElement.dir=RTL.includes(uiLang)?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    if(el.classList.contains('mic-status') && (el.classList.contains('err') || el.querySelector('b'))) return;
+    el.textContent=T(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder=T(el.getAttribute('data-i18n-ph')); });
+  document.querySelectorAll('.ui-lang button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.uiLang===uiLang ? 'true':'false'));
+  const o=document.getElementById('ui-lang-other'); if(o) o.value=UI_NAMES[uiLang]?'':uiLang;
+}
+async function applyUiLang(code){
+  if(!I18N[code]){ renderUi('en'); if(!(await loadAutoLang(code))) return; }
+  renderUi(code);
+}
+function buildUiLang(){
+  const box=document.querySelector('.ui-lang'); if(!box||box.dataset.built) return; box.dataset.built='1';
+  Object.keys(UI_NAMES).forEach(c=>{ const b=document.createElement('button'); b.type='button'; b.dataset.uiLang=c; b.textContent=UI_NAMES[c]; b.addEventListener('click',()=>{ storage.set('voxoira-ui-lang',c); applyUiLang(c); }); box.appendChild(b); });
+  const sel=document.createElement('select'); sel.id='ui-lang-other'; sel.setAttribute('aria-label','Other language');
+  sel.innerHTML='<option value="">Other…</option>'+[...document.querySelectorAll('#t-sourceLang option')].filter(o=>!UI_NAMES[o.value]).map(o=>'<option value="'+o.value+'">'+o.textContent+'</option>').join('');
+  sel.addEventListener('change',()=>{ if(!sel.value) return; storage.set('voxoira-ui-lang',sel.value); applyUiLang(sel.value); });
+  box.appendChild(sel);
+}
 
 let dictSettings = { commands:true, capitalize:true, autosave:true };
 document.getElementById('toggleCommands').addEventListener('change', e=>{dictSettings.commands=e.target.checked; persistSettings();});
@@ -1226,9 +1279,29 @@ function initDictate(){
   const langSelect = document.getElementById('d-langSelect');
   LANGUAGES.forEach(([code,label])=>{
     const opt=document.createElement('option'); opt.value=code; opt.textContent=label;
-    if(code==='en-US') opt.selected=true;
     langSelect.appendChild(opt);
   });
+  /* Auto-detect browser language: saved manual choice > navigator.language > en-US */
+  function detectDictLang(){
+    const codes=LANGUAGES.map(l=>l[0]);
+    const saved=storage.get('voxoira-dict-lang');
+    if(saved && codes.includes(saved)) return saved;
+    const prefs=(navigator.languages && navigator.languages.length) ? [navigator.language].concat(navigator.languages) : [navigator.language];
+    for(const raw of prefs){
+      if(!raw) continue;
+      const tag=String(raw).replace('_','-').toLowerCase();
+      const exact=codes.find(c=>c.toLowerCase()===tag);
+      if(exact) return exact;
+      let base=tag.split('-')[0];
+      if(base==='nb'||base==='nn') base='no';
+      if(base==='tl') base='fil';
+      const near=codes.find(c=>c.toLowerCase().split('-')[0]===base);
+      if(near) return near;
+    }
+    return 'en-US';
+  }
+  langSelect.value = detectDictLang();
+  langSelect.addEventListener('change', ()=>storage.set('voxoira-dict-lang', langSelect.value)); /* manual choice overrides auto-detect */
 
   const COMMANDS = [
     {say:'new paragraph', does:'\\n\\n', re:/\bnew paragraph\b/gi, repl:'\n\n'},
@@ -1572,7 +1645,7 @@ function initDictate(){
     micBtn.classList.toggle('active',on);
     liveCard.classList.toggle('listening',on);
     editor.readOnly = on;
-    micStatus.innerHTML = on ? 'Listening — <b>speak now</b>' : 'Tap the microphone to start dictating';
+    micStatus.innerHTML = on ? T('listening') : T('tapDict');
     liveStatus.textContent = on ? 'Listening… live words will appear as you speak' : 'Ready — your words will appear here while you speak';
     if(!on) resetLiveTranscriptionCard('Ready — your words will appear here while you speak');
     micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
@@ -1669,7 +1742,30 @@ function initTranslate(){
     const o2=document.createElement('option'); o2.value=l.short; o2.textContent=l.label;
     sourceSel.appendChild(o1); targetSel.appendChild(o2);
   });
-  sourceSel.value='fi'; targetSel.value='en';
+  /* Auto-detect browser language for the source; manual choices are remembered and override it */
+  function detectTransLang(){
+    const prefs=(navigator.languages && navigator.languages.length) ? [navigator.language].concat(navigator.languages) : [navigator.language];
+    for(const raw of prefs){
+      if(!raw) continue;
+      const tag=String(raw).replace('_','-');
+      const lower=tag.toLowerCase();
+      if(lower==='zh-tw'||lower==='zh-hk'||lower==='zh-hant'||lower.startsWith('zh-hant')){ if(LANGS.some(l=>l.short==='zh-TW')) return 'zh-TW'; }
+      if(lower.startsWith('zh')) return 'zh-CN';
+      let base=lower.split('-')[0];
+      if(base==='nb'||base==='nn') base='no';
+      if(base==='tl') base='fil';
+      const hit=LANGS.find(l=>l.short.toLowerCase()===base);
+      if(hit) return hit.short;
+    }
+    return 'en';
+  }
+  const savedSrc=storage.get('voxoira-trans-source'), savedTgt=storage.get('voxoira-trans-target');
+  const validShort=v=>LANGS.some(l=>l.short===v);
+  const autoSrc=detectTransLang();
+  sourceSel.value = validShort(savedSrc) ? savedSrc : autoSrc;
+  targetSel.value = validShort(savedTgt) ? savedTgt : (sourceSel.value==='en' ? 'es' : 'en');
+  sourceSel.addEventListener('change', ()=>storage.set('voxoira-trans-source', sourceSel.value));
+  targetSel.addEventListener('change', ()=>storage.set('voxoira-trans-target', targetSel.value));
   function langMeta(short){ return LANGS.find(l=>l.short===short) || LANGS[0]; }
   function updateLangLabels(){
     document.getElementById('t-origLangLabel').textContent = langMeta(sourceSel.value).label;
@@ -1709,9 +1805,9 @@ function initTranslate(){
           <span class="saved-doc-preview">${preview}${(d.original||'').length>90?'…':''}</span>
         </div>
         <div class="saved-doc-actions">
-          <button class="pill" data-action="txt">.txt</button>
-          <button class="pill" data-action="doc">.doc</button>
-          <button class="pill danger" data-action="del">Delete</button>
+          <button type="button" class="pill" data-action="txt">.txt</button>
+          <button type="button" class="pill" data-action="doc">.doc</button>
+          <button type="button" class="pill danger" data-action="del">Delete</button>
         </div>
       </li>`;
     }).join('');
@@ -2074,7 +2170,7 @@ function initTranslate(){
     micWrap.classList.toggle('listening',on);
     micBtn.classList.toggle('active',on);
     liveCard.classList.toggle('listening',on);
-    if(!micStatus.classList.contains('err')) micStatus.innerHTML=on?'Listening — <b>speak now</b>':'Tap the microphone and start speaking';
+    if(!micStatus.classList.contains('err')) micStatus.innerHTML=on?T('listening'):T('tapTrans');
     liveStatus.textContent=on?'Listening… live words will appear as you speak':'Ready — your spoken words will appear here instantly';
     if(!on) resetTranslateLiveSpeech('Ready — your spoken words will appear here instantly');
     micBtn.setAttribute('aria-label', on?'Stop dictation':'Start dictation');
@@ -2449,6 +2545,8 @@ function initMonetization(){
 setDark(true);
 initDictate();
 initTranslate();
+buildUiLang();
+applyUiLang(pickUiLang());
 initAskAI();
 initMonetization();
 })();
