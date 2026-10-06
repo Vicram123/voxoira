@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://voxoira.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://voxoira.com/voice-to-text/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/online-dictation/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/voice-translator/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/ai-transcript-summarizer/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/spanish-voice-to-text/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/audio-to-text/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://voxoira.com/text-to-speech/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/live-captions/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/speaking-time-calculator/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/filler-word-remover/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/share/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/embed-voice-to-text/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://voxoira.com/privacy/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://voxoira.com/chrome-extension/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://voxoira.com/private-dictation/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-french/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-german/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-portuguese/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-italian/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-arabic/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-hindi/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-japanese/</loc></url>
+  <url><loc>https://voxoira.com/voice-to-text-russian/</loc></url>
+  <url><loc>https://voxoira.com/mp3-to-text/</loc></url>
+  <url><loc>https://voxoira.com/m4a-to-text/</loc></url>
+  <url><loc>https://voxoira.com/wav-to-text/</loc></url>
+  <url><loc>https://voxoira.com/voice-message-to-text/</loc></url>
+</urlset>
