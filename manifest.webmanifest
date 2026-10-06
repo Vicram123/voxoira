@@ -1,0 +1,16 @@
+{
+ "name": "Voxoira",
+ "short_name": "Voxoira",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#FFFFFF",
+ "theme_color": "#7657F6",
+ "icons": [
+  {
+   "src": "/icon.svg",
+   "sizes": "any",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  }
+ ]
+}

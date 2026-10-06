@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voice Message to Text — Free, Private Transcriber | Voxoira</title>
+<meta name="description" content="Turn WhatsApp and Telegram voice messages into text for free. Runs in your browser, nothing is uploaded.">
+<link rel="canonical" href="https://voxoira.com/voice-message-to-text/"><link rel="icon" href="/icon.svg"><link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:title" content="Voice Message to Text — Free, Private Transcriber | Voxoira"><meta property="og:url" content="https://voxoira.com/voice-message-to-text/"><meta property="og:image" content="https://voxoira.com/images/footer-banner.webp">
+<meta name="google-adsense-account" content="ca-pub-5810682779564104">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Voxoira Voice message to Text", "url": "https://voxoira.com/voice-message-to-text/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (modern browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I convert a WhatsApp voice message to text?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, once you have saved the message as an audio file. Choose that file here and it is transcribed on your device."}}, {"@type": "Question", "name": "Why will my voice message not open?", "acceptedAnswer": {"@type": "Answer", "text": "Your browser may not support its format, often Opus. Converting the file to MP3 or M4A usually fixes it."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"><link rel="stylesheet" href="/assets/voxoira.css"><script src="/assets/i18n.js"></script><script src="/assets/autolang.js" defer></script><script src="/assets/autotranslate.js" defer></script></head><body><main>
+<p><a href="/" data-t="home">&larr; Voxoira home</a></p>
+<h1>Voice message to text — free and private</h1>
+<p>Turn a saved voice message into text. The file is transcribed on your device and never uploaded.</p>
+<div class="box"><div class="row"><input type="file" id="f" accept="audio/*,video/*">
+<select id="lang" aria-label="Language"><option value="auto">Auto-detect</option><option value="english">English</option><option value="spanish">Spanish</option><option value="french">French</option><option value="german">German</option><option value="italian">Italian</option><option value="portuguese">Portuguese</option><option value="dutch">Dutch</option><option value="russian">Russian</option><option value="arabic">Arabic</option><option value="hindi">Hindi</option><option value="chinese">Chinese</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="turkish">Turkish</option><option value="indonesian">Indonesian</option><option value="finnish">Finnish</option><option value="swedish">Swedish</option><option value="polish">Polish</option><option value="ukrainian">Ukrainian</option></select>
+<select id="model" aria-label="Model"><option value="Xenova/whisper-tiny">Tiny (fast, ~40 MB)</option><option value="Xenova/whisper-base">Base (better, ~75 MB)</option></select>
+<button class="p" id="go" disabled data-t="transcribe">Transcribe</button></div><div id="st" data-t="chooseFile">Choose a file to begin.</div><progress id="pb" max="100" value="0" hidden style="width:100%;height:10px" aria-label="Progress"></progress>
+<div id="spk" hidden><p class="res"><b>Speaker labels</b> (optional). Rename speakers, then choose a speaker on the line where they start talking. Following lines change with it until you pick another speaker.</p><div class="row"><input class="nm" value="Speaker 1" aria-label="Speaker 1 name"><input class="nm" value="Speaker 2" aria-label="Speaker 2 name"><input class="nm" value="Speaker 3" aria-label="Speaker 3 name"><input class="nm" value="Speaker 4" aria-label="Speaker 4 name"></div><div id="seg"></div></div><textarea id="out" placeholder="Your transcript appears here" data-tp="phOut" aria-label="Transcript"></textarea>
+<div class="row"><button id="txt" disabled>⬇ TXT</button><button id="srt" disabled>⬇ SRT</button><button id="vtt" disabled>⬇ VTT</button><button id="cp" disabled data-t="copy">Copy</button></div></div>
+<h2>Transcribing voice messages</h2><p>Save or export the voice message from your chat app to your device, then choose the file here. Voice messages are often small Ogg or Opus files. Chrome and Firefox usually open them; if your browser cannot, convert the message to MP3 first.</p><p>Voice notes are short, so they transcribe quickly, and keeping them private matters because they are personal. Nothing leaves your device. Language auto-detect works for many messages, or choose it yourself for a better result.</p><h2>Questions</h2><h3>Can I convert a WhatsApp voice message to text?</h3><p>Yes, once you have saved the message as an audio file. Choose that file here and it is transcribed on your device.</p><h3>Why will my voice message not open?</h3><p>Your browser may not support its format, often Opus. Converting the file to MP3 or M4A usually fixes it.</p><p>Other formats: <a href="/audio-to-text/">any audio or video</a> · <a href="/mp3-to-text/">MP3</a> · <a href="/m4a-to-text/">M4A</a> · <a href="/wav-to-text/">WAV</a></p><p>Need live dictation instead? Try <a href="/voice-to-text/">voice to text</a> or the <a href="/voice-translator/">voice translator</a>.</p></main>
+<script>
+const $=id=>document.getElementById(id);let asr,cur,segs=[],name='transcript';
+const st=t=>$('st').textContent=t;
+$('f').onchange=()=>{const f=$('f').files[0];$('go').disabled=!f;if(f){name=f.name.replace(/\.[^.]+$/,'');st(f.name+' ready.');}};
+async function load(m){if(asr&&cur===m)return asr;const {pipeline}=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1');
+asr=await pipeline('automatic-speech-recognition',m,{progress_callback:dlp});cur=m;return asr}
+const T=(s,c)=>{s=Math.max(0,s||0);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=Math.floor(s%60),ms=Math.round((s%1)*1000);const p=(n,l=2)=>String(n).padStart(l,'0');return p(h)+':'+p(m)+':'+p(x)+c+p(ms,3)};
+const pb=$('pb');let tm,t0,dur=0,done=0,files={};
+const bar=v=>{pb.hidden=false;if(v==null)pb.removeAttribute('value');else pb.value=v};
+function dlp(p){if(p.file&&p.total)files[p.file]={l:p.loaded||0,t:p.total};let l=0,t=0;for(const k in files){l+=files[k].l;t+=files[k].t}if(t){const v=Math.round(l/t*100);bar(v);st(VT('downloading','Downloading model…')+' '+v+'%')}}
+const pct=()=>dur>0&&done>0?Math.min(99,Math.round(done/Math.ceil(dur/20)*100)):null;
+function startPB(){t0=Date.now();done=0;bar(null);clearInterval(tm);tm=setInterval(()=>{const s=Math.round((Date.now()-t0)/1000),q=pct();st(VT('transcribing','Transcribing…')+' '+(q!=null?q+'% · ':'')+Math.floor(s/60)+':'+String(s%60).padStart(2,'0')+' '+VT('elapsed','elapsed')+'. '+VT('keepTab','Keep this tab open.'));if(q!=null)bar(q)},500)}
+function stopPB(){clearInterval(tm);pb.hidden=true}
+const getDur=u=>new Promise(r=>{const a=new Audio();a.preload='metadata';a.onloadedmetadata=()=>r(isFinite(a.duration)?a.duration:0);a.onerror=()=>r(0);a.src=u;setTimeout(()=>r(0),4000)});
+$('go').onclick=async()=>{const f=$('f').files[0];if(!f)return;$('go').disabled=true;files={};bar(0);
+try{const a=await load($('model').value);const url=URL.createObjectURL(f);const l=$('lang').value;dur=await getDur(url);startPB();
+const r=await a(url,{return_timestamps:true,chunk_length_s:30,stride_length_s:5,task:'transcribe',chunk_callback:()=>{done++},...(l!=='auto'?{language:l}:{})});URL.revokeObjectURL(url);
+segs=(r.chunks||[]).map(c=>({s:c.timestamp[0],e:c.timestamp[1]??c.timestamp[0]+2,t:c.text.trim()})).filter(c=>c.t);
+segs.forEach(c=>c.sp=0);render();['txt','srt','vtt','cp'].forEach(i=>$(i).disabled=false);st(VT('done','Done.'))}
+catch(e){st('Could not transcribe this file: '+(e.message||e)+'. Try another file or browser (Chrome or Edge recommended).')}stopPB();$('go').disabled=false};
+
+const nm=()=>[...document.querySelectorAll('.nm')].map((i,k)=>i.value.trim()||'Speaker '+(k+1));
+const lab=c=>c.sp?nm()[c.sp-1]:'';
+function text(){let o='',p=-1;segs.forEach(c=>{if(c.sp!==p){o+=(o?'\n\n':'')+(c.sp?lab(c)+': ':'');p=c.sp}else o+=' ';o+=c.t});return o}
+function render(){$('spk').hidden=false;const n=nm(),box=$('seg');box.innerHTML='';
+segs.forEach((c,i)=>{const d=document.createElement('div');d.className='sg';const tm=document.createElement('time');tm.textContent=T(c.s,'.').slice(0,8);
+const s=document.createElement('select');s.setAttribute('aria-label','Speaker for line '+(i+1));s.innerHTML='<option value="0">—</option>'+n.map((x,k)=>'<option value="'+(k+1)+'">'+x.replace(/</g,'&lt;')+'</option>').join('');s.value=c.sp;
+s.onchange=()=>{const o=c.sp,v=+s.value;for(let j=i;j<segs.length&&(j===i||segs[j].sp===o);j++)segs[j].sp=v;render()};
+const t=document.createElement('input');t.value=c.t;t.setAttribute('aria-label','Line '+(i+1));t.oninput=()=>{c.t=t.value;$('out').value=text()};
+d.append(tm,s,t);box.append(d)});$('out').value=text()}
+document.addEventListener('input',e=>{if(e.target.classList&&e.target.classList.contains('nm')&&segs.length)render()});
+const dl=(c,ext,mime)=>{const b=new Blob([c],{type:mime+';charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name+'.'+ext;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('txt').onclick=()=>dl($('out').value,'txt','text/plain');
+$('srt').onclick=()=>dl(segs.map((c,i)=>`${i+1}\n${T(c.s,',')} --> ${T(c.e,',')}\n${lab(c)?lab(c)+': ':''}${c.t}\n`).join('\n'),'srt','text/plain');
+$('vtt').onclick=()=>dl('WEBVTT\n\n'+segs.map(c=>`${T(c.s,'.')} --> ${T(c.e,'.')}\n${lab(c)?'<v '+lab(c)+'>':''}${c.t}\n`).join('\n'),'vtt','text/vtt');
+$('cp').onclick=()=>navigator.clipboard.writeText($('out').value).then(()=>st(VT('copied','Copied.')));
+</script><script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{})</script></body></html>

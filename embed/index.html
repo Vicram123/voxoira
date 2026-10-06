@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Voxoira dictation widget</title>
+<style>html,body{height:100%;margin:0}body{font:15px "Plus Jakarta Sans",system-ui,sans-serif;display:flex;flex-direction:column;background:#fff;color:#16140F}body.dark{background:#14130F;color:#F2EFE8}
+textarea{flex:1;border:1px solid #E7E9F5;padding:10px;font:inherit;background:inherit;color:inherit;resize:none;margin:8px 8px 0}.bar{display:flex;gap:8px;align-items:center;padding:8px}
+button{font:inherit;padding:7px 14px;border:1px solid #7657F6;background:#7657F6;color:#fff;border-radius:2px;cursor:pointer}button.s{background:transparent;color:inherit;border-color:#999}a{margin-left:auto;font-size:12px;color:#7657F6}</style><script src="/assets/autolang.js" defer></script></head><body>
+<textarea id="t" placeholder="Press Start and speak"></textarea><div class="bar"><button id="b">Start</button><button class="s" id="c">Copy</button><span id="m" style="font-size:12px"></span><a href="https://voxoira.com/voice-to-text/" target="_blank" rel="noopener">Powered by Voxoira</a></div>
+<script>const q=new URLSearchParams(location.search),$=i=>document.getElementById(i);if(q.get('theme')==='dark')document.body.classList.add('dark');
+const R=window.SpeechRecognition||window.webkitSpeechRecognition;let r,on=false,base='';if(!R)$('m').textContent='Use Chrome, Edge or Safari';
+$('b').onclick=()=>{if(!R)return;if(on){on=false;r.stop();$('b').textContent='Start';return}on=true;$('b').textContent='Stop';base=$('t').value;go()};
+function go(){r=new R();r.continuous=true;r.interimResults=true;r.lang=q.get('lang')||'en-US';let fin=base;
+r.onresult=e=>{let i='';for(let k=e.resultIndex;k<e.results.length;k++){const x=e.results[k][0].transcript;if(e.results[k].isFinal)fin+=(fin&&!/\s$/.test(fin)?' ':'')+x.trim();else i+=x}$('t').value=fin+(i?' '+i:'');base=fin};
+r.onend=()=>{if(on)try{go()}catch(e){}};r.onerror=e=>{if(e.error==='not-allowed'){on=false;$('b').textContent='Start';$('m').textContent='Microphone blocked'}};r.start()}
+$('c').onclick=()=>navigator.clipboard.writeText($('t').value)</script></body></html>
