@@ -561,7 +561,7 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 .seo-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .seo-links a{padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:.85rem}</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Voxoira", "url": "https://voxoira.com/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (modern browser)", "description": "Free voice to text, live translator and AI transcript assistant.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Voxoira", "url": "https://voxoira.com"}}</script>
-<script src="/assets/autolang.js" defer></script><script src="/assets/autotranslate.js" defer></script></head>
+<script src="/assets/dictation-core.js"></script><script src="/assets/whisper-sr.js"></script><script src="/assets/autolang.js" defer></script><script src="/assets/autotranslate.js" defer></script></head>
 <body>
 <div class="wrap">
 
@@ -1127,7 +1127,58 @@ function downloadDoc(title, bodyHtml, filenameBase){
   downloadBlob(html, `${filenameBase}.doc`, 'application/msword');
 }
 
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const NATIVE_SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+/* On-device Whisper engine (assets/whisper-sr.js): used when the browser's own speech service is missing or
+   blocked, which is the normal situation inside an installed app (PWA), especially on iPhone. */
+const VOX_WHISPER = window.VoxWhisperRecognition || null;
+let SR = NATIVE_SR;
+try{ if(VOX_WHISPER && localStorage.getItem('voxoira-engine')==='whisper') SR = VOX_WHISPER; }catch(e){}
+if(!SR && VOX_WHISPER) SR = VOX_WHISPER;
+
+/* ---- Microphone diagnostics (installed app / PWA safe) ----
+   Speech errors used to be swallowed silently, so the mic button looked dead.
+   Every failure now shows a clear message and stops the silent retry loop. */
+const MIC_STANDALONE = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+let micNetworkFails = 0;
+function micErrorMessage(code){
+  switch(code){
+    case 'not-allowed':
+      return 'Microphone access was blocked \u2014 allow the microphone for this app/site in your browser or system settings, then tap the mic again';
+    case 'service-not-allowed':
+      return MIC_STANDALONE
+        ? 'Speech recognition is not available inside the installed app on this device \u2014 open voxoira.com in your regular browser (Chrome, Edge or Safari) instead'
+        : 'Speech recognition is blocked by this browser \u2014 check the microphone permission, or try Chrome / Edge / Safari';
+    case 'language-not-supported':
+      return 'Your browser\u2019s speech recognition does not support this language \u2014 pick another language';
+    case 'audio-capture':
+      return 'No microphone found \u2014 connect or enable a microphone and try again';
+    case 'network':
+      return 'Speech recognition needs an internet connection \u2014 check your connection and try again';
+    case 'start-failed':
+      return 'Could not start speech recognition \u2014 reload the app and try again, or open voxoira.com in your browser';
+    default:
+      return 'Speech recognition error (' + code + ')';
+  }
+}
+function micIsFatal(code){
+  if(['not-allowed','service-not-allowed','language-not-supported','audio-capture','bad-grammar','start-failed'].indexOf(code)>-1) return true;
+  if(code==='network') return ++micNetworkFails>=3;
+  return false;
+}
+let micNativeNetFails = 0;
+/* Native speech engine failed in a way that will not fix itself -> switch to the on-device engine. */
+function micTryFallback(code, notify){
+  if(!VOX_WHISPER || SR===VOX_WHISPER) return false;
+  let sw = (code==='service-not-allowed' || code==='language-not-supported');
+  if(code==='network' && ++micNativeNetFails>=2) sw = true;
+  if(!sw) return false;
+  SR = VOX_WHISPER;
+  if(code==='service-not-allowed'){ try{ localStorage.setItem('voxoira-engine','whisper'); }catch(e){} }
+  micNetworkFails = 0; micNativeNetFails = 0;
+  try{ notify('Switching to the built-in offline speech engine \u2014 the first start downloads a small speech model (one time).'); }catch(e){}
+  return true;
+}
+
 if(!SR) document.getElementById('unsupportedNote').style.display = 'block';
 
 /* Plain localStorage wrapper — works on any real host. (Won't persist inside
@@ -1543,6 +1594,7 @@ function initDictate(){
 
     r.onstart=()=>{
       if(sessionId!==recognitionSessionId) return;
+      micNetworkFails=0; micNativeNetFails=0;
       setListeningUI(true);
     };
 
@@ -1576,15 +1628,17 @@ function initDictate(){
 
     r.onerror=(event)=>{
       if(sessionId!==recognitionSessionId) return;
-      if(event.error==='not-allowed' || event.error==='service-not-allowed'){
-        restartRequested=false;
-        showToast('Microphone access was blocked');
-        setListeningUI(false);
-      } else if(event.error==='audio-capture'){
-        showToast('No microphone input detected — check your microphone');
+      const code=event.error;
+      if(code==='no-speech' || code==='aborted') return;
+      if(micTryFallback(code, showToast)){
+        setTimeout(()=>{ if(restartRequested && listening && !recognition) startRecognition(); },700);
+        return;
       }
-      // no-speech, aborted, and transient network errors are allowed to end;
-      // onend decides whether another fresh session is needed.
+      if(micIsFatal(code)){
+        restartRequested=false;
+        setListeningUI(false);
+      }
+      showToast(micErrorMessage(code));
     };
 
     r.onend=()=>{
@@ -1632,6 +1686,12 @@ function initDictate(){
       setListeningUI(true);
     }catch(e){
       recognition=null;
+      if(e && e.name && e.name!=='InvalidStateError'){
+        restartRequested=false;
+        setListeningUI(false);
+        showToast(micErrorMessage('start-failed'));
+        return;
+      }
       setTimeout(()=>{
         if(restartRequested && listening) startRecognition();
       },250);
@@ -2081,6 +2141,7 @@ function initTranslate(){
 
     r.onstart=()=>{
       if(sessionId!==recognitionSessionId) return;
+      micNetworkFails=0; micNativeNetFails=0;
       recognitionRunning=true;
       recognitionRestartAttempts=0;
     };
@@ -2118,17 +2179,17 @@ function initTranslate(){
 
     r.onerror=(event)=>{
       if(sessionId!==recognitionSessionId) return;
-      if(event.error==='not-allowed' || event.error==='service-not-allowed'){
-        restartRequested=false;
-        micStatus.classList.add('err');
-        micStatus.innerHTML='Microphone access was blocked — allow microphone access in your browser';
-        setListeningUI(false);
-      } else if(event.error==='audio-capture'){
-        micStatus.classList.add('err');
-        micStatus.innerHTML='No microphone input detected — check your microphone';
-      } else if(event.error==='network'){
-        translateState.textContent='Speech service connection interrupted — reconnecting…';
+      const code=event.error;
+      if(code==='no-speech' || code==='aborted') return;
+      if(micTryFallback(code, m=>{ translateState.textContent=m; })){
+        setTimeout(()=>{ if(restartRequested && listening && !recognition && !recognitionRunning) startRecognition(); },700);
+        return;
       }
+      const fatal=micIsFatal(code);
+      if(fatal) restartRequested=false;
+      micStatus.classList.add('err');
+      micStatus.innerHTML=micErrorMessage(code);
+      if(fatal) setListeningUI(false);
     };
 
     r.onend=()=>{
@@ -2188,6 +2249,13 @@ function initTranslate(){
     }catch(e){
       recognition=null;
       recognitionRunning=false;
+      if(e && e.name && e.name!=='InvalidStateError'){
+        restartRequested=false;
+        micStatus.classList.add('err');
+        micStatus.innerHTML=micErrorMessage('start-failed');
+        setListeningUI(false);
+        return;
+      }
       recognitionRestartAttempts++;
       setTimeout(()=>{
         if(restartRequested && listening) startRecognition();
